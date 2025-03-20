@@ -1,6 +1,6 @@
 namespace LumenSys.Objects.Enums
 {
-    public enum VALIDITY
+    public enum Validity
     {
         YES = 0,
         NO = 1

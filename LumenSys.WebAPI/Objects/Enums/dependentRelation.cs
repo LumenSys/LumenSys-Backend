@@ -1,6 +1,6 @@
 ﻿namespace LumenSys.Objects.Enums
 {
-    public enum dependentRelation
+    public enum DependentRelation
     {
         PARENTS = 0,
         GRANDPARENTS = 1,

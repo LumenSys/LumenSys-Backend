@@ -1,4 +1,4 @@
-﻿using LumenSys.WebAPI.Objects.Enum;
+using LumenSys.WebAPI.Objects.Enum;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LumenSys.WebAPI.Objects.Models
@@ -38,5 +38,3 @@ namespace LumenSys.WebAPI.Objects.Models
             Matrial = matrial;
             Sex = sex;
         }
-    }
-}

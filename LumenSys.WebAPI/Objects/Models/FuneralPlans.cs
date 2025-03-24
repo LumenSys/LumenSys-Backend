@@ -2,27 +2,27 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LumenSys.WebAPI.Objects.Models
 {
-    [Table("funeral_plans")]
+    [Table("funeralplans")]
     public class FuneralPlans
     {
-        [Column("id_plan")]
+        [Column("id")]
         public int IdPlan { get; set; }
 
-        [Column("name_plan")]
-        public string NamePlan { get; set; }
+        [Column("name")]
+        public string Name { get; set; }
 
         [Column("description")]
         public string Description { get; set; }
 
-        [Column("monthly_value")]
+        [Column("monthlyvalue")]
         public double MonthlyValue { get; set; }
 
         public FuneralPlans() { }
 
-        public FuneralPlans(int idPlan, string namePlan, string description, double monthlyValue)
+        public FuneralPlans(int id, string name, string description, double monthlyvalue)
         {
-            IdPlan = idPlan;
-            NamePlan = namePlan;
+            Id = id;
+            Name = name;
             Description = description;
             MonthlyValue = monthlyValue;
         }

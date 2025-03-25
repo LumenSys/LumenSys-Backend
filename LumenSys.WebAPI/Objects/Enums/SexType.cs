@@ -1,8 +1,8 @@
 ﻿namespace LumenSys.WebAPI.Objects.Enums
 {
-    public enum Sex
+    public enum SexType
     {
-        Male = 0,      
-        Female = 1
+        MALE = 0,      
+        FEMALE = 1
     }
 }

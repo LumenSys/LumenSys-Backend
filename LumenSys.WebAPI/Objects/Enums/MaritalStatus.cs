@@ -1,6 +1,6 @@
-﻿namespace LumenSys.WebAPI.Objects.Enum
+﻿namespace LumenSys.WebAPI.Objects.Enums
 {
-    public enum MatrialStatus
+    public enum MaritalStatus
     {
         SINGLE = 0,
         MARRIED = 1,

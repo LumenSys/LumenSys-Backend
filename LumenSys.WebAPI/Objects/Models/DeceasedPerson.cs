@@ -1,4 +1,4 @@
-using LumenSys.WebAPI.Objects.Enum;
+using LumenSys.WebAPI.Objects.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LumenSys.WebAPI.Objects.Models
@@ -19,22 +19,24 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("nationality")]
         public string Nationality { get; set; }
 
-        [Column("matrial")]
-        public MatrialStatus Matrial { get; set; }
+        [Column("marital")]
+        public MaritalStatus Marital { get; set; }
 
         [Column("sex")]
         public SexType Sex { get; set; }
 
         public DeceasedPerson() { }
 
-        public DeceasedPerson(int id, string name, int age, DateOnly birthday, string deathcause, string nationality, MatrialStatus matrial, SexType sex) 
+        public DeceasedPerson(int id, string name, int age, DateOnly birthday, string deathcause, string nationality, MaritalStatus marital, SexType sex)
         {
             Id = id;
-            Name = name; 
+            Name = name;
             Age = age;
             BirthDay = birthday;
             DeathCause = deathcause;
             Nationality = nationality;
-            Matrial = matrial;
+            Marital = marital;
             Sex = sex;
         }
+    }
+}

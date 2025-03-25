@@ -6,7 +6,7 @@ namespace LumenSys.WebAPI.Objects.Models
     public class FuneralPlans
     {
         [Column("id")]
-        public int IdPlan { get; set; }
+        public int Id { get; set; }
 
         [Column("name")]
         public string Name { get; set; }
@@ -24,7 +24,7 @@ namespace LumenSys.WebAPI.Objects.Models
             Id = id;
             Name = name;
             Description = description;
-            MonthlyValue = monthlyValue;
+            MonthlyValue = monthlyvalue;
         }
     }
 }

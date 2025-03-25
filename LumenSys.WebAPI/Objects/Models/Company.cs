@@ -8,7 +8,7 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("cpf_cnpj")]
+        [Column("cpfcnpj")]
         public string CpfCnpj { get; set; }
 
         [Column("name")]

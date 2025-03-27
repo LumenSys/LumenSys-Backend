@@ -2,6 +2,7 @@
 
 namespace LumenSys.WebAPI.Objects.Models
 {
+    [Table("type_wake")]
     public class TypeWake
     {
         [Column("id")]

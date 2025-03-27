@@ -2,14 +2,14 @@
 
 namespace LumenSys.WebAPI.Objects.Models
 {
-    [Table("Dependent")]
+    [Table("dependent")]
     public class Dependent
     {
-        [Column("Id")]
+        [Column("id")]
         public int Id { get; set; }
-        [Column("Name")]
+        [Column("name")]
         public string Name { get; set; }
-        [Column("Cpf")]
+        [Column("cpf")]
         public string Cpf { get; set; }
 
         public Dependent() { }

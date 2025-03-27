@@ -2,20 +2,20 @@
 
 namespace LumenSys.WebAPI.Objects.Models
 {
-    [Table("Wake")]
+    [Table("wake")]
     public class Wake
     {
-        [Column("Id")]
+        [Column("id")]
         public int Id { get; set; }
-        [Column("Date")]
+        [Column("date")]
         public DateOnly Date { get; set; }
-        [Column("Location")]
+        [Column("location")]
         public string Location { get; set; }
-        [Column("StartTime")]
+        [Column("starttime")]
         public int StartTime { get; set; }
-        [Column("EndTime")]
+        [Column("endtime")]
         public int EndTime { get; set; }
-        [Column("Description")]
+        [Column("description")]
         public string Description { get; set; }
 
         public Wake() { }

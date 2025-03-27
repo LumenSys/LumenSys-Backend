@@ -2,16 +2,16 @@
 
 namespace LumenSys.WebAPI.Objects.Models
 {
-    [Table("Thanatopraxia")]
+    [Table("thanatopraxia")]
     public class Thanatopraxia
     {
-        [Column("Id")]
+        [Column("id")]
         public string Id { get; set; }
-        [Column("Date")]
+        [Column("date")]
         public DateOnly Date { get; set; }
-        [Column("Description")]
+        [Column("description")]
         public string Description { get; set; }
-        [Column("ConditionBody")]
+        [Column("conditionbody")]
         public string ConditionBody { get; set; }
 
         public Thanatopraxia() { }

@@ -23,6 +23,8 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("hirindate")]
         public DateOnly HirinDate { get; set; }
 
+        public ICollection<User> Users { get; set; } = new List<User>();
+
         public Employee() { }  
         
         public Employee(int id, string name, string cpf, string phone, string email, DateOnly hirindate)

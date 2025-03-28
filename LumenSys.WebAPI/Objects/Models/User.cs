@@ -1,4 +1,5 @@
 using LumenSys.Objects.Enums;
+using LumenSys.WebAPI.Objects.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LumenSys.WebAPI.Objects;
@@ -16,6 +17,10 @@ public class User
     public TypeEmployee TypeEmployee { get; set; }
     [Column("userstatus")]
     public UserStats UserStatus { get; set; }
+
+    public int EmployeeId  { get; set; }
+
+    public Employee Employee { get; set; } = null!;
 
     public User () { }
 

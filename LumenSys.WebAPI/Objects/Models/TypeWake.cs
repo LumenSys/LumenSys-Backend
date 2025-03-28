@@ -12,6 +12,9 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("description")]
         public string Description { get; set; }
 
+        public int? WakeId { get; set; }
+        public Wake Wake { get; set; } = null;
+
         public TypeWake() { }
 
         public TypeWake(int id, string name, string description)

@@ -18,6 +18,8 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("description")]
         public string Description { get; set; }
 
+        public ICollection<TypeWake> TypeWake { get; } = new List<TypeWake>();
+
         public int? DecasedPesronId { get; set; }
         public DeceasedPerson DeceasedPerson { get; set; } = null;
 

@@ -24,6 +24,7 @@ namespace LumenSys.WebAPI.Objects.Models
 
         [Column("sex")]
         public SexType Sex { get; set; }
+        public Cremation? Cremation { get; set; }
 
         public ICollection<Transport> Transport { get; } = new List<Transport>();
         public ICollection<Wake> Wake { get; } = new List<Wake>();

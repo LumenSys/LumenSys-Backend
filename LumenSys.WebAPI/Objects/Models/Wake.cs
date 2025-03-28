@@ -18,6 +18,9 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("description")]
         public string Description { get; set; }
 
+        public int? DecasedPesronId { get; set; }
+        public DeceasedPerson DeceasedPerson { get; set; } = null;
+
         public Wake() { }
 
         public Wake(int id, DateOnly date, string location, int startTime, int endTime, string description)

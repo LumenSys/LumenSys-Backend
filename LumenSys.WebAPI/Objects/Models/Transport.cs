@@ -23,7 +23,8 @@ namespace LumenSys.WebAPI.Objects.Models
         public string City { get; set; }
         [Column("uf")]
         public string Uf { get; set; }
-        public int DecasedPesronId { get; set; }
+
+        public int? DecasedPesronId { get; set; }
         public DeceasedPerson DeceasedPerson { get; set; } = null;
 
         public Transport () { }

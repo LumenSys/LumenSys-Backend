@@ -18,6 +18,11 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("description")]
         public string Description { get; set; }
 
+        public int TypeWakeId { get; set; }
+        public TypeWake TypeWake { get; set; }
+
+        public ICollection<DeceasedPerson> DeceasedPerson { get; set; } = new List<DeceasedPerson>();
+
         public Wake() { }
 
         public Wake(int id, DateOnly date, string location, int startTime, int endTime, string description)

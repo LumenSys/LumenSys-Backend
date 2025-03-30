@@ -24,7 +24,11 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("uf")]
         public string Uf { get; set; }
 
+        public int? DeceasedPersonId { get; set; }
+        public DeceasedPerson DeceasedPerson { get; set; } = null;
+
         public Transport () { }
+
         public Transport (int id, string name, DateOnly date, TimeOnly time, string street, string number, string neighborhood, string city, string uf) 
         {
             Id = id;
@@ -37,7 +41,6 @@ namespace LumenSys.WebAPI.Objects.Models
             City = city;
             Uf = uf;
         }
-
     }
 
 }

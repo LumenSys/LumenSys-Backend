@@ -24,7 +24,13 @@ namespace LumenSys.WebAPI.Objects.Models
 
         [Column("sex")]
         public SexType Sex { get; set; }
+        public Cremation? Cremation { get; set; }
 
+        public ICollection<Transport> Transport { get; } = new List<Transport>();
+        
+        public int? WakeId { get; set; }
+        public Wake? Wake { get; set; }
+        
         public DeceasedPerson() { }
 
         public DeceasedPerson(int id, string name, int age, DateOnly birthday, string deathcause, string nationality, MaritalStatus marital, SexType sex)
@@ -38,5 +44,6 @@ namespace LumenSys.WebAPI.Objects.Models
             Marital = marital;
             Sex = sex;
         }
+
     }
 }

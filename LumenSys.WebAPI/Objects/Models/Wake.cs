@@ -20,7 +20,7 @@ namespace LumenSys.WebAPI.Objects.Models
 
         public ICollection<TypeWake> TypeWake { get; } = new List<TypeWake>();
 
-        public int? DecasedPersonId { get; set; }
+        public int? DeceasedPersonId { get; set; }
         public DeceasedPerson DeceasedPerson { get; set; } = null;
 
         public Wake() { }

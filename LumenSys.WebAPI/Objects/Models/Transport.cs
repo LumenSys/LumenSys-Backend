@@ -24,7 +24,7 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("uf")]
         public string Uf { get; set; }
 
-        public int? DecasedPesronId { get; set; }
+        public int? DeceasedPersonId { get; set; }
         public DeceasedPerson DeceasedPerson { get; set; } = null;
 
         public Transport () { }

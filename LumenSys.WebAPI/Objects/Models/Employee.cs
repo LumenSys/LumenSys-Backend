@@ -23,6 +23,11 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("hirindate")]
         public DateOnly HirinDate { get; set; }
 
+        public int CompanyId { get; set; }
+        public Company company { get; set; } = null!;
+
+        public ICollection<Thanatopraxia> thanatopraxia { get; set; } = new List<Thanatopraxia>();
+
         public ICollection<User> Users { get; set; } = new List<User>();
 
         public Employee() { }  

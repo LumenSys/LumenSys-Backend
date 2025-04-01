@@ -14,6 +14,10 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("conditionbody")]
         public string ConditionBody { get; set; }
 
+        public DeceasedPerson? DeceasedPerson { get; set; }
+
+        public int? EmployeeId { get; set; }
+        public Employee? Employee { get; set; }
         public Thanatopraxia() { }
 
         public Thanatopraxia(string id, DateOnly date, string description, string conditionBody)

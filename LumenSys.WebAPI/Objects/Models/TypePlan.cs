@@ -2,8 +2,8 @@
 
 namespace LumenSys.WebAPI.Objects.Models
 {
-    [Table("type_wake")]
-    public class TypeWake
+    [Table("typeplan")]
+    public class TypePlan
     {
         [Column("id")]
         public int Id { get; set; }
@@ -12,11 +12,9 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("description")]
         public string Description { get; set; }
 
-        public ICollection<FuneralPlans> FuneralPlans { get; set; } = new List<FuneralPlans>();
+        public TypePlan() { }
 
-        public TypeWake() { }
-
-        public TypeWake(int id, string name, string description)
+        public TypePlan(int id, string name, string description)
         {
             Id = id;
             Name = name;

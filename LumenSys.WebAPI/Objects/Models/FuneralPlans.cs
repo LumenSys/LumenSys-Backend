@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection.Metadata;
 
 namespace LumenSys.WebAPI.Objects.Models
 {
@@ -16,6 +17,9 @@ namespace LumenSys.WebAPI.Objects.Models
 
         [Column("monthlyvalue")]
         public double MonthlyValue { get; set; }
+
+        public int? TypeWakeId { get; set; } 
+        public TypeWake? TypeWake { get; set; }
 
         public ICollection<Client> client { get; set; } = new List<Client>();
 

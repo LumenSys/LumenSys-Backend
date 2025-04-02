@@ -28,7 +28,7 @@ namespace LumenSys.WebAPI.Objects.Data.Builders
                 .HasMaxLength(50);
 
             modelBuilder.Entity<Employee>()
-                .Property(e => e.HirinDate)
+                .Property(e => e.HireDate)
                 .IsRequired();
         }
     }

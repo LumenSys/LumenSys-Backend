@@ -34,6 +34,11 @@ namespace LumenSys.WebAPI.Objects.Models
 
         [Column("Uf")]
         public string Uf { get; set; }
+        
+        public ICollection<Dependent> dependent { get; set; } = new List<Dependent>();
+
+        public int? FuneralPlansId { get; set; }
+        public FuneralPlans? FuneralPlans { get; set; }
 
         public Client() { }
 

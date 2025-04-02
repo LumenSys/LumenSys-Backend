@@ -12,6 +12,8 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("description")]
         public string Description { get; set; }
 
+        public ICollection<FuneralPlans> FuneralPlan { get; set; }
+
         public TypePlan() { }
 
         public TypePlan(int id, string name, string description)

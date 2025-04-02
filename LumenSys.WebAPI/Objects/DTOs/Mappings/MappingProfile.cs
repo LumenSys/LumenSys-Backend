@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LumenSys.WebAPI.Objects.Dtos;
+using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.WebAPI.Objects.Models;
 
 namespace LumenSys.WebAPI.Objects.DTOs.Mappings
@@ -9,6 +10,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Mappings
         public MappingProfile() 
         {
             CreateMap<EmployeeDTO, Employee>().ReverseMap();
+            CreateMap<WakeDTO, Wake>().ReverseMap();
         }
     }
 }

@@ -37,6 +37,9 @@ namespace LumenSys.WebAPI.Objects.Models
         
         public ICollection<Dependent> dependent { get; set; } = new List<Dependent>();
 
+        public int? FuneralPlansId { get; set; }
+        public FuneralPlans? FuneralPlans { get; set; }
+
         public Client() { }
 
         public Client(int id, string name, string cpf, string phone, string email, string street, string number, string neighborhood, string city, string uf)

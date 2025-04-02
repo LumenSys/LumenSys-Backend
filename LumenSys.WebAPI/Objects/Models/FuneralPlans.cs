@@ -17,6 +17,8 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("monthlyvalue")]
         public double MonthlyValue { get; set; }
 
+        public ICollection<Client> client { get; set; } = new List<Client>();
+
         public FuneralPlans() { }
 
         public FuneralPlans(int id, string name, string description, double monthlyvalue)

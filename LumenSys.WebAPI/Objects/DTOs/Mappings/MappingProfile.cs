@@ -12,6 +12,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Mappings
             CreateMap<EmployeeDTO, Employee>().ReverseMap();
             CreateMap<WakeDTO, Wake>().ReverseMap();
             CreateMap<TypeWakeDTO, TypeWake>().ReverseMap();
+            CreateMap<CremationDTO, Cremation>().ReverseMap();
         }
     }
 }

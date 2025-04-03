@@ -20,8 +20,8 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("email")]
         public string Email { get; set; }
 
-        [Column("hirindate")]
-        public DateOnly HirinDate { get; set; }
+        [Column("hiredate")]
+        public DateOnly HireDate { get; set; }
 
         public int CompanyId { get; set; }
         public Company company { get; set; } = null!;
@@ -32,14 +32,14 @@ namespace LumenSys.WebAPI.Objects.Models
 
         public Employee() { }  
         
-        public Employee(int id, string name, string cpf, string phone, string email, DateOnly hirindate)
+        public Employee(int id, string name, string cpf, string phone, string email, DateOnly hiredate)
         {
             Id = id;
             Name = name;
             Cpf = cpf;
             Phone = phone;
             Email = email;
-            HirinDate = hirindate;
+            HireDate = hiredate;
         }
     }
 }

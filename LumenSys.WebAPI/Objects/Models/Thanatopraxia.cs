@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection.Metadata;
 
 namespace LumenSys.WebAPI.Objects.Models
 {
@@ -13,11 +14,10 @@ namespace LumenSys.WebAPI.Objects.Models
         public string Description { get; set; }
         [Column("conditionbody")]
         public string ConditionBody { get; set; }
-
-        public DeceasedPerson? DeceasedPerson { get; set; }
-
         public int? EmployeeId { get; set; }
         public Employee? Employee { get; set; }
+        public int DeceasedPerson { get; set; }
+        public DeceasedPerson deceasedPerson { get; set; } = null!;
         public Thanatopraxia() { }
 
         public Thanatopraxia(string id, DateOnly date, string description, string conditionBody)

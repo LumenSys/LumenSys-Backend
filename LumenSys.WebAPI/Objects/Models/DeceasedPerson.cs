@@ -36,7 +36,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public int? ClientId { get; set; } 
         public Client? Client { get; set; }
 
-        public Thanatopraxia? thanatopraxia { get; set; }
+        public Thanatopraxia Thanatopraxia { get; set; }
 
         public DeceasedPerson() { }
 

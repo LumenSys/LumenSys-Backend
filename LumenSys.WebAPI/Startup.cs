@@ -86,10 +86,11 @@ namespace LumenSys.WebAPI
 
             //Scoped Repositories and Interfaces repo
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IUserService, UserService>();
 
             //Scoped Repositories and Interfaces repo
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

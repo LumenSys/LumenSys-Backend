@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LumenSys.WebAPI.Objects.Models
 {
@@ -24,6 +25,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public DateOnly HireDate { get; set; }
 
         public int CompanyId { get; set; }
+        [JsonIgnore]
         public Company company { get; set; } = null!;
 
         public ICollection<Thanatopraxia> thanatopraxia { get; set; } = new List<Thanatopraxia>();

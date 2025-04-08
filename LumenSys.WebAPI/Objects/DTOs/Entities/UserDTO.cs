@@ -9,8 +9,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public UserStats Stats { get; set; }
-        public TypeEmployee TypeEmployee { get; set; }
-        public int EmployeeId { get; set; }
+        public TypeEmployee TypeEmployee { get; set; }  
 
     }
 }

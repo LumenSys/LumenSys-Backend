@@ -2,7 +2,7 @@
 using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Services.Interfaces;
 
-namespace SeniorCareManager.WebAPI.Services.Entities;
+namespace LumenSys.WebAPI.Services.Entities;
 
 public class GenericService<T> : IGenericService<T> where T : class
 {

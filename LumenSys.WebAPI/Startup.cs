@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using LumenSys.WebAPI.Services.Entities;
+
+
 
 namespace LumenSys.WebAPI
 {
@@ -84,8 +87,15 @@ namespace LumenSys.WebAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //Scoped Repositories and Interfaces repo
+            services.AddScoped<IEmployeeService, EmployeeService>();
+
+            services.AddScoped<IFuneralPlansService, FuneralPlansService>();
+
 
             //Scoped Repositories and Interfaces repo
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            services.AddScoped<IFuneralPlansRepository, FuneralPlansRepository>();
 
         }
 

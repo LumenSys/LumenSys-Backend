@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LumenSys.WebAPI.Services.Entities;
 
+
+
 namespace LumenSys.WebAPI
 {
     public class Startup
@@ -88,9 +90,14 @@ namespace LumenSys.WebAPI
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ICompanyService, CompanyService>();
 
+            services.AddScoped<IFuneralPlansService, FuneralPlansService>();
+
+
             //Scoped Repositories and Interfaces repo
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
+
+            services.AddScoped<IFuneralPlansRepository, FuneralPlansRepository>();
 
         }
 

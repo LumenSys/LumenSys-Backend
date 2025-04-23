@@ -89,15 +89,19 @@ namespace LumenSys.WebAPI
             //Scoped Repositories and Interfaces repo
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<ICompanyService, CompanyService>();
-
             services.AddScoped<IFuneralPlansService, FuneralPlansService>();
-
-
+            services.AddScoped<IWakeService, WakeService>();
+          
             //Scoped Repositories and Interfaces repo
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
-
             services.AddScoped<IFuneralPlansRepository, FuneralPlansRepository>();
+            services.AddScoped<IWakeRepository, WakeRepository>();
+
+            //Scoped Repositories and Interfaces para Wake
+
+
+
 
         }
 

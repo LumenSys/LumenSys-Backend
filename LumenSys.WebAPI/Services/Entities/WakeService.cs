@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using LumenSys.WebAPI.Data.Interfaces;
+using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
 
 namespace LumenSys.WebAPI.Services.Entities
 {
-    public class WakeService : GenericService<Wake>, IWakeService
+    public class WakeService : GenericService<Wake, WakeDTO>, IWakeService
     {
         private readonly IWakeRepository _wakeRepository;
         private readonly IMapper _mapper;

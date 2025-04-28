@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace LumenSys.WebAPI.Services.Entities
 {
-    public class CompanyService : GenericService<Company>, ICompanyService
+    public class CompanyService : GenericService<Company, CompanyDTO>, ICompanyService
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;

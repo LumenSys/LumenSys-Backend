@@ -1,8 +1,9 @@
-﻿using LumenSys.WebAPI.Objects.Models;
+﻿using LumenSys.WebAPI.Objects.DTOs.Entities;
+using LumenSys.WebAPI.Objects.Models;
 
 namespace LumenSys.WebAPI.Services.Interfaces
 {
-    public interface IWakeService : IGenericService<Wake>
+    public interface IWakeService : IGenericService<Wake, WakeDTO>
     {
 
     }

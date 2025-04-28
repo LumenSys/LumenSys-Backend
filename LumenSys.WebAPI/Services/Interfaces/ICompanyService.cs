@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace LumenSys.WebAPI.Services.Interfaces
 {
-    public interface ICompanyService : IGenericService<Company>
+    public interface ICompanyService : IGenericService<Company, CompanyDTO>
     {
 
     }

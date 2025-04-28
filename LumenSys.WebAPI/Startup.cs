@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using LumenSys.WebAPI.Services.Entities;
 
+
+
 namespace LumenSys.WebAPI
 {
     public class Startup
@@ -85,12 +87,20 @@ namespace LumenSys.WebAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //Scoped Repositories and Interfaces repo
-            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<IFuneralPlansService, FuneralPlansService>();
+            services.AddScoped<IWakeService, WakeService>();
             services.AddScoped<IUserService, UserService>();
-
+             services.AddScoped<IEmployeeService, EmployeeService>();
+          
             //Scoped Repositories and Interfaces repo
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IFuneralPlansRepository, FuneralPlansRepository>();
+            services.AddScoped<IWakeRepository, WakeRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

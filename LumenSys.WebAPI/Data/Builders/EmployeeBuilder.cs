@@ -1,7 +1,7 @@
 ﻿using LumenSys.WebAPI.Objects.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LumenSys.WebAPI.Objects.Data.Builders
+namespace LumenSys.WebAPI.Data.Builders
 {
     public class EmployeeBuilder
     {

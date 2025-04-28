@@ -1,7 +1,7 @@
 ﻿using LumenSys.WebAPI.Objects.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LumenSys.WebAPI.Objects.Data.Builders
+namespace LumenSys.WebAPI.Data.Builders
 {
     public class WakeBuilder
     {
@@ -10,9 +10,13 @@ namespace LumenSys.WebAPI.Objects.Data.Builders
             modelBuilder.Entity<Wake>().HasKey(w => w.Id);
 
             modelBuilder.Entity<Wake>()
-                .Property(w => w.DeceasedName)
+                .Property(w => w.Date)
+                .IsRequired();
+
+            modelBuilder.Entity<Wake>()
+                .Property(w => w.Location)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(150);
 
             modelBuilder.Entity<Wake>()
                 .Property(w => w.StartTime)
@@ -22,10 +26,6 @@ namespace LumenSys.WebAPI.Objects.Data.Builders
                 .Property(w => w.EndTime)
                 .IsRequired();
 
-            modelBuilder.Entity<Wake>()
-                .Property(w => w.Location)
-                .IsRequired()
-                .HasMaxLength(150);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
+using LumenSys.WebAPI.Objects.Dtos;
 
 namespace LumenSys.WebAPI.Controllers
 {
@@ -32,7 +33,7 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Employee employee)
+        public async Task<IActionResult> Post(EmployeeDTO employee)
         {
             try
             {
@@ -46,7 +47,7 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Employee employee)
+        public async Task<IActionResult> Put(int id, EmployeeDTO employee)
         {
             try
             {
@@ -64,7 +65,7 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
-                await _employeeService.Remove(id);
+                await _employeeService.Delete(id);
             }
             catch (Exception)
             {

@@ -1,10 +1,11 @@
-﻿using LumenSys.WebAPI.Objects.Models;
+﻿using LumenSys.WebAPI.Objects.Dtos;
+using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
 using System.Threading;
 
 namespace LumenSys.WebAPI.Services.Interfaces
 {
-    public interface IEmployeeService : IGenericService<Employee>
+    public interface IEmployeeService : IGenericService<Employee, EmployeeDTO>
     {
 
     }

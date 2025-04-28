@@ -3,6 +3,7 @@ using LumenSys.WebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Data.Repositories;
+using LumenSys.WebAPI.Objects.DTOs.Entities;
 
 
 namespace LumenSys.WebAPI.Controllers
@@ -31,7 +32,7 @@ namespace LumenSys.WebAPI.Controllers
             return Ok(funeralPlan);
         }
         [HttpPost]
-        public async Task<IActionResult> Post(FuneralPlans funeralPlan)
+        public async Task<IActionResult> Post(FuneralPlansDTO funeralPlan)
         {
             try
             {
@@ -44,7 +45,7 @@ namespace LumenSys.WebAPI.Controllers
             return Ok(funeralPlan);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, FuneralPlans funeralPlan)
+        public async Task<IActionResult> Put(int id, FuneralPlansDTO funeralPlan)
         {
             try
             {

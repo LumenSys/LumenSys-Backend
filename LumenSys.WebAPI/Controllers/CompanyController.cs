@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
+using LumenSys.WebAPI.Objects.DTOs.Entities;
 
 namespace LumenSys.WebAPI.Controllers
 {
@@ -33,7 +34,7 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Company company)
+        public async Task<IActionResult> Post(CompanyDTO company)
         {
             try
             {
@@ -47,7 +48,7 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Company company)
+        public async Task<IActionResult> Put(int id, CompanyDTO company)
         {
             try
             {
@@ -65,7 +66,7 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
-                await _companyService.Remove(id);
+                await _companyService.Delete(id);
                 return Ok("Empresa removida com sucesso.");
             }
             catch (Exception ex)

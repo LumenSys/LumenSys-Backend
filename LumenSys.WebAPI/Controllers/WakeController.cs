@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
+using LumenSys.WebAPI.Objects.DTOs.Entities;
 
 namespace LumenSys.WebAPI.Controllers
 {
@@ -32,7 +33,7 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Wake wake)
+        public async Task<IActionResult> Post(WakeDTO wake)
         {
             try
             {
@@ -46,7 +47,7 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Wake wake)
+        public async Task<IActionResult> Put(int id, WakeDTO wake)
         {
             try
             {
@@ -64,7 +65,7 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
-                await _wakeService.Remove(id);
+                await _wakeService.Delete(id);
                 return Ok("Velório removido com sucesso");
             }
             catch (Exception)

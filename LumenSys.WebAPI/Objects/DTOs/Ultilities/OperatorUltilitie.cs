@@ -7,6 +7,15 @@ namespace LumenSys.Objects.Ultilities
 {
     public static class OperatorUltilitie
     {
+        public static string GenerateHash(this string password)
+        {
+            if (string.IsNullOrEmpty(password)) return "";
+
+            var bytes = Encoding.UTF8.GetBytes(password);
+            var hash = SHA256.HashData(bytes);
+            return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant(); 
+        }
+
         public static string RemoveDiacritics(this string text)
         {
             if (string.IsNullOrWhiteSpace(text))
@@ -34,7 +43,10 @@ namespace LumenSys.Objects.Ultilities
 
             return new string(text.Where(char.IsDigit).ToArray());
         }
-
+        public static bool CompareString(string str1, string str2)
+        {
+            return string.Equals(str1.RemoveDiacritics(), str2.RemoveDiacritics(), StringComparison.OrdinalIgnoreCase);
+        }
         public static string FormatForCurrency(double amount)
         {
             // Converte decimal para string com exatamente duas casas decimais
@@ -52,22 +64,36 @@ namespace LumenSys.Objects.Ultilities
             return $"R$ {integerPart},{decimalPart}";
         }
 
-
-        public static string HashPassword(string password)
+        public static bool CheckValidPhone(string phone)
         {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                // Converte a string para um array de bytes
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+            int phoneLength = OperatorUltilitie.ExtractNumbers(phone).Length;
+            return phoneLength > 9 && phoneLength < 12;
+        }
 
-                // Converte o array de bytes de volta para uma string hexadecimal
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
+        public static int CheckValidEmail(string email)
+        {
+            // Verifica se há um único "@" e que não está no início ou no final
+            int atCount = email.Count(c => c == '@');
+            bool hasTextBeforeAt = email.IndexOf('@') > 0;
+            bool hasTextAfterAt = email.LastIndexOf('@') < email.Length - 1;
+
+            // Verifica se após o "@" há um "." e se não termina com "."
+            int atPosition = email.IndexOf('@');
+            bool hasDotAfterAt = atPosition >= 0 && email.IndexOf('.', atPosition) > atPosition;
+            bool endsWithDot = email.EndsWith('.');
+
+            // Verificações
+            if (atCount != 1) return -1; // E-mail inteiro inválido
+
+            else if (!hasTextBeforeAt) return -1; // Parte antes do @ inválida
+
+            else if (!hasTextAfterAt) return -2; // Domínio inválido
+
+            else if (!hasDotAfterAt) return -2; // Domínio inválido
+
+            else if (endsWithDot) return -1; // E-mail inteiro inválido
+
+            return 1; // E-mail válido
         }
 
     }

@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using LumenSys.WebAPI.Data.Interfaces;
+using LumenSys.WebAPI.Objects.Dtos;
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
 using System.Threading;
 
 namespace LumenSys.WebAPI.Services.Entities
 {
-    public class EmployeeService : GenericService<Employee>, IEmployeeService
+    public class EmployeeService : GenericService<Employee, EmployeeDTO>, IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IMapper _mapper;

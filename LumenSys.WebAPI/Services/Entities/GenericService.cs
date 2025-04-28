@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Components.Forms;
+using System;
 
 namespace LumenSys.WebAPI.Services.Entities;
 
-public class GenericService<T> : IGenericService<T> where T : class
+public class GenericService<T, Dto>: IGenericService<T, Dto> where T : class where Dto : class
 {
     private readonly IGenericRepository<T> _repository;
     private readonly IMapper _mapper;
@@ -22,46 +24,35 @@ public class GenericService<T> : IGenericService<T> where T : class
     public GenericService(IProductGroupRepository repository, IMapper mapper)
     {
         this.repository = repository;
-        this.mapper = mapper;
+        this.mapper = mapper;   
     }
     */
-    public async Task<IEnumerable<T>> GetAll()
+    public async Task<IEnumerable<Dto>> GetAll()
     {
         var entities = await _repository.Get();
-        return _mapper.Map<IEnumerable<T>>(entities);
+        return _mapper.Map<IEnumerable<Dto>>(entities);
     }
-
-    public async Task<T> GetById(int id)
+    public async Task<Dto> GetById(int id)
     {
         var entity = await _repository.GetById(id);
-        return _mapper.Map<T>(entity);
+        return _mapper.Map<Dto>(entity);
     }
-
-    public async Task Create(T entity)
+    public async Task Create(Dto dto)
     {
+        var entity = _mapper.Map<T>(dto);
         await _repository.Add(entity);
     }
 
-    public async Task Update(T entity, int id)
+    public async Task Update(Dto dto, int id)
     {
-        var existingEntity = await _repository.GetById(id); // Supondo que sua entidade tenha um campo Id
-
-        if (existingEntity == null)
-        {
-            throw new KeyNotFoundException($"Entity with id {id} not found.");
-        }
-
+        var existing = await _repository.GetById(id);
+        var entity = _mapper.Map<T>(dto);
         await _repository.Update(entity);
     }
 
-    public async Task Remove(int id)
+    public async Task Delete(int id)
     {
         var entity = await _repository.GetById(id);
-        if (entity == null)
-        {
-            throw new KeyNotFoundException($"Entidade com id: {id} não encontrado");
-        }
-
         await _repository.Remove(entity);
     }
 }

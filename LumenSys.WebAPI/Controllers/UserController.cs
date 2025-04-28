@@ -1,91 +1,118 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using LumenSys.WebAPI.Objects;
-using LumenSys.WebAPI.Services.Interfaces;
+﻿using api.Authentication;
+using LumenSys.Objects.Contracts;
 using LumenSys.Objects.Ultilities;
+using LumenSys.WebAPI.Objects;
+using LumenSys.WebAPI.Objects.DTOs.Entities;
+using LumenSys.WebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace LumenSys.WebAPI.Controllers
+namespace api.Controllers
 {
+    [Route("api/user")]
     [ApiController]
-    [Route("api/v1/[controller]")]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
         public UserController(IUserService userService)
         {
-            this._userService = userService;
+            _userService = userService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<List<UserDTO>>> GetAll()
         {
             var users = await _userService.GetAll();
             return Ok(users);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{id}", Name = "GetUser")]
+        public async Task<ActionResult<User>> GetById(int id)
         {
             var user = await _userService.GetById(id);
             if (user == null)
-                return NotFound("Usuário não encontrado");
+                return NotFound("User not found");
             return Ok(user);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(User user)
+        public async Task<ActionResult> Post(UserDTO userDTO)
         {
-            try
+            if (OperatorUltilitie.CheckValidEmail(userDTO.Email) == -1 || OperatorUltilitie.CheckValidEmail(userDTO.Email) == -2)
             {
-                var emailValidation = ValidatorUltilitie.CheckValidEmail(user.Email);
-                if (emailValidation != 1)
-                    return BadRequest("E-mail inválido");
-
-                if (!ValidatorUltilitie.CheckValidPhone(user.Employee?.Phone ?? ""))
-                    return BadRequest("Telefone inválido");
-
-                await _userService.Create(user);
-                return Ok(user);
+                return BadRequest("email incorreto");
             }
-            catch (Exception ex)
+
+            var usersDTO = await _userService.GetAll();
+            if (CheckDuplicates(usersDTO, userDTO))
             {
-                return StatusCode(500, $"Erro ao inserir usuário: {ex.Message}");
+                return BadRequest("Esse e-mail já está em uso");
             }
+
+            await _userService.Create(userDTO);
+
+            return Ok();
+
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, User user)
+        [HttpPost("login")]
+        public async Task<ActionResult> Login(Login login)
         {
-            try
-            {
-                var emailValidation = ValidatorUltilitie.CheckValidEmail(user.Email);
-                if (emailValidation != 1)
-                    return BadRequest("E-mail inválido");
+            if (login == null)
+                return BadRequest("Invalid data");
 
-                if (!ValidatorUltilitie.CheckValidPhone(user.Employee?.Phone ?? ""))
-                    return BadRequest("Telefone inválido");
+            var userDTO = await _userService.Login(login);
+            if (userDTO == null)
+                return Unauthorized("Invalid email or password");
 
-                await _userService.Update(user, id);
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Erro ao atualizar usuário: {ex.Message}");
-            }
+            var tokenGenerator = new Token();
+            var token = tokenGenerator.GenerateToken(userDTO.Email);
+            return Ok(new { token });
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPut]
+        public async Task<ActionResult<UserDTO>> Put(int id, UserDTO userDTO)
         {
+            if (OperatorUltilitie.CheckValidEmail(userDTO.Email) == -1 || OperatorUltilitie.CheckValidEmail(userDTO.Email) == -2)
+            {
+                return BadRequest("Formato incorreto de email ou telefone");
+            }
+
+            var usersDTO = await _userService.GetAll();
+
+            if (CheckDuplicates(usersDTO, userDTO))
+            {
+                return BadRequest("Esse e-mail já está em uso");
+            }
+
             try
             {
-                await _userService.Remove(id);
-                return Ok("Usuário removido com sucesso");
+                await _userService.Update(userDTO, id);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao remover usuário: {ex.Message}");
+                return StatusCode(500, "Ocorreu um erro ao tentar atualizar os dados do usuário" + ex.Message);
             }
+            return Ok(userDTO);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var user = await _userService.GetById(id);
+            if (user == null)
+                return NotFound("User not found");
+
+            await _userService.Delete(id);
+            return NoContent();
+        }
+
+        private static bool CheckDuplicates(IEnumerable<UserDTO> users, UserDTO dto)
+        {
+            return users.Any(u => u.Id != dto.Id && OperatorUltilitie.CompareString(u.Email, dto.Email));
         }
     }
 }

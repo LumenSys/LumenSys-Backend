@@ -2,6 +2,7 @@
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
 using LumenSys.WebAPI.Objects.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LumenSys.WebAPI.Controllers
 {
@@ -17,6 +18,7 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMINISTRATOR, MANAGER")]
         public async Task<IActionResult> GetAll()
         {
             var employees = await _employeeService.GetAll();

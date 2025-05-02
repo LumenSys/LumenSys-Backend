@@ -24,9 +24,9 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("hiredate")]
         public DateOnly HireDate { get; set; }
 
-        public int CompanyId { get; set; }
-        [JsonIgnore]
-        public Company company { get; set; } = null!;
+        public int? CompanyId { get; set; }
+
+        public Company? Company { get; set; }
 
         public ICollection<Thanatopraxia> thanatopraxia { get; set; } = new List<Thanatopraxia>();
 

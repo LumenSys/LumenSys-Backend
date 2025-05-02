@@ -30,6 +30,7 @@ namespace LumenSys.WebAPI.Data.Builders
             modelBuilder.Entity<Employee>()
                 .Property(e => e.HireDate)
                 .IsRequired();
+
         }
     }
 }

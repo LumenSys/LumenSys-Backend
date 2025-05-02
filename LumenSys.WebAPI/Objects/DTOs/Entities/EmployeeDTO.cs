@@ -8,5 +8,6 @@
         public string Phone { get; set; }
         public string Email { get; set; }
         public DateOnly HireDate { get; set; }
+        public int? CompanyId { get; set; }
     }
 }

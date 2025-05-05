@@ -1,6 +1,5 @@
-﻿    using api.Authentication;
-    using LumenSys.Objects.Contracts;
-    using LumenSys.Objects.Ultilities;
+﻿using LumenSys.Objects.Ultilities;
+using LumenSys.WebAPI.Authentication;
     using LumenSys.WebAPI.Objects;
     using LumenSys.WebAPI.Objects.DTOs.Entities;
     using LumenSys.WebAPI.Services.Interfaces;

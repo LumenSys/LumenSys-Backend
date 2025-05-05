@@ -1,5 +1,5 @@
-﻿namespace LumenSys.Objects.Contracts
-{
+﻿namespace LumenSys.WebAPI.Authentication
+{ 
     public class TokenSignatures
     {
         public string Issuer { get; } = "LumenSys API";

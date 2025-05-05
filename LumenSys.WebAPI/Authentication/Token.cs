@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 
-namespace LumenSys.Objects.Contracts
+namespace LumenSys.WebAPI.Authentication
 {
     public class Token
     {

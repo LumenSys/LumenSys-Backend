@@ -8,7 +8,6 @@ using LumenSys.Objects.Enums;
 namespace LumenSys.WebAPI.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/v1/[controller]")]
     public class EmployeeController : Controller
     {
@@ -20,7 +19,6 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(TypeEmployee = 1, 2)]
         public async Task<IActionResult> GetAll()
         {
             var employees = await _employeeService.GetAll();

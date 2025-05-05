@@ -7,7 +7,6 @@ using LumenSys.WebAPI.Objects.DTOs.Entities;
 namespace LumenSys.WebAPI.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/v1/[controller]")]
     public class CompanyController : Controller
     {

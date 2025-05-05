@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LumenSys.WebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250502011103_database")]
+    [Migration("20250505141723_database")]
     partial class database
     {
         /// <inheritdoc />

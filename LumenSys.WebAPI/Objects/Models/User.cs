@@ -13,22 +13,26 @@ public class User
     public string Email { get; set; }
     [Column("password")]
     public string Password { get; set; }
+    [Column("cpf")]
+    public string Cpf { get; set; }
+    [Column("phone")]
+    public string Phone { get; set; }
     [Column("typeemployee")]
     public TypeEmployee TypeEmployee { get; set; }
     [Column("userstatus")]
     public UserStats UserStatus { get; set; }
-
-    public int EmployeeId  { get; set; }
-
-    public Employee Employee { get; set; } = null!;
+    [Column("hiredate")]
+    public DateOnly HireDate { get; set; }
 
     public User () { }
 
-    public User (int id, string email, string password, TypeEmployee typeemployee, UserStats userstatus) 
+    public User (int id, string email, string password, string cpf, string phone, TypeEmployee typeemployee, UserStats userstatus) 
     {
         Id = id;
         Email = email;
         Password = password;
+        Cpf = cpf;
+        Phone = phone;
         TypeEmployee = typeemployee;
         UserStatus = userstatus;
     }

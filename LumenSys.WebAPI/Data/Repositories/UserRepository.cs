@@ -5,7 +5,7 @@ using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Objects;
 using Microsoft.EntityFrameworkCore;
-using LumenSys.WebAPI.Authentication;
+using api.Authentication;
 
 namespace LumenSys.WebAPI.Data.Repositories
 {

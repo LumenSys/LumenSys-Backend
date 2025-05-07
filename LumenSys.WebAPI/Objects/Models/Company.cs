@@ -35,7 +35,7 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("uf")]
         public string UF { get; set; } 
 
-        public ICollection<Employee> employee { get; set; } = new List<Employee>();
+        public ICollection<User> User { get; set; } = new List<User>();
 
         public Company() { }
 

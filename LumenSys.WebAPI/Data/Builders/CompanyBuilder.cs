@@ -48,10 +48,9 @@ namespace LumenSys.WebAPI.Data.Builders
                 .HasMaxLength(2);
 
             modelBuilder.Entity<Company>()
-                .HasMany(c => c.employee)          
-                .WithOne(e => e.Company)         
-                .HasForeignKey(e => e.CompanyId)   
-                .IsRequired(false);
+                .HasMany(c => c.User)
+                .WithOne(e => e.company)
+                .HasForeignKey(e => e.CompanyId);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace LumenSys.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class CompanyController : Controller
+    public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
 

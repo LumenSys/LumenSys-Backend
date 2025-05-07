@@ -1,4 +1,5 @@
 ﻿using LumenSys.WebAPI.Objects;
+using LumenSys.WebAPI.Objects.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LumenSys.WebAPI.Data.Builders

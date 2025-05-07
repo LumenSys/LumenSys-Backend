@@ -1,4 +1,4 @@
-﻿using LumenSys.WebAPI.Authentication;
+﻿using api.Authentication;
 using AutoMapper;
 using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Objects;

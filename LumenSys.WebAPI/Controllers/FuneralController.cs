@@ -2,6 +2,7 @@
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
+using LumenSys.WebAPI.Services.Entities;
 
 namespace LumenSys.WebAPI.Controllers
 {
@@ -9,36 +10,38 @@ namespace LumenSys.WebAPI.Controllers
     [Route("api/v1/[controller]")]
     public class FuneralController : ControllerBase
     {
-        private readonly IFuneralService _wakeService;
+        private readonly IFuneralService _funeralService;
 
-        public FuneralController(IFuneralService wakeService)
+        public FuneralController(IFuneralService funeralService)
         {
-            _wakeService = wakeService;
+            _funeralService = funeralService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var wakes = await _wakeService.GetAll();
-            return Ok(wakes);
+            var funerals = await _funeralService.GetAll();
+            return Ok(funerals);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var wake = await _wakeService.GetById(id);
-            if (wake == null)
+            var funeral = await _funeralService.GetById(id);
+            if (funeral == null)
                 return NotFound("Velório não encontrado");
-            return Ok(wake);
+            return Ok(funeral);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(FuneralDTO wake)
+        public async Task<IActionResult> Post(FuneralDTO funeral)
         {
+            if (string.IsNullOrEmpty(funeral.Location))
+                return BadRequest("Erro na localização");
             try
             {
-                await _wakeService.Create(wake);
-                return Ok(wake);
+                await _funeralService.Create(funeral);
+                return Ok(funeral);
             }
             catch (Exception)
             {
@@ -47,12 +50,14 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, FuneralDTO wake)
+        public async Task<IActionResult> Put(int id, FuneralDTO funeral)
         {
+            if (string.IsNullOrEmpty(funeral.Location))
+                return BadRequest("Erro na localização");
             try
             {
-                await _wakeService.Update(wake, id);
-                return Ok(wake);
+                await _funeralService.Update(funeral, id);
+                return Ok(funeral);
             }
             catch (Exception ex)
             {
@@ -65,7 +70,7 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
-                await _wakeService.Delete(id);
+                await _funeralService.Delete(id);
                 return Ok("Velório removido com sucesso");
             }
             catch (Exception)

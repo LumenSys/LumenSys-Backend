@@ -49,7 +49,7 @@ namespace LumenSys.WebAPI.Data.Builders
 
             modelBuilder.Entity<Company>()
                 .HasMany(c => c.User)
-                .WithOne(e => e.company)
+                .WithOne(e => e.Company)
                 .HasForeignKey(e => e.CompanyId);
         }
     }

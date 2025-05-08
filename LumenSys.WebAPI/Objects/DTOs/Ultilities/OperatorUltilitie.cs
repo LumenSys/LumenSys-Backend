@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -31,6 +32,7 @@ namespace LumenSys.Objects.Ultilities
                 {
                     stringBuilder.Append(c);
                 }
+                
             }
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
@@ -49,18 +51,14 @@ namespace LumenSys.Objects.Ultilities
         }
         public static string FormatForCurrency(double amount)
         {
-            // Converte decimal para string com exatamente duas casas decimais
             string formattedAmount = amount.ToString("F2", CultureInfo.InvariantCulture);
 
-            // Divide o número em parte inteira e parte decimal
             string[] parts = formattedAmount.Split('.');
             string integerPart = parts[0];
             string decimalPart = parts.Length > 1 ? parts[1].PadRight(2, '0') : "00";
 
-            // Adiciona separadores de milhar à parte inteira
             integerPart = Regex.Replace(integerPart, @"(\d)(?=(\d{3})+(?!\d))", "$1.");
 
-            // Retorna a string formatada com espaço
             return $"R$ {integerPart},{decimalPart}";
         }
 

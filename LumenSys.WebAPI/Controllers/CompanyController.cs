@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
+using LumenSys.Objects.Ultilities;
+using LumenSys.WebAPI.Services.Entities;
 
 namespace LumenSys.WebAPI.Controllers
 {
@@ -36,6 +38,11 @@ namespace LumenSys.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CompanyDTO company)
         {
+            if (!ValidateCompany(company))
+                return BadRequest("Dados de usuário inválidos. Verifique os dados.");
+            var companys = await _companyService.GetAll();
+            if (CheckDuplicates(companys, company))
+                return BadRequest("O e-mail ou telefone já está em uso.");
             try
             {
                 await _companyService.Create(company);
@@ -50,6 +57,11 @@ namespace LumenSys.WebAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, CompanyDTO company)
         {
+            if (!ValidateCompany(company))
+                return BadRequest("Dados de usuário inválidos. Verifique os dados.");
+            var companys = await _companyService.GetAll();
+            if (CheckDuplicates(companys, company))
+                return BadRequest("O e-mail ou telefone já está em uso.");
             try
             {
                 await _companyService.Update(company, id);
@@ -73,6 +85,30 @@ namespace LumenSys.WebAPI.Controllers
             {
                 return StatusCode(500, "Erro ao remover empresa: " + ex.Message);
             }
+        }
+        private static bool CheckDuplicates(IEnumerable<CompanyDTO> users, CompanyDTO dto)
+        {
+            return users.Any
+                (u => u.Id != dto.Id &&
+                    (
+                        OperatorUltilitie.CompareString(u.Email, dto.Email) || OperatorUltilitie.CompareString(u.Phone.ExtractNumbers(), dto.Phone.ExtractNumbers())
+                    )
+                );
+        }
+        private static bool ValidateCompany(CompanyDTO dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Name))
+                return false;
+            var cpfNumbers = dto.CpfCnpj.ExtractNumbers();
+            if (cpfNumbers.Length != 11)
+                return false;
+            var emailStatus = OperatorUltilitie.CheckValidEmail(dto.Email);
+            if (emailStatus != 1)
+                return false;
+            if (!OperatorUltilitie.CheckValidPhone(dto.Phone))
+                return false;
+
+            return true;
         }
     }
 }

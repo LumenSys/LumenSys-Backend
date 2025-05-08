@@ -5,7 +5,6 @@ using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Data.Repositories;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
 
-
 namespace LumenSys.WebAPI.Controllers
 {
     [ApiController]
@@ -28,32 +27,36 @@ namespace LumenSys.WebAPI.Controllers
         {
             var funeralPlan = await _funeralPlanService.GetById(id);
             if (funeralPlan == null)
-                return NotFound("Plano de sepultamento não encontrado");
+                return NotFound("Plano não encontrado");
             return Ok(funeralPlan);
         }
         [HttpPost]
         public async Task<IActionResult> Post(FuneralPlansDTO funeralPlan)
         {
+            if (string.IsNullOrEmpty(funeralPlan.Name) || string.IsNullOrEmpty(funeralPlan.Description))
+                return BadRequest("Erro no nome ou descrição");
             try
             {
                 await _funeralPlanService.Create(funeralPlan);
             }
             catch (Exception)
             {
-                return StatusCode(500, "Ocorreu um erro ao tentar inserir um novo plano de sepultamento");
+                return StatusCode(500, "Ocorreu um erro ao tentar inserir um novo plano");
             }
             return Ok(funeralPlan);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, FuneralPlansDTO funeralPlan)
         {
+            if (string.IsNullOrEmpty(funeralPlan.Name) || string.IsNullOrEmpty(funeralPlan.Description))
+                return BadRequest("Erro no nome ou descrição");
             try
             {
                 await _funeralPlanService.Update(funeralPlan, id);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao tentar atualizar os dados do plano de sepultamento: " + ex.Message);
+                return StatusCode(500, "Ocorreu um erro ao tentar atualizar os dados do plano: " + ex.Message);
             }
             return Ok(funeralPlan);
         }

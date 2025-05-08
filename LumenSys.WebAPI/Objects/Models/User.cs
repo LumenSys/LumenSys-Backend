@@ -27,6 +27,9 @@ public class User
     public DateOnly HireDate { get; set; }
     public int? CompanyId { get; set; }
     public Company? Company { get; set; }
+    public ICollection<Funeral> Funeral { get; set; } = new List<Funeral>();
+    public ICollection<Client> Client { get; set; } = new List<Client>();
+    public ICollection<Thanatopraxia> Thanatopraxia { get; set; } = new List<Thanatopraxia>();
     public User () { }
     
     public User (int id, string name, string email, string password, string cpf, string phone, DateOnly hiredate,TypeEmployee typeemployee, UserStats userstatus) 

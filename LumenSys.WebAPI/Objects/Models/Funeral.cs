@@ -17,6 +17,8 @@ namespace LumenSys.WebAPI.Objects.Models
         public int EndTime { get; set; }
         [Column("description")]
         public string Description { get; set; }
+        public int? UserId { get; set; }
+        public User? User { get; set; }
 
         public ICollection<DeceasedPerson> DeceasedPerson { get; set; } = new List<DeceasedPerson>();
 

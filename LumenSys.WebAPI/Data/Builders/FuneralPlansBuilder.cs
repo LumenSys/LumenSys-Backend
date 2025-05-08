@@ -21,10 +21,6 @@ namespace LumenSys.WebAPI.Data.Builders
                 .Property(fp => fp.MonthlyValue)
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
-
-            modelBuilder.Entity<FuneralPlans>()
-                .Property(fp => fp.TypePlanId)
-                .IsRequired();
         }
     }
 }

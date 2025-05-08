@@ -1,6 +1,5 @@
-﻿using api.Authentication;
-using LumenSys.Objects.Contracts;
-using LumenSys.Objects.Ultilities;
+﻿using LumenSys.Objects.Ultilities;
+using LumenSys.WebAPI.Authentication;
 using LumenSys.WebAPI.Objects;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.WebAPI.Services.Interfaces;
@@ -9,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace api.Controllers
+namespace LumenSys.WebAPI.Controllers
 {
     [Route("api/user")]
     [ApiController]

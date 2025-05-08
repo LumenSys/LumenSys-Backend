@@ -3,26 +3,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LumenSys.WebAPI.Data.Builders
 {
-    public class WakeBuilder
+    public class FuneralBuilder
     {
         public static void Build(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Wake>().HasKey(w => w.Id);
+            modelBuilder.Entity<Funeral>().HasKey(w => w.Id);
 
-            modelBuilder.Entity<Wake>()
+            modelBuilder.Entity<Funeral>()
                 .Property(w => w.Date)
                 .IsRequired();
 
-            modelBuilder.Entity<Wake>()
+            modelBuilder.Entity<Funeral>()
                 .Property(w => w.Location)
                 .IsRequired()
                 .HasMaxLength(150);
 
-            modelBuilder.Entity<Wake>()
+            modelBuilder.Entity<Funeral>()
                 .Property(w => w.StartTime)
                 .IsRequired();
 
-            modelBuilder.Entity<Wake>()
+            modelBuilder.Entity<Funeral>()
                 .Property(w => w.EndTime)
                 .IsRequired();
 

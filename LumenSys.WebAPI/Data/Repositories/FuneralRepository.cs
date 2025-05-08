@@ -4,11 +4,11 @@ using LumenSys.WebAPI.Data.Interfaces;
 
 namespace LumenSys.WebAPI.Data.Repositories
 {
-    public class WakeRepository : GenericRepository<Wake>, IWakeRepository
+    public class FuneralRepository : GenericRepository<Funeral>, IFuneralRepository
     {
         private readonly AppDbContext _context;
 
-        public WakeRepository(AppDbContext context) : base(context)
+        public FuneralRepository(AppDbContext context) : base(context)
         {
             _context = context;
         }

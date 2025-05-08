@@ -6,12 +6,12 @@ using LumenSys.WebAPI.Services.Interfaces;
 
 namespace LumenSys.WebAPI.Services.Entities
 {
-    public class WakeService : GenericService<Wake, WakeDTO>, IWakeService
+    public class FuneralService : GenericService<Funeral, FuneralDTO>, IFuneralService
     {
-        private readonly IWakeRepository _wakeRepository;
+        private readonly IFuneralRepository _wakeRepository;
         private readonly IMapper _mapper;
 
-        public WakeService(IWakeRepository repository, IMapper mapper) : base(repository, mapper)
+        public FuneralService(IFuneralRepository repository, IMapper mapper) : base(repository, mapper)
         {
             _wakeRepository = repository;
             _mapper = mapper;

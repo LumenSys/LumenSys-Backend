@@ -23,16 +23,18 @@ public class User
     public UserStats UserStatus { get; set; }
     [Column("hiredate")]
     public DateOnly HireDate { get; set; }
-
+    public int? CompanyId { get; set; }
+    public Company company { get; set; } = null!;
     public User () { }
-
-    public User (int id, string email, string password, string cpf, string phone, TypeEmployee typeemployee, UserStats userstatus) 
+    
+    public User (int id, string email, string password, string cpf, string phone, DateOnly hiredate,TypeEmployee typeemployee, UserStats userstatus) 
     {
         Id = id;
         Email = email;
         Password = password;
         Cpf = cpf;
         Phone = phone;
+        HireDate = hiredate;
         TypeEmployee = typeemployee;
         UserStatus = userstatus;
     }

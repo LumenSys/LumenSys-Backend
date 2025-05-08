@@ -10,15 +10,15 @@ namespace LumenSys.WebAPI.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Wake> Wakes { get; set; } 
-        public DbSet<Employee> FuneralPlans { get; set; }
+        public DbSet<Funeral> funerals { get; set; } 
+        public DbSet<FuneralPlans> FuneralPlans { get; set; }
         public DbSet<Company> Companies { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             UserBuilder.Build(modelBuilder);
-            WakeBuilder.Build(modelBuilder); 
+            FuneralBuilder.Build(modelBuilder); 
             FuneralPlansBuilder.Build(modelBuilder);
             CompanyBuilder.Build(modelBuilder);
         }

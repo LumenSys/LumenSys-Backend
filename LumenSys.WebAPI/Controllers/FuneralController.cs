@@ -7,11 +7,11 @@ namespace LumenSys.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class WakeController : ControllerBase
+    public class FuneralController : ControllerBase
     {
-        private readonly IWakeService _wakeService;
+        private readonly IFuneralService _wakeService;
 
-        public WakeController(IWakeService wakeService)
+        public FuneralController(IFuneralService wakeService)
         {
             _wakeService = wakeService;
         }
@@ -33,7 +33,7 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(WakeDTO wake)
+        public async Task<IActionResult> Post(FuneralDTO wake)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, WakeDTO wake)
+        public async Task<IActionResult> Put(int id, FuneralDTO wake)
         {
             try
             {

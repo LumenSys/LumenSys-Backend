@@ -28,10 +28,6 @@ namespace LumenSys.WebAPI.Data.Builders
                 .Property(u => u.UserStatus)
                 .IsRequired();
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Employee)
-                .WithMany(e => e.Users)
-                .HasForeignKey(u => u.EmployeeId);
         }
     }
 }

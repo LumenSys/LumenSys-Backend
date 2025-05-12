@@ -25,14 +25,14 @@ namespace LumenSys.WebAPI.Controllers
             _userService = userService;
         }
 
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
         [HttpGet]
         public async Task<ActionResult<List<UserDTO>>> GetAll()
         {
             var users = await _userService.GetAll();
             return Ok(users);
         }
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetById(int id)
         {
@@ -76,6 +76,7 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "ADMINISTRATOR,MANAGER,EMPLOYEE")]
         public async Task<ActionResult<UserDTO>> Put(int id, UserDTO userDTO)
         {
             if (!ValidateUser(userDTO))
@@ -97,7 +98,7 @@ namespace LumenSys.WebAPI.Controllers
             }
             return Ok(userDTO);
         }
-        [Authorize]
+        [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(int id)
         {

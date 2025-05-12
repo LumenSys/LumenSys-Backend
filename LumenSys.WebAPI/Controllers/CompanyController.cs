@@ -9,7 +9,7 @@ using LumenSys.WebAPI.Authentication;
 
 namespace LumenSys.WebAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "ADMINISTRATOR")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class CompanyController : ControllerBase

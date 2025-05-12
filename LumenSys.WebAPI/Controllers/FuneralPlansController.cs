@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace LumenSys.WebAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class FuneralPlansController : ControllerBase

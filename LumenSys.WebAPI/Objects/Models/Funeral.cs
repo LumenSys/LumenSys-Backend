@@ -2,8 +2,8 @@
 
 namespace LumenSys.WebAPI.Objects.Models
 {
-    [Table("wake")]
-    public class Wake
+    [Table("funeral")]
+    public class Funeral
     {
         [Column("id")]
         public int Id { get; set; }
@@ -17,15 +17,14 @@ namespace LumenSys.WebAPI.Objects.Models
         public int EndTime { get; set; }
         [Column("description")]
         public string Description { get; set; }
-
-        public int TypeWakeId { get; set; }
-        public TypeWake TypeWake { get; set; }
+        public int? UserId { get; set; }
+        public User? User { get; set; }
 
         public ICollection<DeceasedPerson> DeceasedPerson { get; set; } = new List<DeceasedPerson>();
 
-        public Wake() { }
+        public Funeral() { }
 
-        public Wake(int id, DateOnly date, string location, int startTime, int endTime, string description)
+        public Funeral(int id, DateOnly date, string location, int startTime, int endTime, string description)
         {
             Id = id;
             Date = date;

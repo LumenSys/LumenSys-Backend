@@ -11,6 +11,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using LumenSys.WebAPI.Services.Entities;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using LumenSys.WebAPI.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace LumenSys.WebAPI
 {
@@ -42,8 +47,9 @@ namespace LumenSys.WebAPI
                     Description = @"Enter 'Bearer' [space] your token",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
+                    Type = SecuritySchemeType.Http,       
+                    Scheme = "bearer",                      
+                    BearerFormat = "JWT"
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -65,6 +71,23 @@ namespace LumenSys.WebAPI
                 });
             });
 
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    TokenSignatures tokenSignature = new TokenSignatures();
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = tokenSignature.Issuer,
+                        ValidAudience = tokenSignature.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenSignature.Key)),
+                    };
+                });
+
+
             // Adiciona controllers e configura a serialização JSON
             services.AddControllers().AddJsonOptions(options =>
             {
@@ -84,8 +107,17 @@ namespace LumenSys.WebAPI
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //Scoped Repositories and Interfaces repo
-
+            services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<IFuneralPlansService, FuneralPlansService>();
+            services.AddScoped<IFuneralService, FuneralService>();
+            services.AddScoped<IUserService, UserService>();
+          
             //Scoped Repositories and Interfaces repo
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IFuneralPlansRepository, FuneralPlansRepository>();
+            services.AddScoped<IFuneralRepository, FuneralRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
 
         }
 
@@ -118,10 +150,11 @@ namespace LumenSys.WebAPI
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("MyPolicy");
-            //app.UseAuthorization();
+            app.UseAuthentication();  
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

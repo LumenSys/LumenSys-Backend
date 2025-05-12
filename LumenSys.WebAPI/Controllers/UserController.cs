@@ -3,6 +3,7 @@ using LumenSys.WebAPI.Authentication;
 using LumenSys.WebAPI.Objects;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.WebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -24,13 +25,14 @@ namespace LumenSys.WebAPI.Controllers
             _userService = userService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<UserDTO>>> GetAll()
         {
             var users = await _userService.GetAll();
             return Ok(users);
         }
-
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetById(int id)
         {
@@ -49,6 +51,9 @@ namespace LumenSys.WebAPI.Controllers
             var usersDTO = await _userService.GetAll();
             if (CheckDuplicates(usersDTO, userDTO))
                 return BadRequest("O e-mail ou telefone já está em uso.");
+
+            var hashedPassword = OperatorUltilitie.GenerateHash(userDTO.Password);
+            userDTO.Password = hashedPassword;
             await _userService.Create(userDTO);
 
             return Ok();
@@ -66,7 +71,7 @@ namespace LumenSys.WebAPI.Controllers
                 return Unauthorized("Email ou senha invalido");
 
             var tokenGenerator = new Token();
-            var token = tokenGenerator.GenerateToken(userDTO.Email);
+            var token = tokenGenerator.GenerateToken(userDTO.Email, userDTO.TypeEmployee);
             return Ok(new { token });
         }
 
@@ -79,6 +84,9 @@ namespace LumenSys.WebAPI.Controllers
             var usersDTO = await _userService.GetAll();
             if (CheckDuplicates(usersDTO, userDTO))
                 return BadRequest("O e-mail ou telefone já está em uso.");
+            var hashedPassword = OperatorUltilitie.GenerateHash(userDTO.Password);
+
+            userDTO.Password = hashedPassword;
             try
             {
                 await _userService.Update(userDTO, id);
@@ -89,7 +97,7 @@ namespace LumenSys.WebAPI.Controllers
             }
             return Ok(userDTO);
         }
-
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(int id)
         {

@@ -12,7 +12,7 @@ namespace LumenSys.WebAPI.Authentication
         public string Email { get; set; }
 
         [Required(ErrorMessage = "A senha é requerida!")]
-        [MinLength(8, ErrorMessage = "A senha deve conter pelo menos 6 caracteres.")]
+        [MinLength(9, ErrorMessage = "A senha deve conter pelo menos 9 caracteres.")]
 
         public string Password
         {

@@ -5,9 +5,11 @@ using LumenSys.WebAPI.Services.Interfaces;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.Objects.Ultilities;
 using LumenSys.WebAPI.Services.Entities;
+using LumenSys.WebAPI.Authentication;
 
 namespace LumenSys.WebAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class CompanyController : ControllerBase

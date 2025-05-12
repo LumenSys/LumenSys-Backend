@@ -3,9 +3,11 @@ using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.WebAPI.Services.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LumenSys.WebAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class FuneralController : ControllerBase

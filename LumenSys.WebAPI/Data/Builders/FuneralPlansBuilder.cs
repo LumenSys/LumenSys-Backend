@@ -1,4 +1,5 @@
-﻿using LumenSys.WebAPI.Objects.Models;
+﻿using LumenSys.WebAPI.Objects;
+using LumenSys.WebAPI.Objects.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LumenSys.WebAPI.Data.Builders
@@ -8,23 +9,39 @@ namespace LumenSys.WebAPI.Data.Builders
        public static void Build(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FuneralPlans>().HasKey(fp => fp.Id);
+
             modelBuilder.Entity<FuneralPlans>()
-                .Property(fp => fp.Name)
+                .Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(100);
 
             modelBuilder.Entity<FuneralPlans>()
-                .Property(fp => fp.Description)
+                .Property(u => u.Description)
+                .IsRequired()
                 .HasMaxLength(500);
 
             modelBuilder.Entity<FuneralPlans>()
-                .Property(fp => fp.MonthlyValue)
+                .Property(fp => fp.AnnualValue)
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
 
             modelBuilder.Entity<FuneralPlans>()
-                .Property(fp => fp.TypePlanId)
+                .Property(fp => fp.Available)
                 .IsRequired();
+
+            modelBuilder.Entity<FuneralPlans>()
+                .Property(fp => fp.MaxDependents)
+                .IsRequired();
+
+            modelBuilder.Entity<FuneralPlans>()
+                .Property(fp => fp.MaxAge)
+                .IsRequired();
+
+            modelBuilder.Entity<FuneralPlans>()
+                .Property(fp => fp.DependentAdditional)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
         }
     }
 }
+

@@ -6,31 +6,46 @@ namespace LumenSys.WebAPI.Objects.Models
     [Table("funeralplans")]
     public class FuneralPlans
     {
-        [Column("id")]
+        [Column("Id")]
         public int Id { get; set; }
 
-        [Column("name")]
+        [Column("Name")]
         public string Name { get; set; }
 
-        [Column("description")]
+        [Column("Description")]
         public string Description { get; set; }
 
-        [Column("monthlyvalue")]
-        public double MonthlyValue { get; set; }
+        [Column("AnnualValue")]
+        public double AnnualValue { get; set; }
 
-        public int? TypePlanId { get; set; } 
-        public TypePlan? TypePlan { get; set; }
+        [Column("available")]
+        public bool Available { get; set; }
 
-        public ICollection<Client> client { get; set; } = new List<Client>();
+        [Column("MaxDependents")]
+        public int MaxDependents { get; set; }
+
+        [Column("MaxAge")]
+        public int MaxAge { get; set; }
+
+        [Column("dependentAdditional ")]
+        public double DependentAdditional { get; set; }
+
+        public int? CompanyId { get; set; }
+        public Company? Company { get; set; }
+        public ICollection<Contract> Contract { get; set; } = new List<Contract>();
 
         public FuneralPlans() { }
 
-        public FuneralPlans(int id, string name, string description, double monthlyvalue)
+        public FuneralPlans(int id, string name, string description, double annualValue, bool available, int maxDependents, int maxAge, double dependentAdditional)
         {
             Id = id;
             Name = name;
             Description = description;
-            MonthlyValue = monthlyvalue;
+            AnnualValue = annualValue;
+            Available = available;
+            MaxDependents = maxDependents;
+            MaxAge = maxAge;
+            DependentAdditional = dependentAdditional;
         }
     }
 }

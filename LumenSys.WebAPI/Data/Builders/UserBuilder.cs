@@ -1,4 +1,6 @@
-﻿using LumenSys.WebAPI.Objects;
+﻿using LumenSys.Objects.Enums;
+using LumenSys.WebAPI.Objects;
+using LumenSys.WebAPI.Objects.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LumenSys.WebAPI.Data.Builders
@@ -13,24 +15,28 @@ namespace LumenSys.WebAPI.Data.Builders
                 .Property(u => u.Email)
                 .IsRequired()
                 .HasMaxLength(100);
-
+            modelBuilder.Entity<User>()
+                .Property(u => u.Cpf)
+                .HasMaxLength(11);
+            modelBuilder.Entity<User>()
+                .Property(u => u.Name)
+                .IsRequired()
+                .HasMaxLength(100);
             modelBuilder.Entity<User>()
                 .Property(u => u.Password)
                 .IsRequired()
                 .HasMaxLength(100);
-
+            modelBuilder.Entity<User>()
+                .Property(e => e.HireDate)
+                .IsRequired();
             modelBuilder.Entity<User>()
                 .Property(u => u.TypeEmployee)
                 .IsRequired();
-
             modelBuilder.Entity<User>()
                 .Property(u => u.UserStatus)
                 .IsRequired();
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Employee)
-                .WithMany(e => e.Users)
-                .HasForeignKey(u => u.EmployeeId);
+
         }
     }
 }

@@ -17,8 +17,8 @@ public class GenericService<T, Dto>: IGenericService<T, Dto> where T : class whe
 
     public GenericService(IGenericRepository<T> repository, IMapper mapper)
     {
-        _repository = repository;
-        _mapper = mapper;
+        this._repository = repository;
+        this._mapper = mapper;
     }
     /*
     public GenericService(IProductGroupRepository repository, IMapper mapper)

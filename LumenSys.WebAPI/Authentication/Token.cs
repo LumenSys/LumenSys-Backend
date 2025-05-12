@@ -1,30 +1,45 @@
 ﻿using Jose;
+using LumenSys.Objects.Enums;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 
-namespace LumenSys.Objects.Contracts
+namespace LumenSys.WebAPI.Authentication
 {
     public class Token
     {
         [Required(ErrorMessage = "O token é requerido")]
         public string AccessToken { get; private set; }
 
-        public string GenerateToken(string email)
+        public string GenerateToken(string email, TypeEmployee role)
         {
             var security = new TokenSignatures();
-            var payload = new Dictionary<string, object>
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(security.Key));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
             {
-                { "iss", security.Issuer },
-                { "aud", security.Audience },
-                { "sub", email },
-                { "exp", DateTimeOffset.UtcNow.AddMinutes(60).ToUnixTimeSeconds() }
+                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(JwtRegisteredClaimNames.Iss, security.Issuer),
+                new Claim(JwtRegisteredClaimNames.Aud, security.Audience),
+                new Claim(ClaimTypes.Role, role.ToString())
             };
 
-            return AccessToken = JWT.Encode(payload, Encoding.UTF8.GetBytes(security.Key), JwsAlgorithm.HS256);
+            var token = new JwtSecurityToken(
+                issuer: security.Issuer,
+                audience: security.Audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(60),
+                signingCredentials: creds
+            );
+
+            return AccessToken = new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public string GetEmailFromToken(string token)

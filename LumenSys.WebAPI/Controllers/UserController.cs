@@ -1,15 +1,18 @@
-﻿using api.Authentication;
-using LumenSys.Objects.Contracts;
-using LumenSys.Objects.Ultilities;
+﻿using LumenSys.Objects.Ultilities;
+using LumenSys.WebAPI.Authentication;
 using LumenSys.WebAPI.Objects;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.WebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Numerics;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace api.Controllers
+namespace LumenSys.WebAPI.Controllers
 {
     [Route("api/user")]
     [ApiController]
@@ -22,14 +25,15 @@ namespace api.Controllers
             _userService = userService;
         }
 
+        [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
         [HttpGet]
         public async Task<ActionResult<List<UserDTO>>> GetAll()
         {
             var users = await _userService.GetAll();
             return Ok(users);
         }
-
-        [HttpGet("{id}", Name = "GetUser")]
+        [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetById(int id)
         {
             var user = await _userService.GetById(id);
@@ -41,17 +45,15 @@ namespace api.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(UserDTO userDTO)
         {
-            if (OperatorUltilitie.CheckValidEmail(userDTO.Email) == -1 || OperatorUltilitie.CheckValidEmail(userDTO.Email) == -2)
-            {
-                return BadRequest("email incorreto");
-            }
+            if (!ValidateUser(userDTO))
+                return BadRequest("Dados de usuário inválidos. Verifique os dados.");
 
             var usersDTO = await _userService.GetAll();
             if (CheckDuplicates(usersDTO, userDTO))
-            {
-                return BadRequest("Esse e-mail já está em uso");
-            }
+                return BadRequest("O e-mail ou telefone já está em uso.");
 
+            var hashedPassword = OperatorUltilitie.GenerateHash(userDTO.Password);
+            userDTO.Password = hashedPassword;
             await _userService.Create(userDTO);
 
             return Ok();
@@ -62,32 +64,30 @@ namespace api.Controllers
         public async Task<ActionResult> Login(Login login)
         {
             if (login == null)
-                return BadRequest("Invalid data");
+                return BadRequest("Dado invalido");
 
             var userDTO = await _userService.Login(login);
             if (userDTO == null)
-                return Unauthorized("Invalid email or password");
+                return Unauthorized("Email ou senha invalido");
 
             var tokenGenerator = new Token();
-            var token = tokenGenerator.GenerateToken(userDTO.Email);
+            var token = tokenGenerator.GenerateToken(userDTO.Email, userDTO.TypeEmployee);
             return Ok(new { token });
         }
 
         [HttpPut]
+        [Authorize(Roles = "ADMINISTRATOR,MANAGER,EMPLOYEE")]
         public async Task<ActionResult<UserDTO>> Put(int id, UserDTO userDTO)
         {
-            if (OperatorUltilitie.CheckValidEmail(userDTO.Email) == -1 || OperatorUltilitie.CheckValidEmail(userDTO.Email) == -2)
-            {
-                return BadRequest("Formato incorreto de email ou telefone");
-            }
+            if (!ValidateUser(userDTO))
+                return BadRequest("Dados de usuário inválidos. Verifique os dados.");
 
             var usersDTO = await _userService.GetAll();
-
             if (CheckDuplicates(usersDTO, userDTO))
-            {
-                return BadRequest("Esse e-mail já está em uso");
-            }
+                return BadRequest("O e-mail ou telefone já está em uso.");
+            var hashedPassword = OperatorUltilitie.GenerateHash(userDTO.Password);
 
+            userDTO.Password = hashedPassword;
             try
             {
                 await _userService.Update(userDTO, id);
@@ -98,13 +98,13 @@ namespace api.Controllers
             }
             return Ok(userDTO);
         }
-
+        [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var user = await _userService.GetById(id);
             if (user == null)
-                return NotFound("User not found");
+                return NotFound("Usuario não encontrado");
 
             await _userService.Delete(id);
             return NoContent();
@@ -112,7 +112,30 @@ namespace api.Controllers
 
         private static bool CheckDuplicates(IEnumerable<UserDTO> users, UserDTO dto)
         {
-            return users.Any(u => u.Id != dto.Id && OperatorUltilitie.CompareString(u.Email, dto.Email));
+            return users.Any
+                (u =>u.Id != dto.Id &&
+                    (
+                        OperatorUltilitie.CompareString(u.Email, dto.Email)||OperatorUltilitie.CompareString(u.Phone.ExtractNumbers(),dto.Phone.ExtractNumbers())
+                    )
+                );
         }
+        private static bool ValidateUser(UserDTO dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Name))
+                return false;
+            var cpfNumbers = dto.Cpf.ExtractNumbers();
+            if (cpfNumbers.Length != 11)
+                return false;
+            var emailStatus = OperatorUltilitie.CheckValidEmail(dto.Email);
+            if (emailStatus != 1)
+                return false;
+            if (string.IsNullOrEmpty(dto.Password) || dto.Password.Length < 9)
+                return false;
+            if (!OperatorUltilitie.CheckValidPhone(dto.Phone))
+                return false;
+
+            return true;
+        }
+
     }
 }

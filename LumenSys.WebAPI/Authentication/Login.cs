@@ -3,28 +3,26 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace api.Authentication
+namespace LumenSys.WebAPI.Authentication
 {
     public class Login
     {
         [Required(ErrorMessage = "O e-mail é requerido!")]
         [EmailAddress(ErrorMessage = "Formato de e-mail inválido!")]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "A senha é requerida!")]
-        [MinLength(6, ErrorMessage = "A senha deve conter pelo menos 6 caracteres.")]
-        public string? Password { get; set; }
+        [MinLength(9, ErrorMessage = "A senha deve conter pelo menos 9 caracteres.")]
 
-        [MinLength(12)]
-        public string Senha
+        public string Password
         {
-            get => senha;
+            get => password;
             set
             {
-                senha = value.GenerateHash();
+                password = value.GenerateHash();
             }
         }
 
-        private string senha;
+        private string password;
     }
 }

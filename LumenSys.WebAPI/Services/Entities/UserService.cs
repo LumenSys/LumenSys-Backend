@@ -1,5 +1,5 @@
-﻿using api.Authentication;
-using AutoMapper;
+﻿using AutoMapper;
+using LumenSys.WebAPI.Authentication;
 using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Objects;
 using LumenSys.WebAPI.Objects.DTOs.Entities;

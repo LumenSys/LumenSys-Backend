@@ -1,7 +1,7 @@
 ﻿using LumenSys.WebAPI.Objects.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LumenSys.WebAPI.Objects.Data.Builders
+namespace LumenSys.WebAPI.Data.Builders
 {
     public class CompanyBuilder
     {
@@ -46,11 +46,6 @@ namespace LumenSys.WebAPI.Objects.Data.Builders
             modelBuilder.Entity<Company>()
                 .Property(c => c.UF)
                 .HasMaxLength(2);
-
-            modelBuilder.Entity<Company>()
-                .HasMany(c => c.employee)
-                .WithOne(e => e.company)
-                .HasForeignKey(e => e.CompanyId);
         }
     }
 }

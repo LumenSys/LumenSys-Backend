@@ -12,9 +12,9 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("cpf")]
         public string Cpf { get; set; }
 
-        public int? ClientId { get; set; }
-        public Client? client { get; set; }
-
+        public int? ContractId { get; set; }
+        public Contract? Contract { get; set; }
+   
         public Dependent() { }
 
         public Dependent(int id, string name, string cpf)

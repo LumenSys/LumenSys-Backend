@@ -150,7 +150,7 @@ namespace LumenSys.WebAPI
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("MyPolicy");
             app.UseAuthentication();  

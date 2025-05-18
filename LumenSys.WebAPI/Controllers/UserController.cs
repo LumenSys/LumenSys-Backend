@@ -42,6 +42,7 @@ namespace LumenSys.WebAPI.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> Post(UserDTO userDTO)
         {
@@ -59,7 +60,7 @@ namespace LumenSys.WebAPI.Controllers
             return Ok();
 
         }
-
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login(Login login)
         {
@@ -115,27 +116,52 @@ namespace LumenSys.WebAPI.Controllers
             return users.Any
                 (u =>u.Id != dto.Id &&
                     (
-                        OperatorUltilitie.CompareString(u.Email, dto.Email)||OperatorUltilitie.CompareString(u.Phone.ExtractNumbers(),dto.Phone.ExtractNumbers())
-                    )
+                        (!string.IsNullOrWhiteSpace(dto.Phone)
+                            && !string.IsNullOrWhiteSpace(u.Phone)
+                            && OperatorUltilitie.ExtractNumbers(u.Phone) == OperatorUltilitie.ExtractNumbers(dto.Phone))
+                        ||
+                        (!string.IsNullOrWhiteSpace(dto.Cpf)
+                            && !string.IsNullOrWhiteSpace(u.Cpf)
+                            && OperatorUltilitie.ExtractNumbers(u.Cpf) == OperatorUltilitie.ExtractNumbers(dto.Cpf)))
+                    
                 );
         }
         private static bool ValidateUser(UserDTO dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Name))
                 return false;
-            var cpfNumbers = dto.Cpf.ExtractNumbers();
-            if (cpfNumbers.Length != 11)
+
+            if (!string.IsNullOrWhiteSpace(dto.Cpf))
+            {
+                var cpfNumbers = dto.Cpf.ExtractNumbers();
+                if (cpfNumbers.Length != 11)
+                    return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.Email))
                 return false;
+
             var emailStatus = OperatorUltilitie.CheckValidEmail(dto.Email);
             if (emailStatus != 1)
                 return false;
-            if (string.IsNullOrEmpty(dto.Password) || dto.Password.Length < 9)
-                return false;
-            if (!OperatorUltilitie.CheckValidPhone(dto.Phone))
+
+            if (string.IsNullOrWhiteSpace(dto.Password) || dto.Password.Length < 9)
                 return false;
 
+            if (!string.IsNullOrWhiteSpace(dto.Phone))
+            {
+                if (!OperatorUltilitie.CheckValidPhone(dto.Phone))
+                    return false;
+            }
+            if (dto.HireDate.HasValue)
+            {
+                var today = DateOnly.FromDateTime(DateTime.Now);
+                if (dto.HireDate.Value > today)
+                    return false; 
+            }
             return true;
         }
+
 
     }
 }

@@ -157,7 +157,7 @@ namespace LumenSys.WebAPI.Controllers
             {
                 var today = DateOnly.FromDateTime(DateTime.Now);
                 if (dto.HireDate.Value > today)
-                    return false; 
+                    return false;
             }
             return true;
         }

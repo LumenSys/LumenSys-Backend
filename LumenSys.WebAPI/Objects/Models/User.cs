@@ -24,7 +24,7 @@ public class User
     [Column("userstatus")]
     public UserStats UserStatus { get; set; }
     [Column("hiredate")]
-    public DateOnly HireDate { get; set; }
+    public DateOnly? HireDate { get; set; }
     public int? CompanyId { get; set; }
     public Company? Company { get; set; }
     public ICollection<Funeral> Funeral { get; set; } = new List<Funeral>();

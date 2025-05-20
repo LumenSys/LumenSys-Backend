@@ -392,7 +392,7 @@ COPY public."Contract" ("Id", "IsActive", "StartDate", "EndDate", "DependentCoun
 --
 
 COPY public."__EFMigrationsHistory" ("MigrationId", "ProductVersion") FROM stdin;
-20250518072417_database	9.0.3
+20250520105305_database	9.0.3
 \.
 
 
@@ -465,8 +465,7 @@ COPY public.transport (id, name, data, "time", street, number, neighborhood, cit
 --
 
 COPY public."user" (id, name, email, password, cpf, phone, typeemployee, userstatus, hiredate, "CompanyId") FROM stdin;
-1	João	joao@email.com	15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225	\N	\N	0	0	\N	\N
-2	Giorno	giorno@gmail.com	15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225	\N	\N	0	0	\N	\N
+1	giorno	giorno@gmail.com	15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225	\N	\N	0	0	\N	\N
 \.
 
 
@@ -537,7 +536,7 @@ SELECT pg_catalog.setval('public.transport_id_seq', 1, false);
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_id_seq', 2, true);
+SELECT pg_catalog.setval('public.user_id_seq', 1, true);
 
 
 --

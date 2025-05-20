@@ -29,11 +29,9 @@ namespace LumenSys.WebAPI.Data.Builders
             modelBuilder.Entity<User>()
                 .Property(e => e.HireDate);
             modelBuilder.Entity<User>()
-                .Property(u => u.TypeEmployee)
-                .IsRequired();
+                .Property(u => u.TypeEmployee);
             modelBuilder.Entity<User>()
-                .Property(u => u.UserStatus)
-                .IsRequired();
+                .Property(u => u.UserStatus);
 
         }
     }

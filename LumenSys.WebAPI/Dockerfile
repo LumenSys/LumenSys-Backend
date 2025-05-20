@@ -24,7 +24,7 @@ WORKDIR /app
 COPY --from=build /app/out .
 
 # Expõe a porta da aplicação
-EXPOSE 5000
+EXPOSE 80
 
 # Define o comando para rodar a aplicação
-ENTRYPOINT ["dotnet", "LumenSys.WebAPI.dll"]      
+ENTRYPOINT ["dotnet", "LumenSys.WebAPI.dll"]

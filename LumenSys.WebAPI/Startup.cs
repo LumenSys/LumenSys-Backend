@@ -47,8 +47,8 @@ namespace LumenSys.WebAPI
                     Description = @"Enter 'Bearer' [space] your token",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,       
-                    Scheme = "bearer",                      
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
                     BearerFormat = "JWT"
                 });
 
@@ -111,12 +111,17 @@ namespace LumenSys.WebAPI
             services.AddScoped<IFuneralPlansService, FuneralPlansService>();
             services.AddScoped<IFuneralService, FuneralService>();
             services.AddScoped<IUserService, UserService>();
-          
+            services.AddScoped<IContractsService, ContractsService>();
+            services.AddScoped<IDependentService, DependentService>();
+
             //Scoped Repositories and Interfaces repo
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IFuneralPlansRepository, FuneralPlansRepository>();
             services.AddScoped<IFuneralRepository, FuneralRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IContractsRepository, ContractsRepository>();
+            services.AddScoped<IDependentRepository, DependentRepository>();
+
 
 
         }
@@ -150,10 +155,10 @@ namespace LumenSys.WebAPI
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("MyPolicy");
-            app.UseAuthentication();  
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

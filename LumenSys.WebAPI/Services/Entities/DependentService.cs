@@ -6,13 +6,13 @@ using LumenSys.WebAPI.Services.Interfaces;
 
 namespace LumenSys.WebAPI.Services.Entities
 {
-    public class ContractsService : GenericService<Contracts, ContractsDTO>, IContractsService
+    public class DependentService : GenericService<Dependent, DependentDTO>, IDependentService
     {
-        private readonly IContractsRepository _contractsRepository;
+        private readonly IDependentRepository _dependentRepository;
         private readonly IMapper _mapper;
-        public ContractsService(IContractsRepository repository, IMapper mapper) : base(repository, mapper)
+        public DependentService(IDependentRepository repository, IMapper mapper) : base(repository, mapper)
         {
-            _contractsRepository = repository;
+            _dependentRepository = repository;
             _mapper = mapper;
         }
     }

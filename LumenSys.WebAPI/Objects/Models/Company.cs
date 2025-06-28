@@ -13,6 +13,8 @@ namespace LumenSys.WebAPI.Objects.Models
 
         [Column("name")]
         public string Name { get; set; }
+        [Column("tradename")]
+        public string TradeName { get; set; }
 
         [Column("email")]
         public string Email { get; set; }
@@ -39,11 +41,12 @@ namespace LumenSys.WebAPI.Objects.Models
         public ICollection<FuneralPlans> FuneralPlans { get; set; } = new List<FuneralPlans>();
         public Company() { }
 
-        public Company(int id, string cpfCnpj, string name, string email, string phone, string street, string number, string neighborhood, string city, string uf)
+        public Company(int id, string cpfCnpj, string name,string tradename, string email, string phone, string street, string number, string neighborhood, string city, string uf)
         {
             Id = id;
             CpfCnpj = cpfCnpj;
             Name = name;
+            TradeName = tradename;
             Email = email;
             Phone = phone;
             Street = street;

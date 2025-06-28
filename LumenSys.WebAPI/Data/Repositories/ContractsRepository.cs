@@ -1,11 +1,13 @@
 ﻿using LumenSys.WebAPI.Data.Repositories;
 using LumenSys.WebAPI.Data;
+using LumenSys.WebAPI.Objects.Models;
+using LumenSys.WebAPI.Data.Interfaces;
 
-public class DependentContractRepository : GenericRepository<DependentContract>, IDependentContractRepository
+public class ContractsRepository : GenericRepository<Contracts>, IContractsRepository
 {
     private readonly AppDbContext _context;
 
-    public DependentContractRepository(AppDbContext context) : base(context)
+    public ContractsRepository(AppDbContext context) : base(context)
     {
         _context = context;
     }

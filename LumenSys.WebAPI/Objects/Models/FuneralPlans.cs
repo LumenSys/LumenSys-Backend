@@ -32,7 +32,7 @@ namespace LumenSys.WebAPI.Objects.Models
 
         public int? CompanyId { get; set; }
         public Company? Company { get; set; }
-        public ICollection<Contract> Contract { get; set; } = new List<Contract>();
+        public ICollection<Contracts> Contracts { get; set; } = new List<Contracts>();
 
         public FuneralPlans() { }
 

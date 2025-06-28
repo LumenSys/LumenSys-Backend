@@ -3,7 +3,7 @@ using LumenSys.WebAPI.Objects.Models;
 
 namespace LumenSys.WebAPI.Services.Interfaces
 {
-    public interface IContractsService : IGenericService<Contracts, ContractsDTO>
+    public interface IDependentService : IGenericService<Dependent, DependentDTO>
     {
     }
 }

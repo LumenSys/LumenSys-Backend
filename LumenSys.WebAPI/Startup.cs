@@ -111,12 +111,17 @@ namespace LumenSys.WebAPI
             services.AddScoped<IFuneralPlansService, FuneralPlansService>();
             services.AddScoped<IFuneralService, FuneralService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IContractsService, ContractsService>();
+            services.AddScoped<IDependentService, DependentService>();
 
             //Scoped Repositories and Interfaces repo
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IFuneralPlansRepository, FuneralPlansRepository>();
             services.AddScoped<IFuneralRepository, FuneralRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IContractsRepository, ContractsRepository>();
+            services.AddScoped<IDependentRepository, DependentRepository>();
+
 
 
         }

@@ -20,6 +20,11 @@ namespace LumenSys.WebAPI.Data.Builders
                 .HasMaxLength(100);
 
             modelBuilder.Entity<Company>()
+                .Property(c => c.TradeName)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            modelBuilder.Entity<Company>()
                 .Property(c => c.Email)
                 .HasMaxLength(50);
 

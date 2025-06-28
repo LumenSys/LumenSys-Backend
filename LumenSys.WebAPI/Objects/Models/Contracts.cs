@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LumenSys.WebAPI.Objects.Models
 {
-    [Table("Contract")]
-    public class Contract
+    [Table("Contracts")]
+    public class Contracts
     {
         [Column("Id")]
         public int Id { get; set; }
@@ -21,20 +21,23 @@ namespace LumenSys.WebAPI.Objects.Models
 
         [Column("DependentCount")]
         public int DependentCount { get; set; }
+        [Column("value")]
+        public double Value { get; set; }
         public int? ClientId { get; set; }
         public Client? Client { get; set; }
 
         //public ICollection<Installment> Installments { get; set; } = new List<Installment>();
         public ICollection<Dependent> Dependent { get; set; } = new List<Dependent>();
-        public Contract() { }
+        public Contracts() { }
 
-        public Contract(int id, bool isActive, DateTime startDate, DateTime endDate, int dependentCount)
+        public Contracts(int id, bool isActive, DateTime startDate, DateTime endDate, int dependentCount, double value)
         {
             Id = id;
             IsActive = isActive;
             StartDate = startDate;
             EndDate = endDate;
             DependentCount = dependentCount;
+            Value = value;
         }
     }
 }

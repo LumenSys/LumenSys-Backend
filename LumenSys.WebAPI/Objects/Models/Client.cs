@@ -38,6 +38,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public User? User { get; set; }
 
         public ICollection<DeceasedPerson> DeceasedPerson { get; set; } =new List<DeceasedPerson>();
+        public ICollection<Contracts> Contracts { get; set; } = new List<Contracts>();
 
         public Client() { }
 

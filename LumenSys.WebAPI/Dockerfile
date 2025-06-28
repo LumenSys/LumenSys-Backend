@@ -1,21 +1,30 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-RUN apt-get update && apt-get install -y libicu-dev
-EXPOSE 5000
-ENV ASPNETCORE_URLS=http://+:5000
-ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
-
+# Usar uma imagem base do SDK do .NET para construir a aplicação
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
-COPY ["LumenSys.WebAPI.csproj", "./"]
-RUN dotnet restore "LumenSys.WebAPI.csproj"
-COPY . .
-RUN dotnet build "LumenSys.WebAPI.csproj" -c Release -o /app/build
 
-FROM build AS publish
-RUN dotnet publish "LumenSys.WebAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
+# Define o diretório de trabalho
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+# Copia o arquivo .csproj e restaura as dependências
+COPY ./*.csproj ./
+RUN dotnet restore
+
+# Copia o restante dos arquivos da aplicação
+COPY . ./
+
+# Compila a aplicação
+RUN dotnet publish -c Release -o out
+
+# Usar uma imagem base do runtime do .NET para executar a aplicação
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+
+# Define o diretório de trabalho
+WORKDIR /app
+
+# Copia os arquivos compilados da etapa de build
+COPY --from=build /app/out .
+
+# Expõe a porta da aplicação
+EXPOSE 80
+
+# Define o comando para rodar a aplicação
 ENTRYPOINT ["dotnet", "LumenSys.WebAPI.dll"]

@@ -8,7 +8,7 @@ using LumenSys.Objects.Enums;
 
 namespace LumenSys.WebAPI.Controllers
 {
-    [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
+    [Authorize(Roles = "ADMINISTRATOR,MANAGER,EMPLOYEE")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class FuneralPlansController : ControllerBase

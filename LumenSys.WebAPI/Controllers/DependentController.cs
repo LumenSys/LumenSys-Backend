@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.WebAPI.Services.Interfaces;
-using LumenSys.Objects.Ultilities;
+using LumenSys.WebAPI.Services.Utils;
 
 namespace LumenSys.WebAPI.Controllers
 {

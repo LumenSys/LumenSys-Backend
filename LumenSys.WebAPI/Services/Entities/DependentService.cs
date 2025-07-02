@@ -24,6 +24,9 @@ namespace LumenSys.WebAPI.Services.Entities
             if (dto == null)
                 throw new ArgumentNullException("O dependente não pode ser nulo.");
 
+            if (!CpfCnpjValidator.IsValid(dto.Cpf))
+                throw new ArgumentException("CPF inválido.");
+
             if (await CheckDuplicate(dto.Cpf, 0, dto.ContractId))
                 throw new InvalidOperationException("Já existe um dependente com este CPF neste contrato.");
 
@@ -37,6 +40,9 @@ namespace LumenSys.WebAPI.Services.Entities
 
             if (dto.Id != id)
                 throw new ArgumentException("O ID do dependente deve corresponder ao ID informado.");
+
+            if (!CpfCnpjValidator.IsValid(dto.Cpf))
+                throw new ArgumentException("CPF inválido.");
 
             if (await CheckDuplicate(dto.Cpf, id, dto.ContractId))
                 throw new InvalidOperationException("Já existe outro dependente com este CPF neste contrato.");

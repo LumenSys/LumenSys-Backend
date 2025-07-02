@@ -33,7 +33,8 @@ namespace LumenSys.WebAPI.Services.Entities
             if (companyDto == null)
                 throw new ArgumentNullException("Empresa não pode ser nula.");
 
-            CompanyDTO.Validate(companyDto);
+            if (!CpfCnpjValidator.IsValid(companyDto.CpfCnpj))
+                throw new ArgumentException("CPF ou CNPJ inválido.");
 
             if (await CheckDuplicate(c => c.CpfCnpj, companyDto.CpfCnpj, 0))
                 throw new InvalidOperationException("Já existe uma empresa com esse CPF/CNPJ.");
@@ -51,6 +52,9 @@ namespace LumenSys.WebAPI.Services.Entities
 
             if (companyDto.Id != id)
                 throw new ArgumentException("O ID da empresa deve corresponder ao ID informado.");
+
+            if (!CpfCnpjValidator.IsValid(companyDto.CpfCnpj))
+                throw new ArgumentException("CPF ou CNPJ inválido.");
 
             if (await CheckDuplicate(c => c.CpfCnpj, companyDto.CpfCnpj, id))
                 throw new InvalidOperationException("Já existe uma empresa com esse CPF/CNPJ.");

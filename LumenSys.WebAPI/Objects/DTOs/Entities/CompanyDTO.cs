@@ -83,13 +83,11 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             set => _uf = value?.Trim().ToUpper();
         }
 
-        // Validação de campos obrigatórios e formato
         public static void Validate(CompanyDTO dto)
         {
             if (dto == null)
                 throw new ArgumentNullException("Empresa inválida.");
 
-            // CPF ou CNPJ obrigatório e válido
             if (string.IsNullOrWhiteSpace(dto.CpfCnpj))
                 throw new ArgumentException("CPF ou CNPJ é obrigatório.");
 
@@ -97,22 +95,18 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             if (!(onlyNumbers.Length == 11 || onlyNumbers.Length == 14))
                 throw new ArgumentException("CPF deve conter 11 dígitos ou CNPJ 14 dígitos.");
 
-            // Nome e nome fantasia obrigatórios
             if (string.IsNullOrWhiteSpace(dto.Name))
                 throw new ArgumentException("Nome da empresa é obrigatório.");
 
             if (string.IsNullOrWhiteSpace(dto.TradeName))
                 throw new ArgumentException("Nome fantasia da empresa é obrigatório.");
 
-            // Email obrigatório e válido
             if (string.IsNullOrWhiteSpace(dto.Email) || OperatorUltilitie.CheckValidEmail(dto.Email) != 1)
                 throw new ArgumentException("E-mail é obrigatório e deve ser válido.");
 
-            // Telefone opcional mas se preenchido, válido
             if (!string.IsNullOrWhiteSpace(dto.Phone) && !OperatorUltilitie.CheckValidPhone(dto.Phone))
                 throw new ArgumentException("Número de telefone inválido.");
 
-            // Endereço completo obrigatório
             if (string.IsNullOrWhiteSpace(dto.Street))
                 throw new ArgumentException("Rua é obrigatória.");
 

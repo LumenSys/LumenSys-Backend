@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using LumenSys.WebAPI.Objects.Models;
-using LumenSys.WebAPI.Services.Interfaces;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
-using LumenSys.WebAPI.Services.Entities;
-using LumenSys.WebAPI.Authentication;
-using LumenSys.WebAPI.Services.Utils;
+using LumenSys.WebAPI.Services.Interfaces;
+using LumenSys.WebAPI.Objects.Contract;
+using LumenSys.Objects.Enums;
 
 namespace LumenSys.WebAPI.Controllers
 {
@@ -15,60 +13,118 @@ namespace LumenSys.WebAPI.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
+        private readonly Response _response;
 
         public CompanyController(ICompanyService companyService)
         {
             _companyService = companyService;
+            _response = new Response();
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var companies = await _companyService.GetAll();
-            return Ok(companies);
+            _response.Code = ResponseEnum.Success;
+            _response.Data = companies;
+            _response.Message = "Lista de empresas obtida com sucesso!";
+            return Ok(_response);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var company = await _companyService.GetById(id);
-            if (company == null)
-                return NotFound("Empresa não encontrada.");
-            return Ok(company);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Post(CompanyDTO company)
-        {
-            if (!ValidateCompany(company))
-                return BadRequest("Dados de usuário inválidos. Verifique os dados.");
-            var companys = await _companyService.GetAll();
-
             try
             {
-                await _companyService.Create(company);
-                return Ok(company);
+                var company = await _companyService.GetById(id);
+                _response.Code = ResponseEnum.Success;
+                _response.Message = $"Empresa {company.Name} encontrada com sucesso!";
+                _response.Data = company;
+                return Ok(_response);
+            }
+            catch (ArgumentNullException ex)
+            {
+                _response.Code = ResponseEnum.NotFound;
+                _response.Message = ex.Message;
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Erro ao cadastrar empresa: " + ex.Message);
+                _response.Code = ResponseEnum.Error;
+                _response.Message = "Erro ao buscar empresa.";
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(CompanyDTO companyDto)
+        {
+            try
+            {
+                CompanyDTO.Validate(companyDto);
+                await _companyService.Create(companyDto);
+
+                _response.Code = ResponseEnum.Success;
+                _response.Message = "Empresa criada com sucesso!";
+                _response.Data = companyDto;
+                return Ok(_response);
+            }
+            catch (ArgumentException ex)
+            {
+                _response.Code = ResponseEnum.Invalid;
+                _response.Message = ex.Message;
+                return BadRequest(_response);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _response.Code = ResponseEnum.Conflict;
+                _response.Message = ex.Message;
+                return Conflict(_response);
+            }
+            catch (Exception)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = "Erro ao cadastrar empresa.";
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, CompanyDTO company)
+        public async Task<IActionResult> Put(int id, CompanyDTO companyDto)
         {
-            if (!ValidateCompany(company))
-                return BadRequest("Dados de usuário inválidos. Verifique os dados.");
-
             try
             {
-                await _companyService.Update(company, id);
-                return Ok(company);
+                CompanyDTO.Validate(companyDto);
+                await _companyService.Update(companyDto, id);
+
+                _response.Code = ResponseEnum.Success;
+                _response.Message = "Empresa atualizada com sucesso!";
+                _response.Data = companyDto;
+                return Ok(_response);
             }
-            catch (Exception ex)
+            catch (ArgumentNullException ex)
             {
-                return StatusCode(500, "Erro ao atualizar empresa: " + ex.Message);
+                _response.Code = ResponseEnum.NotFound;
+                _response.Message = ex.Message;
+                return NotFound(_response);
+            }
+            catch (ArgumentException ex)
+            {
+                _response.Code = ResponseEnum.Invalid;
+                _response.Message = ex.Message;
+                return BadRequest(_response);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _response.Code = ResponseEnum.Conflict;
+                _response.Message = ex.Message;
+                return Conflict(_response);
+            }
+            catch (Exception)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = "Erro ao atualizar empresa.";
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
 
@@ -78,28 +134,22 @@ namespace LumenSys.WebAPI.Controllers
             try
             {
                 await _companyService.Delete(id);
-                return Ok("Empresa removida com sucesso.");
+                _response.Code = ResponseEnum.Success;
+                _response.Message = "Empresa removida com sucesso!";
+                return Ok(_response);
             }
-            catch (Exception ex)
+            catch (ArgumentNullException ex)
             {
-                return StatusCode(500, "Erro ao remover empresa: " + ex.Message);
+                _response.Code = ResponseEnum.NotFound;
+                _response.Message = ex.Message;
+                return NotFound(_response);
             }
-        }
-
-        private static bool ValidateCompany(CompanyDTO dto)
-        {
-            if (string.IsNullOrWhiteSpace(dto.Name))
-                return false;
-            var cpfNumbers = dto.CpfCnpj.ExtractNumbers();
-            if (cpfNumbers.Length != 11)
-                return false;
-            var emailStatus = OperatorUltilitie.CheckValidEmail(dto.Email);
-            if (emailStatus != 1)
-                return false;
-            if (!OperatorUltilitie.CheckValidPhone(dto.Phone))
-                return false;
-
-            return true;
+            catch (Exception)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = "Erro ao remover empresa.";
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
         }
     }
 }

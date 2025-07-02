@@ -15,6 +15,34 @@ namespace LumenSys.WebAPI.Services.Entities
             _contractsRepository = repository;
             _mapper = mapper;
         }
+        public override async Task Update(ContractsDTO dto, int id)
+        {
+            if (dto == null)
+                throw new ArgumentNullException("Contrato inválido.");
+
+            if (dto.Id != id)
+                throw new ArgumentException("ID do contrato não corresponde.");
+
+            await base.Update(dto, id);
+        }
+
+        public override async Task<ContractsDTO> GetById(int id)
+        {
+            var contract = await _contractsRepository.GetById(id);
+            if (contract == null)
+                throw new ArgumentNullException($"Contrato com ID {id} não foi encontrado.");
+
+            return _mapper.Map<ContractsDTO>(contract);
+        }
+
+        public override async Task Delete(int id)
+        {
+            var contract = await _contractsRepository.GetById(id);
+            if (contract == null)
+                throw new ArgumentNullException($"Contrato com ID {id} não foi encontrado.");
+
+            await base.Delete(id);
+        }
     }
 }
 

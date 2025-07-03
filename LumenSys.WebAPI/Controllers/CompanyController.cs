@@ -81,12 +81,14 @@ namespace LumenSys.WebAPI.Controllers
                 _response.Message = ex.Message;
                 return Conflict(_response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 _response.Code = ResponseEnum.Error;
-                _response.Message = "Erro ao cadastrar empresa.";
+                _response.Message = $"Erro ao cadastrar empresa: {(ex.InnerException?.Message ?? ex.Message)}";
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
+
+
         }
 
         [HttpPut("{id}")]

@@ -91,8 +91,8 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             if (string.IsNullOrWhiteSpace(dto.CpfCnpj))
                 throw new ArgumentException("CPF ou CNPJ é obrigatório.");
 
-            var onlyNumbers = dto.CpfCnpj.ExtractNumbers();
-            if (!(onlyNumbers.Length == 11 || onlyNumbers.Length == 14))
+            dto.CpfCnpj = dto.CpfCnpj.ExtractNumbers();
+            if (!(dto.CpfCnpj.Length == 11 || dto.CpfCnpj.Length == 14))
                 throw new ArgumentException("CPF deve conter 11 dígitos ou CNPJ 14 dígitos.");
 
             if (string.IsNullOrWhiteSpace(dto.Name))

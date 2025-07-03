@@ -7,12 +7,13 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
     {
         public int? Id { get; set; }
         public DateOnly Date { get; set; }
-        private string _location { get; set; }
+        private string _location;
         public string Location
         {
-            get => Location;
-            set => Location = value?.Trim();
+            get => _location;
+            set => _location = value?.Trim();
         }
+
         public int StartTime { get; set; }
         public int EndTime { get; set; }
         public string Description { get; set; }
@@ -31,9 +32,6 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
 
             if (dto.EndTime <= dto.StartTime)
                 throw new ArgumentException("O horário de término deve ser maior que o horário de início.");
-
-            if (dto.Date < DateOnly.FromDateTime(DateTime.Today))
-                throw new ArgumentException("A data do funeral não pode ser anterior à data atual.");
 
             if (string.IsNullOrWhiteSpace(dto.Description))
                 throw new ArgumentException("A descrição do funeral é obrigatória.");

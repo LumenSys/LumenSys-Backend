@@ -51,13 +51,16 @@ namespace LumenSys.WebAPI.Services.Entities
             return funerals.Any(f =>
                 (idIgnorar == null || f.Id != idIgnorar) &&
                 !string.IsNullOrWhiteSpace(selector(f)) &&
+                f.StartTime != null && f.EndTime != null &&
                 StringUtils.CompareString(selector(f)!.Trim(), dto.Location.Trim()) &&
+                f.Date == dto.Date &&
                 (
                     (dto.StartTime >= f.StartTime && dto.StartTime < f.EndTime) ||
                     (dto.EndTime > f.StartTime && dto.EndTime <= f.EndTime) ||
                     (dto.StartTime <= f.StartTime && dto.EndTime >= f.EndTime)
                 )
             );
+
         }
     }
 }

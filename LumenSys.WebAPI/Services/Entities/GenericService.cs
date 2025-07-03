@@ -1,58 +1,59 @@
 ﻿using AutoMapper;
 using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Services.Interfaces;
-using Microsoft.AspNetCore.Components.Forms;
-using System;
 
 namespace LumenSys.WebAPI.Services.Entities;
 
-public class GenericService<T, Dto>: IGenericService<T, Dto> where T : class where Dto : class
+public class GenericService<T, TDto> : IGenericService<T, TDto> where T : class where TDto : class
 {
     private readonly IGenericRepository<T> _repository;
     private readonly IMapper _mapper;
-    /*  
-    private IProductGroupRepository repository;
-    private IMapper mapper;
-    */
 
     public GenericService(IGenericRepository<T> repository, IMapper mapper)
     {
-        this._repository = repository;
-        this._mapper = mapper;
+        _repository = repository;
+        _mapper = mapper;
     }
-    /*
-    public GenericService(IProductGroupRepository repository, IMapper mapper)
-    {
-        this.repository = repository;
-        this.mapper = mapper;   
-    }
-    */
-    public async Task<IEnumerable<Dto>> GetAll()
+
+    public virtual async Task<IEnumerable<TDto>> GetAll()
     {
         var entities = await _repository.Get();
-        return _mapper.Map<IEnumerable<Dto>>(entities);
+        return _mapper.Map<IEnumerable<TDto>>(entities);
     }
-    public async Task<Dto> GetById(int id)
+
+    public virtual async Task<TDto> GetById(int id)
     {
         var entity = await _repository.GetById(id);
-        return _mapper.Map<Dto>(entity);
+        return _mapper.Map<TDto>(entity);
     }
-    public async Task Create(Dto dto)
+
+    public virtual async Task Create(TDto entityDTO)
     {
-        var entity = _mapper.Map<T>(dto);
+        var entity = _mapper.Map<T>(entityDTO);
         await _repository.Add(entity);
     }
 
-    public async Task Update(Dto dto, int id)
+    public virtual async Task Update(TDto entityDTO, int id)
     {
-        var existing = await _repository.GetById(id);
-        var entity = _mapper.Map<T>(dto);
+        var entity = _mapper.Map<T>(entityDTO);
+        var existingEntity = await _repository.GetById(id);
+
+        if (existingEntity == null)
+        {
+            throw new KeyNotFoundException($"Entity with id {id} not found.");
+        }
+
         await _repository.Update(entity);
     }
 
-    public async Task Delete(int id)
+    public virtual async Task Delete(int id)
     {
         var entity = await _repository.GetById(id);
+        if (entity == null)
+        {
+            throw new KeyNotFoundException($"Entity with id: {id} not found");
+        }
+
         await _repository.Remove(entity);
     }
 }

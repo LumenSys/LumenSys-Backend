@@ -1,6 +1,9 @@
-﻿namespace LumenSys.WebAPI.Services.Interfaces
+﻿using LumenSys.WebAPI.Objects.DTOs.Entities;
+using LumenSys.WebAPI.Objects.Models;
+
+namespace LumenSys.WebAPI.Services.Interfaces
 {
-    public class ICremationService
+    public interface ICremationService : IGenericService<Cremation, CremationDTO>
     {
     }
 }

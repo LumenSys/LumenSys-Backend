@@ -15,6 +15,13 @@ namespace LumenSys.WebAPI.Objects.Models
         public int Age { get; set; }
         [Column("birthday")]
         public DateOnly BirthDay { get; set; }
+
+        [Column("deathdate")]
+        public DateOnly? DeathDate { get; set; } // Data da morte
+
+        [Column("cpf")]
+        public string? Cpf { get; set; } // CPF do falecido
+
         [Column("deathcause")]
         public string DeathCause { get; set; }
         [Column("nationality")]
@@ -29,28 +36,29 @@ namespace LumenSys.WebAPI.Objects.Models
         public Cremation? Cremation { get; set; }
 
         public ICollection<Transport> Transport { get; } = new List<Transport>();
-        
+
         public int? WakeId { get; set; }
         public Funeral? Wake { get; set; }
 
-        public int? ClientId { get; set; } 
+        public int? ClientId { get; set; }
         public Client? Client { get; set; }
 
         public Thanatopraxia Thanatopraxia { get; set; }
 
         public DeceasedPerson() { }
 
-        public DeceasedPerson(int id, string name, int age, DateOnly birthday, string deathcause, string nationality, MaritalStatus marital, SexType sex)
+        public DeceasedPerson(int id, string name, int age, DateOnly birthday, DateOnly? deathDate, string cpf, string deathcause, string nationality, MaritalStatus marital, SexType sex)
         {
             Id = id;
             Name = name;
             Age = age;
             BirthDay = birthday;
+            DeathDate = deathDate;
+            Cpf = cpf;
             DeathCause = deathcause;
             Nationality = nationality;
             Marital = marital;
             Sex = sex;
         }
-
     }
 }

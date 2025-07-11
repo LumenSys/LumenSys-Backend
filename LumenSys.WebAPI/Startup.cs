@@ -113,6 +113,8 @@ namespace LumenSys.WebAPI
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IContractsService, ContractsService>();
             services.AddScoped<IDependentService, DependentService>();
+            services.AddScoped<ITransportService, TransportService>();
+
 
             //Scoped Repositories and Interfaces repo
             services.AddScoped<ICompanyRepository, CompanyRepository>();
@@ -121,7 +123,7 @@ namespace LumenSys.WebAPI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IContractsRepository, ContractsRepository>();
             services.AddScoped<IDependentRepository, DependentRepository>();
-
+            services.AddScoped<ITransportRepository, TransportRepository>();
 
 
         }

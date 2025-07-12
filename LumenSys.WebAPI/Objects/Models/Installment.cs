@@ -1,6 +1,6 @@
 ﻿namespace LumenSys.WebAPI.Objects.Models
 {
-    public class installments
+    public class Installment
     {
     }
 }

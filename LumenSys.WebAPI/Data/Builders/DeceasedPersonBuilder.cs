@@ -1,5 +1,5 @@
 ﻿using LumenSys.WebAPI.Objects.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; 
 
 namespace LumenSys.WebAPI.Data.Builders
 {
@@ -60,7 +60,6 @@ namespace LumenSys.WebAPI.Data.Builders
                 .WithMany()
                 .HasForeignKey(dp => dp.WakeId)
                 .OnDelete(DeleteBehavior.SetNull);
-
         }
     }
 }

@@ -17,6 +17,7 @@ namespace LumenSys.WebAPI.Data
         public DbSet<Dependent> Dependents { get; set; }
         public DbSet<Transport> transports { get; set; }
         public DbSet<Cremation> Cremations { get; set; }
+        public DbSet<DeceasedPerson> DeceasedPerson { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +30,13 @@ namespace LumenSys.WebAPI.Data
             DependentBuilder.Build(modelBuilder);
             TransportBuilder.Build(modelBuilder)
             CremationBuilder.Build(modelBuilder);
+            DeceasedPersonBuilder.Build(modelBuilder);
+
+            modelBuilder.Entity<Transport>()
+            .HasOne(t => t.DeceasedPerson)
+            .WithMany(d => d.Transport)
+            .HasForeignKey(t => t.DeceasedPersonId);
+
         }
 
     }

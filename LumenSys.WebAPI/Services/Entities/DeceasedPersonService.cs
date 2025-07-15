@@ -21,8 +21,8 @@ namespace LumenSys.WebAPI.Services.Entities
         {
             if (dto == null)
                 throw new ArgumentNullException("Pessoa falecida inválida.");
-            if (int.TryParse(dto.Id, out int dtoId) && dtoId != id)
-                throw new ArgumentException("ID da pessoa falecida não corresponde.");
+            if(dto.Id != id)
+                throw new ArgumentException("ID do contrato não corresponde.");
             await base.Update(dto, id);
         }
 

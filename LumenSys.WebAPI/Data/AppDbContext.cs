@@ -29,6 +29,12 @@ namespace LumenSys.WebAPI.Data
             DependentBuilder.Build(modelBuilder); 
             CremationBuilder.Build(modelBuilder);
             DeceasedPersonBuilder.Build(modelBuilder);
+
+            modelBuilder.Entity<Transport>()
+            .HasOne(t => t.DeceasedPerson)
+            .WithMany(d => d.Transport)
+            .HasForeignKey(t => t.DeceasedPersonId);
+
         }
 
     }

@@ -1,15 +1,14 @@
 ﻿using LumenSys.WebAPI.Objects.Enums;
 using LumenSys.WebAPI.Services.Utils;
-using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace LumenSys.WebAPI.Objects.DTOs.Entities
 {
     public class DeceasedPersonDTO
     {
-        public string Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
-        public string Age { get; set; }
+        public int Age { get; set; }
         public DateOnly BirthDay { get; set; }
         public DateOnly? DeathDate { get; set; }
         public string Cpf { get; set; }
@@ -27,7 +26,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             if (string.IsNullOrWhiteSpace(dto.Name))
                 throw new ArgumentException("Nome é obrigatório.");
 
-            if (string.IsNullOrWhiteSpace(dto.Age))
+            if (dto.Age <= 0)
                 throw new ArgumentException("Idade é obrigatória.");
 
             if (dto.BirthDay == default)

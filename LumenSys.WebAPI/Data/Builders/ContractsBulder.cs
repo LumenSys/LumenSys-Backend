@@ -31,6 +31,11 @@ namespace LumenSys.WebAPI.Data.Builders
                 .HasColumnName("value");
 
             modelBuilder.Entity<Contracts>()
+                .Property(c => c.MonthlyFee)
+                .IsRequired()
+                .HasColumnType("decimal(5,2)");
+
+            modelBuilder.Entity<Contracts>()
                 .HasOne(c => c.Client)
                 .WithMany(c => c.Contracts)
                 .HasForeignKey(c => c.ClientId)

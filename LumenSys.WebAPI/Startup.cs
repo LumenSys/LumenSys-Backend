@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using LumenSys.WebAPI.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using LumenSys.WebAPI.BackgroundServices;
 
 namespace LumenSys.WebAPI
 {
@@ -113,6 +114,7 @@ namespace LumenSys.WebAPI
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IContractsService, ContractsService>();
             services.AddScoped<IDependentService, DependentService>();
+            services.AddScoped<IInstallmentService, InstallmentService>();
 
             //Scoped Repositories and Interfaces repo
             services.AddScoped<ICompanyRepository, CompanyRepository>();
@@ -121,8 +123,9 @@ namespace LumenSys.WebAPI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IContractsRepository, ContractsRepository>();
             services.AddScoped<IDependentRepository, DependentRepository>();
+            services.AddScoped<IInstallmentRepository, InstallmentRepository>();
 
-
+            services.AddHostedService<InstallmentLateFeeService>();
 
         }
 

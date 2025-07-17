@@ -16,6 +16,10 @@ namespace LumenSys.WebAPI.Data
         public DbSet<Contracts> Contracts { get; set; }
         public DbSet<Dependent> Dependents { get; set; }
         public DbSet<Installment> Installments { get; set; }
+        public DbSet<Transport> transports { get; set; }
+        public DbSet<Cremation> Cremations { get; set; }
+        public DbSet<DeceasedPerson> DeceasedPerson { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -26,6 +30,12 @@ namespace LumenSys.WebAPI.Data
             ContractsBuilder.Build(modelBuilder);
             DependentBuilder.Build(modelBuilder); 
             InstallmentBuilder.Build(modelBuilder); 
+            DependentBuilder.Build(modelBuilder);
+            TransportBuilder.Build(modelBuilder);
+            CremationBuilder.Build(modelBuilder);
+            DeceasedPersonBuilder.Build(modelBuilder);
+
+
 
         }
 

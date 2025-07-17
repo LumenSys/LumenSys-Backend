@@ -49,9 +49,8 @@ namespace LumenSys.WebAPI.Data.Builders
 
             modelBuilder.Entity<Transport>()
                 .HasOne(t => t.DeceasedPerson)
-                .WithMany()
-                .HasForeignKey(t => t.DeceasedPersonId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .WithMany(d => d.Transport)
+                .HasForeignKey(t => t.DeceasedPersonId);
         }
     }
 }

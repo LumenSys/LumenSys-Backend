@@ -19,16 +19,18 @@ namespace LumenSys.WebAPI.Objects.Models
 
         [Column("DependentCount")]
         public int DependentCount { get; set; }
+        [Column("MonthlyFee")]
+        public double MonthlyFee { get; set; }
         [Column("value")]
         public double Value { get; set; }
         public int ClientId { get; set; }
         public Client Client { get; set; }
 
-        //public ICollection<Installment> Installments { get; set; } = new List<Installment>();
+        public ICollection<Installment> Installments { get; set; } = new List<Installment>();
         public ICollection<Dependent> Dependent { get; set; } = new List<Dependent>();
         public Contracts() { }
 
-        public Contracts(int id, bool isActive, DateTime startDate, DateTime endDate, int dependentCount, double value)
+        public Contracts(int id, bool isActive, DateTime startDate, DateTime endDate, int dependentCount, double value, double monthlyFee)
         {
             Id = id;
             IsActive = isActive;
@@ -36,6 +38,7 @@ namespace LumenSys.WebAPI.Objects.Models
             EndDate = endDate;
             DependentCount = dependentCount;
             Value = value;
+            MonthlyFee = monthlyFee;
         }
     }
 }

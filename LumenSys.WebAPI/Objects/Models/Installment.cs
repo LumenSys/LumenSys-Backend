@@ -18,8 +18,8 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("Value")]
         public double Value { get; set; }
 
-        [Column("LateFee")]//penalty
-        public double LateFee { get; set; }
+        [Column("Penalty")]
+        public double Penalty { get; set; }
 
         [Column("PaymentMethod")]
         public PaymentMethod PaymentMethod { get; set; }
@@ -32,13 +32,13 @@ namespace LumenSys.WebAPI.Objects.Models
         public Contracts Contract { get; set; }
 
         public Installment() { }
-        public Installment(int id, DateTime? paymentDate, DateTime dueDate, double value, double lateFee, PaymentMethod paymentMethod, PaymentStatus paymentStatus, int contractId)
+        public Installment(int id, DateTime? paymentDate, DateTime dueDate, double value, double penalty, PaymentMethod paymentMethod, PaymentStatus paymentStatus, int contractId)
         {
             Id = id;
             PaymentDate = paymentDate;
             DueDate = dueDate;
             Value = value;
-            LateFee = lateFee;
+            Penalty = penalty;
             PaymentMethod = paymentMethod;
             PaymentStatus = paymentStatus;
             ContractId = contractId;

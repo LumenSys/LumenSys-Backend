@@ -22,10 +22,10 @@ namespace LumenSys.WebAPI.BackgroundServices
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var service = scope.ServiceProvider.GetRequiredService<IInstallmentService>();
-                    await service.FeesOverdueInstallments(); // Correção aqui
+                    await service.FeesOverdueInstallments(); 
                 }
 
-                await Task.Delay(TimeSpan.FromHours(24), stoppingToken); // Executa uma vez a cada 24 horas
+                await Task.Delay(TimeSpan.FromHours(24), stoppingToken);
             }
         }
     }

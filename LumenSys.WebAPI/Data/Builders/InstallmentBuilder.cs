@@ -23,7 +23,7 @@ namespace LumenSys.WebAPI.Data.Builders
                 .HasColumnType("decimal(18,2)");
 
             modelBuilder.Entity<Installment>()
-                .Property(i => i.LateFee)
+                .Property(i => i.Penalty)
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
 

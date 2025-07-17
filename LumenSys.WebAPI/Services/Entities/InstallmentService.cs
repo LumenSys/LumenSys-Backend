@@ -54,7 +54,7 @@ namespace LumenSys.WebAPI.Services.Entities
                 {
                     DueDate = dueDate,
                     Value = value,
-                    LateFee = 0,
+                    Penalty = 0,
                     PaymentMethod = dto.PaymentMethod,
                     PaymentStatus = PaymentStatus.PENDING,
                     ContractId = dto.ContractId
@@ -124,7 +124,7 @@ namespace LumenSys.WebAPI.Services.Entities
                 if (monthsLate <= 0) continue;
 
                 var fee = installment.Value * ((contract.MonthlyFee / 100.0) * monthsLate);
-                installment.LateFee = Math.Round(fee, 2);
+                installment.Penalty = Math.Round(fee, 2);
                 installment.PaymentStatus = PaymentStatus.LATE;
 
                 await _installmentRepository.Update(installment);

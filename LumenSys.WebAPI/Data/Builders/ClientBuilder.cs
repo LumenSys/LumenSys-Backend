@@ -58,12 +58,6 @@ namespace LumenSys.WebAPI.Data.Builders
                 .WithOne(d => d.Client)
                 .HasForeignKey(d => d.ClientId)
                 .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<Client>()
-                .HasOne(c => c.User)
-                .WithMany()
-                .HasForeignKey(c => c.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

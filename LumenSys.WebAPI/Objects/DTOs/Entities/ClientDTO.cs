@@ -75,8 +75,6 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             set => _uf = value?.Trim().ToUpper();
         }
 
-        public int? UserId { get; set; }
-
         public static void Validate(ClientDTO dto)
         {
             if (dto == null)
@@ -91,9 +89,6 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             dto.Cpf = dto.Cpf.ExtractNumbers();
             if (dto.Cpf.Length != 11)
                 throw new ArgumentException("CPF deve conter 11 dígitos.");
-
-            if (string.IsNullOrWhiteSpace(dto.Phone))
-                throw new ArgumentException("Telefone é obrigatório.");
 
             if (!OperatorUltilitie.CheckValidPhone(dto.Phone))
                 throw new ArgumentException("Telefone inválido.");

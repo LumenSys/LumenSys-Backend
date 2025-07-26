@@ -18,6 +18,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Mappings
             CreateMap<InstallmentDTO, Installment>().ReverseMap();
             CreateMap<DeceasedPersonDTO, DeceasedPerson>().ReverseMap();
             CreateMap<TransportDTO, Transport>().ReverseMap();
+            CreateMap<ClientDTO, Client>().ReverseMap();
 
         }
     }

@@ -60,6 +60,14 @@ namespace LumenSys.WebAPI.Data.Builders
                 .WithMany()
                 .HasForeignKey(dp => dp.WakeId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<DeceasedPerson>(entity =>
+            {
+                entity.HasOne(dp => dp.Client)
+                      .WithMany(c => c.DeceasedPerson)
+                      .HasForeignKey(dp => dp.ClientId)
+                      .IsRequired();
+            });
         }
     }
 }

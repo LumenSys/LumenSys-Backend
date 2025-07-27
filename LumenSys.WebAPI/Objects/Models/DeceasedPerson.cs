@@ -40,8 +40,8 @@ namespace LumenSys.WebAPI.Objects.Models
         public int? WakeId { get; set; }
         public Funeral? Wake { get; set; }
 
-        public int? ClientId { get; set; }
-        public Client? Client { get; set; }
+        public int ClientId { get; set; }
+        public Client Client { get; set; }
 
         public Thanatopraxia Thanatopraxia { get; set; }
 

@@ -17,6 +17,16 @@ namespace LumenSys.WebAPI.Services.Entities
             _mapper = mapper;
         }
 
+        public override async Task Create(DeceasedPersonDTO dto)
+        {
+            var entity = _mapper.Map<DeceasedPerson>(dto);
+
+            // Garante que o EF saiba que o cliente já existe
+            _deceasedPersonRepository.Attach(new Client { Id = entity.ClientId });
+
+            await _deceasedPersonRepository.Add(entity);
+        }
+
         public override async Task Update(DeceasedPersonDTO dto, int id)
         {
             if (dto == null)

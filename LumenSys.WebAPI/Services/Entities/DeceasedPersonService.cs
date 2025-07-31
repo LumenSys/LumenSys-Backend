@@ -21,9 +21,6 @@ namespace LumenSys.WebAPI.Services.Entities
         {
             var entity = _mapper.Map<DeceasedPerson>(dto);
 
-            // Garante que o EF saiba que o cliente já existe
-            _deceasedPersonRepository.Attach(new Client { Id = entity.ClientId });
-
             await _deceasedPersonRepository.Add(entity);
         }
 

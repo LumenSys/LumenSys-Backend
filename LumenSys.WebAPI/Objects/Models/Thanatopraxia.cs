@@ -16,8 +16,8 @@ namespace LumenSys.WebAPI.Objects.Models
         public string ConditionBody { get; set; }
         public int? UserId { get; set; }
         public User? User { get; set; }
-        public int DeceasedPersonId { get; set; }
-        public DeceasedPerson deceasedPerson { get; set; } = null!;
+        public int? DeceasedPersonId { get; set; }
+        public DeceasedPerson? deceasedPerson { get; set; } = null!;
         public Thanatopraxia() { }
 
         public Thanatopraxia(string id, DateOnly date, string description, string conditionBody)

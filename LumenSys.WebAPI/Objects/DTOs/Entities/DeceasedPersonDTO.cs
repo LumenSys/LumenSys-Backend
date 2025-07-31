@@ -114,11 +114,12 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             if (string.IsNullOrWhiteSpace(dto.Nationality))
                 throw new ArgumentException("Nacionalidade é obrigatória.");
 
-            if (dto.Marital == default)
-                throw new ArgumentException("Estado civil é obrigatório.");
+            if (!Enum.IsDefined(typeof(MaritalStatus), dto.Marital))
+                throw new ArgumentException("Estado civil inválido.");
 
-            if (dto.Sex == default)
-                throw new ArgumentException("Sexo é obrigatório.");
+            if (!Enum.IsDefined(typeof(SexType), dto.Sex))
+                throw new ArgumentException("Sexo inválido.");
+
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using LumenSys.WebAPI.Objects.Models;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 
 namespace LumenSys.WebAPI.Data.Builders
 {
@@ -7,67 +7,63 @@ namespace LumenSys.WebAPI.Data.Builders
     {
         public static void Build(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DeceasedPerson>().HasKey(c => c.Id);
+            var entity = modelBuilder.Entity<DeceasedPerson>();
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .Property(dp => dp.Name)
+            entity.HasKey(dp => dp.Id);
+
+            entity.Property(dp => dp.Name)
                 .IsRequired();
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .Property(dp => dp.Age)
+            entity.Property(dp => dp.Age)
                 .IsRequired();
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .Property(dp => dp.BirthDay)
+            entity.Property(dp => dp.BirthDay)
                 .IsRequired();
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .Property(dp => dp.DeathDate)
+            entity.Property(dp => dp.DeathDate)
+                .IsRequired(false); 
+
+            entity.Property(dp => dp.Cpf)
                 .IsRequired(false);
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .Property(dp => dp.Cpf)
-                .IsRequired(false);
-
-            modelBuilder.Entity<DeceasedPerson>()
-                .Property(dp => dp.DeathCause)
+            entity.Property(dp => dp.DeathCause)
                 .IsRequired();
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .Property(dp => dp.Nationality)
+            entity.Property(dp => dp.Nationality)
                 .IsRequired();
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .Property(dp => dp.Marital)
+            entity.Property(dp => dp.Marital)
                 .IsRequired();
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .Property(dp => dp.Sex)
+            entity.Property(dp => dp.Sex)
                 .IsRequired();
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .HasOne(dp => dp.Cremation)
-                .WithMany()
-                .OnDelete(DeleteBehavior.SetNull);
+            entity.HasOne(dp => dp.Cremation)
+                  .WithOne(c => c.DeceasedPerson)
+                  .HasForeignKey<Cremation>(c => c.DeceasedPersonId)
+                  .IsRequired(false)
+                  .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .HasMany(dp => dp.Transport)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasMany(dp => dp.Transport)
+                  .WithOne()
+                  .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<DeceasedPerson>()
-                .HasOne(dp => dp.Wake)
-                .WithMany()
-                .HasForeignKey(dp => dp.WakeId)
-                .OnDelete(DeleteBehavior.SetNull);
+            entity.HasOne(dp => dp.Wake)
+                  .WithMany()
+                  .HasForeignKey(dp => dp.WakeId)
+                  .OnDelete(DeleteBehavior.SetNull);
 
-            modelBuilder.Entity<DeceasedPerson>(entity =>
-            {
-                entity.HasOne(dp => dp.Client)
-                      .WithMany(c => c.DeceasedPerson)
-                      .HasForeignKey(dp => dp.ClientId)
-                      .IsRequired();
-            });
+            entity.HasOne(dp => dp.Client)
+                  .WithMany(c => c.DeceasedPerson)
+                  .HasForeignKey(dp => dp.ClientId)
+                  .IsRequired()
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(dp => dp.Thanatopraxia)
+                  .WithOne(t => t.deceasedPerson)
+                  .HasForeignKey<Thanatopraxia>(t => t.DeceasedPersonId)
+                  .IsRequired(false)
+                  .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

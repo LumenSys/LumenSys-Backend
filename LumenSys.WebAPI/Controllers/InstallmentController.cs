@@ -55,6 +55,7 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
+                dto.Id = 0;
                 InstallmentDTO.Validate(dto);
                 await _installmentService.Create(dto); 
 

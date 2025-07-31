@@ -56,6 +56,7 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
+                funeralPlan.Id = 0;
                 FuneralPlansDTO.Validate(funeralPlan);
                 await _funeralPlanService.Create(funeralPlan);
 

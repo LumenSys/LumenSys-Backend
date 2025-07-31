@@ -62,6 +62,7 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
+                funeral.Id = 0;
                 FuneralDTO.Validate(funeral);
                 await _funeralService.Create(funeral);
                 _response.Code = ResponseEnum.Success;

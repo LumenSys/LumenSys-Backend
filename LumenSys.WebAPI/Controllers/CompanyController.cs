@@ -62,6 +62,7 @@ namespace LumenSys.WebAPI.Controllers
             try
             {
                 CompanyDTO.Validate(companyDto);
+                companyDto.Id = 0;
                 await _companyService.Create(companyDto);
 
                 _response.Code = ResponseEnum.Success;

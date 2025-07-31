@@ -62,6 +62,7 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
+                dependent.Id = 0;
                 DependentDTO.Validate(dependent);
                 await _dependentService.Create(dependent);
 

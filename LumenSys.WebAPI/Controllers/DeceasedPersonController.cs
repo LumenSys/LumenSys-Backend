@@ -55,37 +55,38 @@ namespace LumenSys.WebAPI.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Post(DeceasedPersonDTO dto)
+        public async Task<IActionResult> Post(DeceasedPersonDTO deceasedPersondto)
         {
             try
             {
-                DeceasedPersonDTO.Validate(dto);
-                await _deceasedPersonService.Create(dto);
+                deceasedPersondto.Id = 0;
+                DeceasedPersonDTO.Validate(deceasedPersondto);
+                await _deceasedPersonService.Create(deceasedPersondto);
 
                 _response.Code = ResponseEnum.Success;
                 _response.Message = "Pessoa falecida criado com sucesso!";
-                _response.Data = dto;
+                _response.Data = deceasedPersondto;
                 return Ok(_response);
             }
             catch (ArgumentException ex)
             {
                 _response.Code = ResponseEnum.Invalid;
                 _response.Message = ex.Message;
-                _response.Data = dto;
+                _response.Data = deceasedPersondto;
                 return BadRequest(_response);
             }
             catch (InvalidOperationException ex)
             {
                 _response.Code = ResponseEnum.Conflict;
                 _response.Message = ex.Message;
-                _response.Data = dto;
+                _response.Data = deceasedPersondto;
                 return Conflict(_response);
             }
             catch (Exception ex)
             {
                 _response.Code = ResponseEnum.Error;
                 _response.Message = "Erro ao cadastrar pessoa falecida: " + ex.Message;
-                _response.Data = dto;
+                _response.Data = deceasedPersondto;
                 return StatusCode(500, _response);
             }
         }

@@ -15,8 +15,8 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("cremationnumber")]
         public string Number { get; set;}
 
-        public int DeceasedPersonId { get; set; } 
-        public DeceasedPerson DeceasedPerson { get; set; } = null!;
+        public int? DeceasedPersonId { get; set; }
+        public DeceasedPerson? DeceasedPerson { get; set; }
 
         public Cremation () { }
 

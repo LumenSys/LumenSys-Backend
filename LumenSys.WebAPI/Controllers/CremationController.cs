@@ -64,6 +64,7 @@ namespace LumenSys.WebAPI.Controllers
             try
             {
                 CremationDTO.Validate(dto);
+                dto.Id = 0;
                 await _cremationService.Create(dto);
 
                 _response.Code = ResponseEnum.Success;

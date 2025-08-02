@@ -17,6 +17,13 @@ namespace LumenSys.WebAPI.Services.Entities
             _mapper = mapper;
         }
 
+        public override async Task Create(DeceasedPersonDTO dto)
+        {
+            var entity = _mapper.Map<DeceasedPerson>(dto);
+
+            await _deceasedPersonRepository.Add(entity);
+        }
+
         public override async Task Update(DeceasedPersonDTO dto, int id)
         {
             if (dto == null)

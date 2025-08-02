@@ -61,6 +61,7 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
+                transportDto.Id = 0;
                 TransportDTO.Validate(transportDto);
                 await _transportService.Create(transportDto);
 

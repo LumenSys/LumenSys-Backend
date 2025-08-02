@@ -64,6 +64,7 @@ namespace LumenSys.WebAPI.Controllers
             try
             {
                 ContractsDTO.Validate(dto);
+                dto.Id = 0;
                 await _contractsService.Create(dto);
 
                 _response.Code = ResponseEnum.Success;

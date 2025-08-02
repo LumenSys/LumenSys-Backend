@@ -17,10 +17,10 @@ namespace LumenSys.WebAPI.Objects.Models
         public DateOnly BirthDay { get; set; }
 
         [Column("deathdate")]
-        public DateOnly? DeathDate { get; set; } // Data da morte
+        public DateOnly? DeathDate { get; set; } 
 
         [Column("cpf")]
-        public string? Cpf { get; set; } // CPF do falecido
+        public string? Cpf { get; set; } 
 
         [Column("deathcause")]
         public string DeathCause { get; set; }
@@ -40,10 +40,10 @@ namespace LumenSys.WebAPI.Objects.Models
         public int? WakeId { get; set; }
         public Funeral? Wake { get; set; }
 
-        public int? ClientId { get; set; }
-        public Client? Client { get; set; }
+        public int ClientId { get; set; }
+        public Client Client { get; set; }
 
-        public Thanatopraxia Thanatopraxia { get; set; }
+        public Thanatopraxia? Thanatopraxia { get; set; }
 
         public DeceasedPerson() { }
 
@@ -62,3 +62,4 @@ namespace LumenSys.WebAPI.Objects.Models
         }
     }
 }
+

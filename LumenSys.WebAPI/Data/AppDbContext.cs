@@ -20,6 +20,8 @@ namespace LumenSys.WebAPI.Data
         public DbSet<Cremation> Cremations { get; set; }
         public DbSet<DeceasedPerson> DeceasedPerson { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Thanatopraxia> Thanatopraxias { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +38,7 @@ namespace LumenSys.WebAPI.Data
             CremationBuilder.Build(modelBuilder);
             DeceasedPersonBuilder.Build(modelBuilder);
             ClientBuilder.Build(modelBuilder);
-
+            ThanatopraxiaBuilder.Build(modelBuilder);
 
 
         }

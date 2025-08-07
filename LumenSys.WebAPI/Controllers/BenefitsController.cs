@@ -10,12 +10,12 @@ namespace LumenSys.WebAPI.Controllers
     [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class BenefitsContoller : ControllerBase
+    public class BenefitsController : ControllerBase
     {
         private readonly IBenefitsService _benefitsService;
         private readonly Response _response;
 
-        public BenefitsContoller(IBenefitsService benefitsService)
+        public BenefitsController(IBenefitsService benefitsService)
         {
             _benefitsService = benefitsService;
             _response = new Response();
@@ -82,7 +82,7 @@ namespace LumenSys.WebAPI.Controllers
                 BenefitsDTO.IsFilledString(dto.Description);
                 await _benefitsService.Update(dto, id);
                 _response.Code = ResponseEnum.Success;
-                _response.Message = "Benefício obitido com sucesso!";
+                _response.Message = "Benefício atualizado com sucesso!";
                 _response.Data = dto;
                 return Ok(_response);
             }

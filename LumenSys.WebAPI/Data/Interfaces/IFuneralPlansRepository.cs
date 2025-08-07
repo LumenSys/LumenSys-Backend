@@ -1,12 +1,9 @@
-﻿using LumenSys.WebAPI.Data.Interfaces;
-using LumenSys.WebAPI.Objects.Models;
-using System.Threading;
-
+﻿using LumenSys.WebAPI.Objects.Models;
 
 namespace LumenSys.WebAPI.Data.Interfaces
 {
     public interface IFuneralPlansRepository : IGenericRepository<FuneralPlans>
     {
-       
+        Task<FuneralPlans> GetById(int id); 
     }
 }

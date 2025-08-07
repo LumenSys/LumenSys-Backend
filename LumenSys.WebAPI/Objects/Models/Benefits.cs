@@ -2,7 +2,7 @@
 
 namespace LumenSys.WebAPI.Objects.Models
 {
-    [Table("Benetits")]
+    [Table("Benefits")]
     public class Benefits
     {
         [Column("Id")]

@@ -31,15 +31,6 @@ namespace LumenSys.WebAPI.Services.Entities
             if (await CheckDuplicate(dto.Name, 0))
                 throw new InvalidOperationException("Já existe um plano funerário com este nome.");
 
-            var entity = _mapper.Map<FuneralPlans>(dto);
-
-            foreach (var benefitId in dto.BenefitsIds)
-            {
-                entity.BenefitsPlans.Add(new BenefitsPlans
-                {
-                    BenefitsId = benefitId,
-                });
-            }
             await base.Create(dto);
         }
 
@@ -57,19 +48,6 @@ namespace LumenSys.WebAPI.Services.Entities
             var entity = await _funeralPlansRepository.GetById(id);
             if (entity == null)
                 throw new ArgumentNullException($"Plano funerário com ID {id} não encontrado.");
-
-            _mapper.Map(dto, entity);
-
-            entity.BenefitsPlans.Clear();
-
-            foreach (var benefitId in dto.BenefitsIds)
-            {
-                entity.BenefitsPlans.Add(new BenefitsPlans
-                {
-                    BenefitsId = benefitId,
-                    FuneralPlansId = id
-                });
-            }
 
             await base.Update(dto, id);
         }

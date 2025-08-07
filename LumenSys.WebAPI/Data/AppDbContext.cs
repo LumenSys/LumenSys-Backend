@@ -21,6 +21,7 @@ namespace LumenSys.WebAPI.Data
         public DbSet<DeceasedPerson> DeceasedPerson { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Benefits> Benefits { get; set; }
+        public DbSet<BenefitsPlans> BenefitsPlans { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,6 +39,7 @@ namespace LumenSys.WebAPI.Data
             DeceasedPersonBuilder.Build(modelBuilder);
             ClientBuilder.Build(modelBuilder);
             BenefitsBuilder.Build(modelBuilder);
+            BenefitsPlansBuilder.Build(modelBuilder);
 
 
         }

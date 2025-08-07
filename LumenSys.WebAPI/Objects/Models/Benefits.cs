@@ -12,6 +12,7 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("Description")]
         public string Description { get; set; }
         public ICollection<BenefitsPlans> BenefitsPlans { get; set; } = new List<BenefitsPlans>();
+
     }
 }
     

@@ -56,6 +56,7 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
+                dto.Id = 0;
                 await _benefitsPlansService.Create(dto);
                 _response.Code = ResponseEnum.Success;
                 _response.Message = "Relação planos e benefícios criado com sucesso!";

@@ -2,8 +2,8 @@
 {
     public class BenefitsPlansDTO
     {
+        public int Id { get; set; }
         public int BenefitsId { get; set; }
-
         public int FuneralPlansId { get; set; }
     }
 }

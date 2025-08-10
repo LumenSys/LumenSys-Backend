@@ -28,7 +28,7 @@ namespace LumenSys.WebAPI.Services.Entities
         public override async Task Create(BenefitsPlansDTO benefitsPlansDto)
         {
             if (benefitsPlansDto == null)
-                throw new ArgumentNullException("Cliente não pode ser nulo.");
+                throw new ArgumentNullException("Relação não pode ser nulo.");
 
 
             await base.Create(benefitsPlansDto);
@@ -37,10 +37,10 @@ namespace LumenSys.WebAPI.Services.Entities
         public override async Task Update(BenefitsPlansDTO benefitsPlansDto, int id)
         {
             if (benefitsPlansDto == null)
-                throw new ArgumentNullException("Cliente não pode ser nulo.");
+                throw new ArgumentNullException("Relação não pode ser nulo.");
 
             if (benefitsPlansDto.FuneralPlansId != id)
-                throw new ArgumentException("O ID do cliente deve corresponder ao ID informado.");
+                throw new ArgumentException("O ID da relação deve corresponder ao ID informado.");
 
             await base.Update(benefitsPlansDto, id);
         }
@@ -49,7 +49,7 @@ namespace LumenSys.WebAPI.Services.Entities
         {
             var client = await _benefitsPlansRepository.GetById(id);
             if (client == null)
-                throw new ArgumentNullException($"Cliente com o ID {id} não foi encontrado.");
+                throw new ArgumentNullException($"Relação com o ID {id} não foi encontrado.");
 
             await base.Delete(id);
         }

@@ -1,5 +1,6 @@
 ﻿using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Objects.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LumenSys.WebAPI.Data.Repositories
 {
@@ -10,6 +11,12 @@ namespace LumenSys.WebAPI.Data.Repositories
         public BenefitsPlansRepository(AppDbContext context) : base(context)
         {
             _context = context;
+        }
+        public async Task<IEnumerable<BenefitsPlans>> GetByIds(List<int> ids)
+        {
+            return await _context.BenefitsPlans
+                .Where(bp => ids.Contains(bp.Id))
+                .ToListAsync();
         }
     }
 }

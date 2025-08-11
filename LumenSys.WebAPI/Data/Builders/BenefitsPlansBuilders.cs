@@ -8,7 +8,7 @@ namespace LumenSys.WebAPI.Data.Builders
         public static void Build(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BenefitsPlans>()
-                .HasKey(bp => new { bp.BenefitsId, bp.FuneralPlansId });
+                .HasKey(bp => bp.Id);
 
             modelBuilder.Entity<BenefitsPlans>()
                 .HasOne(bp => bp.Benefit)

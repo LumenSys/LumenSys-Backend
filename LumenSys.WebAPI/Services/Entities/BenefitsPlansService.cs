@@ -42,7 +42,7 @@ public class BenefitsPlansService : GenericService<BenefitsPlans, BenefitsPlansD
         return grouped;
     }
 
-    public async Task<BenefitsPlansDTO> GetByFuneralPlanId(int funeralPlanId)
+    public async Task<BenefitsPlansDTO> GetById(int funeralPlanId)
     {
         var allRelations = await _benefitsPlansRepository.Get();
 
@@ -90,11 +90,10 @@ public class BenefitsPlansService : GenericService<BenefitsPlans, BenefitsPlansD
     }
     public override async Task Delete(int id)
     {
-        var relacao = await _benefitsPlansRepository.GetById(id);
-        if (relacao == null)
-            throw new ArgumentNullException($"Relação com o ID {id} não foi encontrada.");
+        var relation = await _benefitsRepository.GetById(id);
+        if (relation == null)
+            throw new ArgumentNullException($"Relação com o ID {id} não foi encontrado.");
         await _benefitsPlansRepository.RemoveByFuneralPlanIdAsync(id);
-        await base.Delete(id);
     }
 
 

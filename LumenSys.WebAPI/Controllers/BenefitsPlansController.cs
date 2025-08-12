@@ -49,6 +49,12 @@ namespace LumenSys.WebAPI.Controllers
                 _response.Message = ex.Message;
                 return NotFound(_response);
             }
+            catch (Exception ex)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = ex.Message;
+                return StatusCode(500, _response);
+            }
         }
 
         [HttpPost]
@@ -56,29 +62,10 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
-                dto.Id = 0;
+           
                 await _benefitsPlansService.Create(dto);
                 _response.Code = ResponseEnum.Success;
                 _response.Message = "Relação planos e benefícios criado com sucesso!";
-                _response.Data = dto;
-                return Ok(_response);
-            }
-            catch (ArgumentException ex)
-            {
-                _response.Code = ResponseEnum.Invalid;
-                _response.Message = ex.Message;
-                return BadRequest(_response);
-            }
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, BenefitsPlansDTO dto)
-        {
-            try
-            {
-                await _benefitsPlansService.Update(dto, id);
-                _response.Code = ResponseEnum.Success;
-                _response.Message = "Relação planos e benefícios atualizado com sucesso!";
                 _response.Data = dto;
                 return Ok(_response);
             }
@@ -92,6 +79,7 @@ namespace LumenSys.WebAPI.Controllers
             {
                 _response.Code = ResponseEnum.Invalid;
                 _response.Message = ex.Message;
+                _response.Data = dto;
                 return BadRequest(_response);
             }
             catch (Exception ex)
@@ -117,6 +105,12 @@ namespace LumenSys.WebAPI.Controllers
                 _response.Code = ResponseEnum.NotFound;
                 _response.Message = ex.Message;
                 return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = ex.Message;
+                return StatusCode(500, _response);
             }
         }
 

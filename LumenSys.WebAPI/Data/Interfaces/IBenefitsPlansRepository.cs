@@ -4,7 +4,9 @@ namespace LumenSys.WebAPI.Data.Interfaces
 {
     public interface IBenefitsPlansRepository : IGenericRepository<BenefitsPlans>
     {
-        Task<IEnumerable<BenefitsPlans>> GetByIds(List<int> ids);
+        Task RemoveByFuneralPlanIdAsync(int funeralPlanId);
+        Task AddRangeAsync(IEnumerable<BenefitsPlans> entities);
+
 
     }
 }

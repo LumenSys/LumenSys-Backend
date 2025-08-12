@@ -12,11 +12,16 @@ namespace LumenSys.WebAPI.Data.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<BenefitsPlans>> GetByIds(List<int> ids)
+        public async Task RemoveByFuneralPlanIdAsync(int funeralPlanId)
         {
-            return await _context.BenefitsPlans
-                .Where(bp => ids.Contains(bp.Id))
-                .ToListAsync();
+            var items = _context.BenefitsPlans.Where(x => x.FuneralPlansId == funeralPlanId);
+            _context.BenefitsPlans.RemoveRange(items);
+            await _context.SaveChangesAsync();
+        }
+        public async Task AddRangeAsync(IEnumerable<BenefitsPlans> entities)
+        {
+            await _context.BenefitsPlans.AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
         }
     }
 }

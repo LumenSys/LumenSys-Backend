@@ -48,6 +48,12 @@ namespace LumenSys.WebAPI.Controllers
                 _response.Message = ex.Message;
                 return NotFound(_response);
             }
+            catch (Exception ex)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = ex.Message;
+                return StatusCode(500, _response);
+            }
         }
 
         [HttpPost]
@@ -70,6 +76,12 @@ namespace LumenSys.WebAPI.Controllers
                 _response.Code = ResponseEnum.Invalid;
                 _response.Message = ex.Message;
                 return BadRequest(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = ex.Message;
+                return StatusCode(500, _response);
             }
         }
 
@@ -121,6 +133,12 @@ namespace LumenSys.WebAPI.Controllers
                 _response.Code = ResponseEnum.NotFound;
                 _response.Message = ex.Message;
                 return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = ex.Message;
+                return StatusCode(500, _response);
             }
         }
 

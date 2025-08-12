@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public int FuneralPlansId { get; set; }
-        public List<int> BenefitsIds { get; set; } = new List<int>();
+        public List<int> BenefitsIds { get; set; } = new();
     }
 }

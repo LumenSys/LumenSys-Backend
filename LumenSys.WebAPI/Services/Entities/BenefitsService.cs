@@ -21,20 +21,20 @@ namespace LumenSys.WebAPI.Services.Entities
         }
         public override async Task<BenefitsDTO> GetById(int id)
         {
-            var transport = await _benefitsRepository.GetById(id);
-            if (transport == null)
+            var benefit = await _benefitsRepository.GetById(id);
+            if (benefit == null)
                 throw new ArgumentNullException($"Benefício com o ID {id} não foi encontrado.");
 
-            return _mapper.Map<BenefitsDTO>(transport);
+            return _mapper.Map<BenefitsDTO>(benefit);
         }
 
         public override async Task Create(BenefitsDTO dto)
         {
             if (dto == null)
-                throw new ArgumentNullException("Benefício não pode ser nulo.");
+                throw new ArgumentNullException("O benefício não pode ser nulo.");
 
             if (await CheckDuplicate(b => b.Name, dto.Name, 0))
-                throw new InvalidOperationException("E-mail já está em uso.");
+                throw new InvalidOperationException("O nome do benefício já está em uso.");
 
             await base.Create(dto);
         }
@@ -42,13 +42,13 @@ namespace LumenSys.WebAPI.Services.Entities
         public override async Task Update(BenefitsDTO dto, int id)
         {
             if (dto == null)
-                throw new ArgumentNullException("Beneficio não pode ser nulo.");
+                throw new ArgumentNullException("O benefício não pode ser nulo.");
 
             if (dto.Id != id)
                 throw new ArgumentException("O ID informado não corresponde ao ID do benefício.");
 
             if (await CheckDuplicate(b => b.Name, dto.Name, id))
-                throw new InvalidOperationException("E-mail já está em uso.");
+                throw new InvalidOperationException("O nome do benefício já está em uso.");
             await base.Update(dto, id);
         }
 
@@ -56,7 +56,7 @@ namespace LumenSys.WebAPI.Services.Entities
         {
             var transport = await _benefitsRepository.GetById(id);
             if (transport == null)
-                throw new ArgumentNullException("Benefício não encontrado.");
+                throw new ArgumentNullException($"Benefício com o ID {id} não foi encontrado.");
 
             await base.Delete(id);
         }

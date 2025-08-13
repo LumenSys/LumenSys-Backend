@@ -64,6 +64,7 @@ namespace LumenSys.WebAPI.Data.Builders
                   .HasForeignKey<Thanatopraxia>(t => t.DeceasedPersonId)
                   .IsRequired(false)
                   .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

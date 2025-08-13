@@ -30,6 +30,8 @@ namespace LumenSys.WebAPI.Objects.DTOs.Mappings
             CreateMap<ClientDTO, Client>().ReverseMap();
             CreateMap<BenefitsDTO, Benefits>().ReverseMap();
             CreateMap<BenefitsPlansDTO, BenefitsPlans>().ReverseMap();
+            CreateMap<ThanatopraxiaDTO, Thanatopraxia>().ReverseMap();
+
         }
     }
 }

@@ -7,7 +7,7 @@ namespace LumenSys.WebAPI.Objects.Models
     public class Thanatopraxia
     {
         [Column("id")]
-        public string Id { get; set; }
+        public int Id { get; set; }
         [Column("date")]
         public DateOnly Date { get; set; }
         [Column("description")]
@@ -20,7 +20,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public DeceasedPerson? deceasedPerson { get; set; } = null!;
         public Thanatopraxia() { }
 
-        public Thanatopraxia(string id, DateOnly date, string description, string conditionBody)
+        public Thanatopraxia(int id, DateOnly date, string description, string conditionBody)
         {
             Id = id;
             Date = date;

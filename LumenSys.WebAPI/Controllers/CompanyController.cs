@@ -48,7 +48,7 @@ namespace LumenSys.WebAPI.Controllers
                 _response.Message = ex.Message;
                 return NotFound(_response);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _response.Code = ResponseEnum.Error;
                 _response.Message = "Erro ao buscar empresa.";

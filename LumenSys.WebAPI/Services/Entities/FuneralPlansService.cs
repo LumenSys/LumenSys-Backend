@@ -5,6 +5,7 @@ using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
 using LumenSys.WebAPI.Services.Utils;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,8 +45,13 @@ namespace LumenSys.WebAPI.Services.Entities
             if (await CheckDuplicate(dto.Name, id))
                 throw new InvalidOperationException("Já existe outro plano funerário com este nome.");
 
+            var entity = await _funeralPlansRepository.GetById(id);
+            if (entity == null)
+                throw new ArgumentNullException($"Plano funerário com ID {id} não encontrado.");
+
             await base.Update(dto, id);
         }
+
 
         private async Task<bool> CheckDuplicate(string valor, int idIgnorar)
         {
@@ -56,6 +62,7 @@ namespace LumenSys.WebAPI.Services.Entities
                 StringUtils.CompareString(f.Name, valor)
             );
         }
+        
 
     }
 }

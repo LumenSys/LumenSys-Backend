@@ -8,10 +8,17 @@ public class GenericService<T, TDto> : IGenericService<T, TDto> where T : class 
 {
     private readonly IGenericRepository<T> _repository;
     private readonly IMapper _mapper;
+    private IBenefitsPlansService repository;
 
     public GenericService(IGenericRepository<T> repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
+    }
+
+    public GenericService(IBenefitsPlansService repository, IMapper mapper)
+    {
+        this.repository = repository;
         _mapper = mapper;
     }
 

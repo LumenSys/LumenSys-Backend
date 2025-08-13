@@ -27,14 +27,14 @@ namespace LumenSys.WebAPI.Services.Entities
         {
             var cremation = await _cremationRepository.GetById(id);
             if (cremation == null)
-                throw new ArgumentNullException($"Cremation com ID {id} não foi encontrado.");
+                throw new ArgumentNullException($"Cremação com ID {id} não foi encontrado.");
             return _mapper.Map<CremationDTO>(cremation);
         }
         public override async Task Delete(int id)
         {
             var cremation = await _cremationRepository.GetById(id);
             if (cremation == null)
-                throw new ArgumentNullException($"Cremation com ID {id} não foi encontrado.");
+                throw new ArgumentNullException($"Cremação com ID {id} não foi encontrado.");
             await base.Delete(id);
         }
     }

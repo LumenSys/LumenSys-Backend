@@ -16,6 +16,8 @@
     public int MaxAge { get; set; }
     public double DependentAdditional { get; set; }
 
+    public List<int> BenefitsIds { get; set; } = new();
+
     public static void Validate(FuneralPlansDTO dto)
     {
         if (dto == null)

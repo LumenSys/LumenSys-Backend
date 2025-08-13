@@ -1,33 +1,34 @@
-﻿using LumenSys.WebAPI.Objects.DTOs.Entities;
+﻿using LumenSys.WebAPI.Objects.Contract;
+using LumenSys.WebAPI.Objects.DTOs.Entities;
+using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
-using LumenSys.Objects.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using LumenSys.WebAPI.Objects.Contract;
 
 namespace LumenSys.WebAPI.Controllers
 {
     [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class InstallmentController : ControllerBase
+
+    public class BenefitsPlansController : Controller
     {
-        private readonly IInstallmentService _installmentService;
+        private readonly IBenefitsPlansService _benefitsPlansService;
         private readonly Response _response;
 
-        public InstallmentController(IInstallmentService installmentService)
+        public BenefitsPlansController(IBenefitsPlansService benefitsPlansService)
         {
-            _installmentService = installmentService;
+            _benefitsPlansService = benefitsPlansService;
             _response = new Response();
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var installments = await _installmentService.GetAll();
+            var benefitsPlan = await _benefitsPlansService.GetAll();
             _response.Code = ResponseEnum.Success;
-            _response.Message = "Lista de parcelamentos obtida com sucesso!";
-            _response.Data = installments;
+            _response.Message = "Lista de relações planos e benefícios obtida com sucesso!";
+            _response.Data = benefitsPlan;
             return Ok(_response);
         }
 
@@ -36,10 +37,10 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
-                var installment = await _installmentService.GetById(id);
+                var benefitsPlan = await _benefitsPlansService.GetById(id);
                 _response.Code = ResponseEnum.Success;
-                _response.Message = "Parcelamento encontrado com sucesso!";
-                _response.Data = installment;
+                _response.Message = "Relação planos e benefícios encontrado com sucesso!";
+                _response.Data = benefitsPlan;
                 return Ok(_response);
             }
             catch (ArgumentNullException ex)
@@ -57,36 +58,14 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(InstallmentDTO dto)
+        public async Task<IActionResult> Post(BenefitsPlansDTO dto)
         {
             try
             {
-                dto.Id = 0;
-                InstallmentDTO.Validate(dto);
-                await _installmentService.Create(dto); 
-
+           
+                await _benefitsPlansService.Create(dto);
                 _response.Code = ResponseEnum.Success;
-                _response.Message = "Installments generated successfully.";
-                _response.Data = dto;
-                return Ok(_response);
-            }
-            catch (ArgumentException ex)
-            {
-                _response.Code = ResponseEnum.Invalid;
-                _response.Message = ex.Message;
-                return BadRequest(_response);
-            }
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, InstallmentDTO dto)
-        {
-            try
-            {
-                InstallmentDTO.Validate(dto);
-                await _installmentService.Update(dto, id);
-                _response.Code = ResponseEnum.Success;
-                _response.Message = "Paecelamento obitido com sucesso!";
+                _response.Message = "Relação planos e benefícios criado com sucesso!";
                 _response.Data = dto;
                 return Ok(_response);
             }
@@ -100,6 +79,7 @@ namespace LumenSys.WebAPI.Controllers
             {
                 _response.Code = ResponseEnum.Invalid;
                 _response.Message = ex.Message;
+                _response.Data = dto;
                 return BadRequest(_response);
             }
             catch (Exception ex)
@@ -115,9 +95,9 @@ namespace LumenSys.WebAPI.Controllers
         {
             try
             {
-                await _installmentService.Delete(id);
+                await _benefitsPlansService.Delete(id);
                 _response.Code = ResponseEnum.Success;
-                _response.Message = "Parcelamento deletado com sucesso!";
+                _response.Message = "Relação planos e benefícios deletado com sucesso!";
                 return Ok(_response);
             }
             catch (ArgumentNullException ex)

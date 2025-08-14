@@ -2,8 +2,9 @@
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
-using LumenSys.WebAPI.Services.Entities;
 using Microsoft.AspNetCore.Authorization;
+using LumenSys.WebAPI.Objects.Contract;
+using LumenSys.Objects.Enums;
 
 namespace LumenSys.WebAPI.Controllers
 {
@@ -13,57 +14,112 @@ namespace LumenSys.WebAPI.Controllers
     public class FuneralController : ControllerBase
     {
         private readonly IFuneralService _funeralService;
+        private readonly Response _response;
 
         public FuneralController(IFuneralService funeralService)
         {
             _funeralService = funeralService;
+            _response = new Response();
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var funerals = await _funeralService.GetAll();
-            return Ok(funerals);
+            _response.Code = ResponseEnum.Success;
+            _response.Message = "Lista de velórios obtida com sucesso.";
+            _response.Data = funerals;
+            return Ok(_response);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var funeral = await _funeralService.GetById(id);
-            if (funeral == null)
-                return NotFound("Velório não encontrado");
-            return Ok(funeral);
+            try
+            {
+                var funeral = await _funeralService.GetById(id);
+                _response.Code = ResponseEnum.Success;
+                _response.Message = "Velório encontrado com sucesso.";
+                _response.Data = funeral;
+                return Ok(_response);
+            }
+            catch (ArgumentNullException ex)
+            {
+                _response.Code = ResponseEnum.NotFound;
+                _response.Message = ex.Message;
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = "Erro ao buscar velório: " + ex.Message;
+                return StatusCode(500, _response);
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(FuneralDTO funeral)
         {
-            if (string.IsNullOrEmpty(funeral.Location))
-                return BadRequest("Erro na localização");
             try
             {
+                funeral.Id = 0;
+                FuneralDTO.Validate(funeral);
                 await _funeralService.Create(funeral);
-                return Ok(funeral);
+                _response.Code = ResponseEnum.Success;
+                _response.Message = "Velório criado com sucesso!";
+                _response.Data = funeral;
+                return Ok(_response);
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
-                return StatusCode(500, "Ocorreu um erro ao tentar inserir um novo velório.");
+                _response.Code = ResponseEnum.Invalid;
+                _response.Message = ex.Message;
+                return BadRequest(_response);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _response.Code = ResponseEnum.Conflict;
+                _response.Message = ex.Message;
+                return Conflict(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = "Erro ao criar velório: " + ex.Message;
+                return StatusCode(500, _response);
             }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, FuneralDTO funeral)
         {
-            if (string.IsNullOrEmpty(funeral.Location))
-                return BadRequest("Erro na localização");
             try
             {
+
+                FuneralDTO.Validate(funeral);
                 await _funeralService.Update(funeral, id);
-                return Ok(funeral);
+                _response.Code = ResponseEnum.Success;
+                _response.Message = "Velório atualizado com sucesso!";
+                _response.Data = funeral;
+                return Ok(_response);
+            }
+            catch (ArgumentException ex)
+            {
+                _response.Code = ResponseEnum.Invalid;
+                _response.Message = ex.Message;
+                return BadRequest(_response);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _response.Code = ResponseEnum.Conflict;
+                _response.Message = ex.Message;
+                return Conflict(_response);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Erro ao atualizar os dados do velório: " + ex.Message);
+                _response.Code = ResponseEnum.Error;
+                _response.Message = "Erro ao atualizar velório: " + ex.Message;
+                return StatusCode(500, _response);
             }
         }
 
@@ -73,11 +129,21 @@ namespace LumenSys.WebAPI.Controllers
             try
             {
                 await _funeralService.Delete(id);
-                return Ok("Velório removido com sucesso");
+                _response.Code = ResponseEnum.Success;
+                _response.Message = "Velório removido com sucesso.";
+                return Ok(_response);
             }
-            catch (Exception)
+            catch (ArgumentNullException ex)
             {
-                return StatusCode(500, "Erro ao tentar remover o velório.");
+                _response.Code = ResponseEnum.NotFound;
+                _response.Message = ex.Message;
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = "Erro ao remover velório: " + ex.Message;
+                return StatusCode(500, _response);
             }
         }
     }

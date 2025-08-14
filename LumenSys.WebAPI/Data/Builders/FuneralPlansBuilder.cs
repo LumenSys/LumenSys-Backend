@@ -41,6 +41,9 @@ namespace LumenSys.WebAPI.Data.Builders
                 .Property(fp => fp.DependentAdditional)
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<FuneralPlans>()
+                .HasKey(fp => fp.Id);
+
         }
     }
 }

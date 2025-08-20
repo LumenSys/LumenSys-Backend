@@ -45,7 +45,7 @@ namespace LumenSys.WebAPI.Data.Builders
             modelBuilder.Entity<Thanatopraxia>().HasData(
                 new Thanatopraxia
                 {
-                    Id = 0,
+                    Id = 1,
                     Date = new DateOnly(2024, 6, 15),
                     Description = "Preservação padrão para velório em capela",
                     ConditionBody = "Estado regular",
@@ -54,7 +54,7 @@ namespace LumenSys.WebAPI.Data.Builders
                 },
                 new Thanatopraxia
                 {
-                    Id = 0,
+                    Id = 2,
                     Date = new DateOnly(2025, 1, 6),
                     Description = "Tratamento avançado para cerimônia prolongada",
                     ConditionBody = "Boa conservação",

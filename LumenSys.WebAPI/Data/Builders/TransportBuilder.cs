@@ -56,7 +56,7 @@ namespace LumenSys.WebAPI.Data.Builders
             modelBuilder.Entity<Transport>().HasData(
                 new Transport
                 {
-                    Id = 0,
+                    Id = 1,
                     Name = "Carro Funerário A",
                     Date = new DateOnly(2024, 6, 16),
                     Time = new TimeOnly(8, 30, 0),
@@ -69,7 +69,7 @@ namespace LumenSys.WebAPI.Data.Builders
                 },
                 new Transport
                 {
-                    Id = 0,
+                    Id = 2,
                     Name = "Carro Funerário B",
                     Date = new DateOnly(2025, 1, 7),
                     Time = new TimeOnly(9, 15, 0),
@@ -82,7 +82,7 @@ namespace LumenSys.WebAPI.Data.Builders
                 },
                 new Transport
                 {
-                    Id = 0,
+                    Id = 3,
                     Name = "Carro Funerário C",
                     Date = new DateOnly(2025, 1, 7),
                     Time = new TimeOnly(9, 30, 0),

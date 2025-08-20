@@ -34,7 +34,6 @@ namespace LumenSys.WebAPI.Data
             ContractsBuilder.Build(modelBuilder);
             DependentBuilder.Build(modelBuilder); 
             InstallmentBuilder.Build(modelBuilder); 
-            DependentBuilder.Build(modelBuilder);
             TransportBuilder.Build(modelBuilder);
             CremationBuilder.Build(modelBuilder);
             DeceasedPersonBuilder.Build(modelBuilder);

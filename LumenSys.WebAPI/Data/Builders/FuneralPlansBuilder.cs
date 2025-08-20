@@ -45,8 +45,8 @@ namespace LumenSys.WebAPI.Data.Builders
                 .HasKey(fp => fp.Id);
 
             modelBuilder.Entity<FuneralPlans>().HasData(
-                new FuneralPlans { Id = 0, Name = "Platina", Description = "Platina no LOL.", AnnualValue = 800.00, Available = true, MaxDependents = 2, MaxAge = 70, DependentAdditional = 15.00 },
-                new FuneralPlans { Id = 0, Name = "Ovo", Description = "Ovo no funeral.", AnnualValue = 10.00, Available = true, MaxDependents = 4, MaxAge = 75, DependentAdditional = 0.00 }
+                new FuneralPlans { Id = 1, Name = "Platina", Description = "Platina no LOL.", AnnualValue = 800.00, Available = true, MaxDependents = 2, MaxAge = 70, DependentAdditional = 15.00 },
+                new FuneralPlans { Id = 2, Name = "Ovo", Description = "Ovo no funeral.", AnnualValue = 10.00, Available = true, MaxDependents = 4, MaxAge = 75, DependentAdditional = 0.00 }
             );
         }
     }

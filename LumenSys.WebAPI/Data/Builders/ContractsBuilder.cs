@@ -28,7 +28,8 @@ namespace LumenSys.WebAPI.Data.Builders
             modelBuilder.Entity<Contracts>()
                 .Property(c => c.Value)
                 .IsRequired()
-                .HasColumnName("value");
+                .HasColumnType("decimal(10,2)");
+
 
             modelBuilder.Entity<Contracts>()
                 .Property(c => c.MonthlyFee)
@@ -55,10 +56,10 @@ namespace LumenSys.WebAPI.Data.Builders
             modelBuilder.Entity<Contracts>().HasData(
                 new Contracts
                 {
-                    Id = 0,
+                    Id = 1,
                     IsActive = true,
-                    StartDate = new DateTime(2025, 1, 1),
-                    EndDate = new DateTime(2030, 1, 1),
+                    StartDate = new DateOnly(2025, 1, 1),
+                    EndDate = new DateOnly(2030, 1, 1),
                     DependentCount = 2,
                     Value = 5000.00,
                     MonthlyFee = 150.00,

@@ -20,11 +20,11 @@ namespace LumenSys.WebAPI.Data.Builders
                 .WithMany(fp => fp.BenefitsPlans)
                 .HasForeignKey(bp => bp.FuneralPlansId);
             modelBuilder.Entity<BenefitsPlans>().HasData(
-                new BenefitsPlans { Id = 0, BenefitsId = 1, FuneralPlansId = 2 },
-                new BenefitsPlans { Id = 0, BenefitsId = 2, FuneralPlansId = 2 },
-                new BenefitsPlans { Id = 0, BenefitsId = 1, FuneralPlansId = 1 },
-                new BenefitsPlans { Id = 0, BenefitsId = 2, FuneralPlansId = 1 },
-                new BenefitsPlans { Id = 0, BenefitsId = 3, FuneralPlansId = 1 }
+                new BenefitsPlans { Id = 1, BenefitsId = 1, FuneralPlansId = 2 },
+                new BenefitsPlans { Id = 2, BenefitsId = 2, FuneralPlansId = 2 },
+                new BenefitsPlans { Id = 3, BenefitsId = 1, FuneralPlansId = 1 },
+                new BenefitsPlans { Id = 4, BenefitsId = 2, FuneralPlansId = 1 },
+                new BenefitsPlans { Id = 5, BenefitsId = 3, FuneralPlansId = 1 }
             );
         }
     }

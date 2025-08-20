@@ -22,9 +22,9 @@ namespace LumenSys.WebAPI.Data.Builders
 
             //Inserção inicial 
             modelBuilder.Entity<Benefits>().HasData(
-                new Benefits { Id = 0, Name = "Transporte", Description = "Transporte do corpo ilimitado." },
-                new Benefits { Id = 0, Name = "Caixão", Description = "Cerimonia com o caixão." },
-                new Benefits { Id = 0, Name = "Flores", Description = "Flores padrão." }
+                new Benefits { Id = 1, Name = "Transporte", Description = "Transporte do corpo ilimitado." },
+                new Benefits { Id = 2, Name = "Caixão", Description = "Cerimonia com o caixão." },
+                new Benefits { Id = 3, Name = "Flores", Description = "Flores padrão." }
             );
         }
 

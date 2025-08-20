@@ -17,7 +17,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public DateOnly BirthDay { get; set; }
 
         [Column("deathdate")]
-        public DateOnly? DeathDate { get; set; } 
+        public DateOnly DeathDate { get; set; } 
 
         [Column("cpf")]
         public string? Cpf { get; set; } 
@@ -47,7 +47,7 @@ namespace LumenSys.WebAPI.Objects.Models
 
         public DeceasedPerson() { }
 
-        public DeceasedPerson(int id, string name, int age, DateOnly birthday, DateOnly? deathDate, string cpf, string deathcause, string nationality, MaritalStatus marital, SexType sex)
+        public DeceasedPerson(int id, string name, int age, DateOnly birthday, DateOnly deathDate, string cpf, string deathcause, string nationality, MaritalStatus marital, SexType sex)
         {
             Id = id;
             Name = name;

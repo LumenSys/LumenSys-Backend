@@ -21,10 +21,10 @@ namespace LumenSys.WebAPI.Data.Builders
                 .IsRequired();
 
             entity.Property(dp => dp.DeathDate)
-                .IsRequired(false); 
+                .IsRequired(); 
 
             entity.Property(dp => dp.Cpf)
-                .IsRequired(false);
+                .IsRequired();
 
             entity.Property(dp => dp.DeathCause)
                 .IsRequired();

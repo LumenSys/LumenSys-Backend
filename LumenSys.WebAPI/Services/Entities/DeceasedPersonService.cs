@@ -21,6 +21,12 @@ namespace LumenSys.WebAPI.Services.Entities
         {
             var entity = _mapper.Map<DeceasedPerson>(dto);
 
+            var age = dto.DeathDate.Year - dto.BirthDay.Year;
+            if (dto.DeathDate < dto.BirthDay.AddYears(age))
+                age--;
+
+            entity.Age = age;
+
             await _deceasedPersonRepository.Add(entity);
         }
 

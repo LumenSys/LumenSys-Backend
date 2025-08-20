@@ -10,7 +10,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
         private string _name;
         private int _age;
         private DateOnly _birthDay;
-        private DateOnly? _deathDate;
+        private DateOnly _deathDate;
         private string _cpf;
         private string _deathCause;
         private string _nationality;
@@ -42,7 +42,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             set => _birthDay = value;
         }
 
-        public DateOnly? DeathDate
+        public DateOnly DeathDate
         {
             get => _deathDate;
             set => _deathDate = value;
@@ -92,13 +92,10 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             if (string.IsNullOrWhiteSpace(dto.Name))
                 throw new ArgumentException("Nome é obrigatório.");
 
-            if (dto.Age <= 0)
-                throw new ArgumentException("Idade é obrigatória.");
-
             if (dto.BirthDay == default)
                 throw new ArgumentException("Data de nascimento é obrigatória.");
 
-            if (dto.DeathDate.HasValue && dto.DeathDate < dto.BirthDay)
+            if (dto.DeathDate < dto.BirthDay)
                 throw new ArgumentException("Data de falecimento não pode ser anterior à data de nascimento.");
 
             if (string.IsNullOrWhiteSpace(dto.DeathCause))

@@ -38,6 +38,9 @@ namespace LumenSys.WebAPI.Services.Entities
             if (await CheckDuplicate(c => c.Email, clientDto.Email, 0))
                 throw new InvalidOperationException("Já existe um cliente com esse e-mail.");
 
+            if (!CpfCnpjValidator.IsValid(clientDto.Cpf))
+                throw new ArgumentException("CPF inválido.");
+
             await base.Create(clientDto);
         }
 
@@ -54,6 +57,9 @@ namespace LumenSys.WebAPI.Services.Entities
 
             if (await CheckDuplicate(c => c.Email, clientDto.Email, id))
                 throw new InvalidOperationException("Já existe um cliente com esse e-mail.");
+
+            if (!CpfCnpjValidator.IsValid(clientDto.Cpf))
+                throw new ArgumentException("CPF inválido.");
 
             await base.Update(clientDto, id);
         }

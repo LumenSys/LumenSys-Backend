@@ -41,7 +41,27 @@ namespace LumenSys.WebAPI.Data.Builders
                 .WithOne(dp => dp.Thanatopraxia)
                 .HasForeignKey<Thanatopraxia>(t => t.DeceasedPersonId)
                 .OnDelete(DeleteBehavior.SetNull);
-    
+
+            modelBuilder.Entity<Thanatopraxia>().HasData(
+                new Thanatopraxia
+                {
+                    Id = 1,
+                    Date = new DateOnly(2024, 6, 15),
+                    Description = "Preservação padrão para velório em capela",
+                    ConditionBody = "Estado regular",
+                    UserId = 3, 
+                    DeceasedPersonId = 1 
+                },
+                new Thanatopraxia
+                {
+                    Id = 2,
+                    Date = new DateOnly(2025, 1, 6),
+                    Description = "Tratamento avançado para cerimônia prolongada",
+                    ConditionBody = "Boa conservação",
+                    UserId = 4,
+                    DeceasedPersonId = 2 
+                }
+            );
         }
     }
 }

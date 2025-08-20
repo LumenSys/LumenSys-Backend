@@ -28,7 +28,8 @@ namespace LumenSys.WebAPI.Data.Builders
             modelBuilder.Entity<Contracts>()
                 .Property(c => c.Value)
                 .IsRequired()
-                .HasColumnName("value");
+                .HasColumnType("decimal(10,2)");
+
 
             modelBuilder.Entity<Contracts>()
                 .Property(c => c.MonthlyFee)
@@ -45,6 +46,28 @@ namespace LumenSys.WebAPI.Data.Builders
                 .HasMany(c => c.Dependent)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Contracts>()
+                .HasOne(c => c.FuneralPlans)
+                .WithMany(fp => fp.Contracts)
+                .HasForeignKey(c => c.FuneralPlanId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Contracts>().HasData(
+                new Contracts
+                {
+                    Id = 1,
+                    IsActive = true,
+                    StartDate = new DateOnly(2025, 1, 1),
+                    EndDate = new DateOnly(2030, 1, 1),
+                    DependentCount = 2,
+                    Value = 5000.00,
+                    MonthlyFee = 150.00,
+                    ClientId = 1,        
+                    FuneralPlanId = 1    
+                }
+            );
+
         }
     }
 }

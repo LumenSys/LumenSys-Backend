@@ -51,6 +51,17 @@ namespace LumenSys.WebAPI.Data.Builders
             modelBuilder.Entity<Company>()
                 .Property(c => c.UF)
                 .HasMaxLength(2);
+
+            modelBuilder.Entity<Company>().HasData(
+                new Company
+                {
+                    Id = 1,CpfCnpj = "98740052000107", Name = "BarbyGirls", TradeName = "Barby", Email = "barbygirls@gmail.com", Phone = "(85)3029-4894", Street = "Av. Paulista", Number = "999", Neighborhood = "Bela Vista",City = "São Paulo",UF = "SP"
+                },
+                new Company
+                {
+                    Id = 2,CpfCnpj = "04862960000111", Name = "DiggoOpinião",TradeName = "Diggo",Email = "diggo@gmmail.com",Phone = "(17)9978-6332", Street = "Rua das Laranjeiras", Number = "2043", Neighborhood = "Centro",City = "Rio de Janeiro",UF = "RJ"
+                }
+            );
         }
     }
 }

@@ -52,8 +52,8 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
 
         public static void PasswordIsValid(string password)
         {
-            if (string.IsNullOrWhiteSpace(password) && password.Length < 9)
-                throw new ArgumentException("A senha deve conter no mínimo 9 caracteres.");
+            if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
+                throw new ArgumentException("A senha deve conter no mínimo 8 caracteres.");
         }
 
         public static void PhoneIsValid(string? phone)

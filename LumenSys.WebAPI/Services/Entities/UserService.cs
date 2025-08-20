@@ -43,6 +43,9 @@ namespace LumenSys.WebAPI.Services.Entities
             if (await CheckDuplicate(u => u.Cpf, userDto.Cpf, 0))
                 throw new InvalidOperationException("CPF já está em uso.");
 
+            if (!string.IsNullOrWhiteSpace(userDto.Cpf) && !CpfCnpjValidator.IsValid(userDto.Cpf))
+                throw new ArgumentException("CPF inválido.");
+
             userDto.Password = OperatorUltilitie.GenerateHash(userDto.Password);
             await base.Create(userDto);
         }
@@ -62,6 +65,9 @@ namespace LumenSys.WebAPI.Services.Entities
 
             if (await CheckDuplicate(u => u.Cpf, userDto.Cpf, id))
                 throw new InvalidOperationException("CPF já está em uso.");
+
+            if (!string.IsNullOrWhiteSpace(userDto.Cpf) && !CpfCnpjValidator.IsValid(userDto.Cpf))
+                throw new ArgumentException("CPF inválido.");
 
             userDto.Password = OperatorUltilitie.GenerateHash(userDto.Password);
             await base.Update(userDto, id);
@@ -113,3 +119,4 @@ namespace LumenSys.WebAPI.Services.Entities
 
     }
 }
+

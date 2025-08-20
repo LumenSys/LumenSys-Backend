@@ -1,4 +1,5 @@
-﻿using LumenSys.WebAPI.Objects.Models;
+﻿using LumenSys.WebAPI.Objects.Enums;
+using LumenSys.WebAPI.Objects.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LumenSys.WebAPI.Data.Builders
@@ -21,10 +22,10 @@ namespace LumenSys.WebAPI.Data.Builders
                 .IsRequired();
 
             entity.Property(dp => dp.DeathDate)
-                .IsRequired(false); 
+                .IsRequired(); 
 
             entity.Property(dp => dp.Cpf)
-                .IsRequired(false);
+                .IsRequired();
 
             entity.Property(dp => dp.DeathCause)
                 .IsRequired();
@@ -65,6 +66,37 @@ namespace LumenSys.WebAPI.Data.Builders
                   .IsRequired(false)
                   .OnDelete(DeleteBehavior.Cascade);
 
+            entity.HasData
+                (
+                    new DeceasedPerson
+                    {
+                        Id = 1,
+                        Name = "RealGuy",
+                        Age = 75,
+                        BirthDay = new DateOnly(1949, 3, 10),
+                        DeathDate = new DateOnly(2024, 6, 15),
+                        Cpf = "62456763041",
+                        DeathCause = "Causas naturais",
+                        Nationality = "Brasileiro",
+                        Marital = MaritalStatus.MARRIED,
+                        Sex = SexType.MALE,
+                        ClientId = 1
+                    },
+                    new DeceasedPerson
+                    {
+                        Id = 2,
+                        Name = "Edd Gould",
+                        Age = 23,
+                        BirthDay = new DateOnly(1988, 10, 28),
+                        DeathDate = new DateOnly(2012, 3, 12),
+                        Cpf = "65293682806",
+                        DeathCause = "Câncer",
+                        Nationality = "Britânico",
+                        Marital = MaritalStatus.SINGLE,
+                        Sex = SexType.MALE,
+                        ClientId = 2
+                    }
+                 );
         }
     }
 }

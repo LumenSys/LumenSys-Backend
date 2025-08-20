@@ -71,7 +71,7 @@ namespace LumenSys.WebAPI.Data.Builders
                     Id = 4,
                     Name = "giorno",
                     Email = "giorno@gmail.com",
-                    Password = "12345678", 
+                    Password = "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f", 
                     Cpf = "09216837071",
                     HireDate = new DateOnly(2025, 8, 19),
                     TypeEmployee = TypeEmployee.ADMINISTRATOR,

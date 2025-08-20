@@ -24,6 +24,22 @@ namespace LumenSys.WebAPI.Data.Builders
                 .WithMany(c => c.Dependent)
                 .HasForeignKey(d => d.ContractId)
                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Dependent>().HasData(
+                new Dependent
+                {
+                    Id = 0,
+                    Name = "Maria Silva",
+                    Cpf = "228.487.200-00",
+                    ContractId = 1 
+                },
+                new Dependent
+                {
+                    Id = 0,
+                    Name = "Pedro Souza",
+                    Cpf = "463.749.600-41",
+                    ContractId = 1
+                }
+            );
         }
     }
 }

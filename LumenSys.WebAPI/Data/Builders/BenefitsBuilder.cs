@@ -19,7 +19,14 @@ namespace LumenSys.WebAPI.Data.Builders
                 .Property(b => b.Description)
                 .IsRequired()
                 .HasMaxLength(100);
-        
+
+            //Inserção inicial 
+            modelBuilder.Entity<Benefits>().HasData(
+                new Benefits { Id = 0, Name = "Transporte", Description = "Transporte do corpo ilimitado." },
+                new Benefits { Id = 0, Name = "Caixão", Description = "Cerimonia com o caixão." },
+                new Benefits { Id = 0, Name = "Flores", Description = "Flores padrão." }
+            );
         }
+
     }
 }

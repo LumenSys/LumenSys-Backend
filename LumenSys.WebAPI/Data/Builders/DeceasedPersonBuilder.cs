@@ -1,4 +1,5 @@
-﻿using LumenSys.WebAPI.Objects.Models;
+﻿using LumenSys.WebAPI.Objects.Enums;
+using LumenSys.WebAPI.Objects.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LumenSys.WebAPI.Data.Builders
@@ -65,6 +66,37 @@ namespace LumenSys.WebAPI.Data.Builders
                   .IsRequired(false)
                   .OnDelete(DeleteBehavior.Cascade);
 
+            entity.HasData
+                (
+                    new DeceasedPerson
+                    {
+                        Id = 0,
+                        Name = "RealGuy",
+                        Age = 0,
+                        BirthDay = new DateOnly(1949, 3, 10),
+                        DeathDate = new DateOnly(2024, 6, 15),
+                        Cpf = "44.809.587/0001-50",
+                        DeathCause = "Causas naturais",
+                        Nationality = "Brasileiro",
+                        Marital = MaritalStatus.MARRIED,
+                        Sex = SexType.MALE,
+                        ClientId = 1
+                    },
+                    new DeceasedPerson
+                    {
+                        Id = 0,
+                        Name = "Edd Gould",
+                        Age = 0,
+                        BirthDay = new DateOnly(1988, 10, 28),
+                        DeathDate = new DateOnly(20122, 3, 12),
+                        Cpf = "652.936.828-06",
+                        DeathCause = "Câncer",
+                        Nationality = "Britânico",
+                        Marital = MaritalStatus.SINGLE,
+                        Sex = SexType.MALE,
+                        ClientId = 2
+                    }
+                 );
         }
     }
 }

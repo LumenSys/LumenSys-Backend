@@ -58,6 +58,17 @@ namespace LumenSys.WebAPI.Data.Builders
                 .WithOne(d => d.Client)
                 .HasForeignKey(d => d.ClientId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Client>().HasData(
+               new Client
+               {
+                   Id = 0, Name = "Professor Utônio", Cpf = "249.295.176-64", Phone = "(79)3279-8495", Email = "utonium@gmail.com", Street = "Rua Meninas", Number = "123", Neighborhood = "Superpoderosas", City = "Townsville", Uf = "NS"
+               },
+               new Client
+               {
+                   Id = 0, Name = "TomSka", Cpf = "604.915.292-60", Phone = "(85)5538-3582", Email = "tomska@gmail.com", Street = "Edds Road", Number = "27", Neighborhood = "Durdam Lane", City = "Green Street", Uf = "UK"
+               }
+           );
         }
     }
 }

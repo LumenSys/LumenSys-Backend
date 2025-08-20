@@ -20,6 +20,16 @@ namespace LumenSys.WebAPI.Data.Builders
             modelBuilder.Entity<Cremation>()
                 .Property(c => c.Number)
                 .IsRequired();
+            modelBuilder.Entity<Cremation>().HasData(
+                new Cremation
+                {
+                    Id = 0,
+                    Date = new DateOnly(2024, 6, 20),
+                    Time = new TimeOnly(14, 0, 0),
+                    Number = "CR-001",
+                    DeceasedPersonId = 1 
+                }
+            );
 
         }
     }

@@ -45,6 +45,28 @@ namespace LumenSys.WebAPI.Data.Builders
                 .HasMany(c => c.Dependent)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Contracts>()
+                .HasOne(c => c.FuneralPlans)
+                .WithMany(fp => fp.Contracts)
+                .HasForeignKey(c => c.FuneralPlanId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Contracts>().HasData(
+                new Contracts
+                {
+                    Id = 0,
+                    IsActive = true,
+                    StartDate = new DateTime(2025, 1, 1),
+                    EndDate = new DateTime(2030, 1, 1),
+                    DependentCount = 2,
+                    Value = 5000.00,
+                    MonthlyFee = 150.00,
+                    ClientId = 1,        
+                    FuneralPlanId = 1    
+                }
+            );
+
         }
     }
 }

@@ -25,6 +25,8 @@ namespace LumenSys.WebAPI.Objects.Models
         public double Value { get; set; }
         public int ClientId { get; set; }
         public Client Client { get; set; }
+        public int FuneralPlanId {get; set; }
+        public FuneralPlans FuneralPlans { get; set; }
 
         public ICollection<Installment> Installments { get; set; } = new List<Installment>();
         public ICollection<Dependent> Dependent { get; set; } = new List<Dependent>();

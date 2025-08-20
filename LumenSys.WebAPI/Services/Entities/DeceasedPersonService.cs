@@ -3,6 +3,7 @@ using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
+using LumenSys.WebAPI.Services.Utils;
 
 namespace LumenSys.WebAPI.Services.Entities
 {
@@ -21,6 +22,9 @@ namespace LumenSys.WebAPI.Services.Entities
         {
             var entity = _mapper.Map<DeceasedPerson>(dto);
 
+            if (!CpfCnpjValidator.IsValid(dto.Cpf))
+                throw new ArgumentException("CPF inválido.");
+
             var age = dto.DeathDate.Year - dto.BirthDay.Year;
             if (dto.DeathDate < dto.BirthDay.AddYears(age))
                 age--;
@@ -36,6 +40,10 @@ namespace LumenSys.WebAPI.Services.Entities
                 throw new ArgumentNullException("Pessoa falecida inválida.");
             if(dto.Id != id)
                 throw new ArgumentException("ID do contrato não corresponde.");
+
+            if (!CpfCnpjValidator.IsValid(dto.Cpf))
+                throw new ArgumentException("CPF inválido.");
+
             await base.Update(dto, id);
         }
 

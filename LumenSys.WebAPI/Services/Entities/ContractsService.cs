@@ -9,25 +9,24 @@ namespace LumenSys.WebAPI.Services.Entities
     public class ContractsService : GenericService<Contracts, ContractsDTO>, IContractsService
     {
         private readonly IContractsRepository _contractsRepository;
-        // private readonly IClientRepository _clientRepository; 
+        private readonly IClientRepository _clientRepository; 
         private readonly IMapper _mapper;
-        public ContractsService(IContractsRepository repository, /* IClientRepository clientRepository, */IMapper mapper) : base(repository, mapper)
+        public ContractsService(IContractsRepository repository,  IClientRepository clientRepository, IMapper mapper) : base(repository, mapper)
         {
             _contractsRepository = repository;
-            // _clientRepository = clientRepository;
+            _clientRepository = clientRepository;
             _mapper = mapper;
         }
 
-        /*
         public async Task Create(ContractsDTO contractDto)
         {
-            var clientExists = await _clientRepository.Exists(contractDto.ClientId);
-            if (!clientExists)
+            var clientExists = await _clientRepository.GetById(contractDto.ClientId);
+            if (clientExists == null)
                 throw new ArgumentException("Cliente informado não existe.");
 
             await base.Create(contractDto);
         }
-        */
+        
         public override async Task Update(ContractsDTO dto, int id)
         {
             if (dto == null)

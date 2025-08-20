@@ -11,15 +11,16 @@ namespace LumenSys.WebAPI.Services.Entities
     public class DependentService : GenericService<Dependent, DependentDTO>, IDependentService
     {
         private readonly IDependentRepository _dependentRepository;
-        //private readonly IContractRepository _contractRepository;
+        private readonly IContractsRepository _contractsRepository;
         private readonly IMapper _mapper;
 
-        public DependentService(IDependentRepository repository, IMapper mapper) : base(repository, mapper)
+        public DependentService(IDependentRepository dependentRepository, IContractsRepository contractsRepository, IMapper mapper) : base(dependentRepository, mapper)
         {
-            _dependentRepository = repository;
-            //_contractRepository = contractRepository;
+            _dependentRepository = dependentRepository;
+            _contractsRepository = contractsRepository;
             _mapper = mapper;
         }
+
 
         public override async Task Create(DependentDTO dto)
         {
@@ -31,11 +32,11 @@ namespace LumenSys.WebAPI.Services.Entities
 
             if (await CheckDuplicate(dto.Cpf, 0, dto.ContractId))
                 throw new InvalidOperationException("Já existe um dependente com este CPF neste contrato.");
-            /*
-            var contractExists = await _contractRepository.Exists(dependentDto.ContractId);
-            if (!contractExists)
+
+            var contract = await _contractsRepository.GetById(dto.ContractId.Value);
+            if (contract == null)
                 throw new ArgumentException("Contrato informado não existe.");
-            */
+            
             await base.Create(dto);
         }
 

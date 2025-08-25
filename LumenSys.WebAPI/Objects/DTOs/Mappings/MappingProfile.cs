@@ -9,15 +9,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<FuneralPlans, FuneralPlansDTO>()
-                .AfterMap((src, dest) =>
-                {
-                    dest.BenefitsIds = src.BenefitsPlans.Select(bp => bp.BenefitsId).ToList();
-                });
-
-            CreateMap<FuneralPlansDTO, FuneralPlans>()
-                .ForMember(dest => dest.BenefitsPlans, opt => opt.Ignore());
-
+            CreateMap<FuneralPlans, FuneralPlansDTO>();
             CreateMap<DependentDTO, Dependent>().ReverseMap();
             CreateMap<FuneralDTO, Funeral>().ReverseMap();
             CreateMap<CremationDTO, Cremation>().ReverseMap();

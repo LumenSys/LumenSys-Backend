@@ -1,5 +1,4 @@
 using LumenSys.WebAPI.Services.Utils;
-using System;
 
 namespace LumenSys.WebAPI.Objects.DTOs.Entities
 {
@@ -7,7 +6,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
     {
         private int? _id;
         private string _cpfCnpj;
-        private string _name;
+        private string _companyName;
         private string _tradeName;
         private string _email;
         private string _phone;
@@ -16,6 +15,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
         private string _neighborhood;
         private string _city;
         private string _uf;
+        public byte[] CompanyLogo { get; set; }
 
         public int? Id
         {
@@ -29,10 +29,10 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             set => _cpfCnpj = value?.Trim();
         }
 
-        public string Name
+        public string CompanyName
         {
-            get => _name;
-            set => _name = value?.Trim();
+            get => _companyName;
+            set => _companyName = value?.Trim();
         }
 
         public string TradeName
@@ -95,7 +95,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             if (!(dto.CpfCnpj.Length == 11 || dto.CpfCnpj.Length == 14))
                 throw new ArgumentException("CPF deve conter 11 dígitos ou CNPJ 14 dígitos.");
 
-            if (string.IsNullOrWhiteSpace(dto.Name))
+            if (string.IsNullOrWhiteSpace(dto.CompanyName))
                 throw new ArgumentException("Nome da empresa é obrigatório.");
 
             if (string.IsNullOrWhiteSpace(dto.TradeName))

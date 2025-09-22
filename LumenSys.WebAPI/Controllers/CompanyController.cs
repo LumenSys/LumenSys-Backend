@@ -38,7 +38,7 @@ namespace LumenSys.WebAPI.Controllers
             {
                 var company = await _companyService.GetById(id);
                 _response.Code = ResponseEnum.Success;
-                _response.Message = $"Empresa {company.Name} encontrada com sucesso!";
+                _response.Message = $"Empresa {company.CompanyName} encontrada com sucesso!";
                 _response.Data = company;
                 return Ok(_response);
             }
@@ -153,6 +153,39 @@ namespace LumenSys.WebAPI.Controllers
                 _response.Message = "Erro ao remover empresa.";
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
+        }
+
+        [HttpPost("{id}/upload-logo")]
+        public async Task<IActionResult> InsertLogo(int id, IFormFile logo)
+        {
+            await _companyService.UpdateLogo(id, logo);
+            _response.Code = ResponseEnum.Success;
+            _response.Message = "Logo inserido com sucesso!";
+            _response.Data = null;
+            return Ok(_response);
+        }
+
+        [HttpGet("{id}/logo-base64")]
+        public async Task<IActionResult> GetCompanyLogoBase64(int id)
+        {
+            var result = await _companyService.GetLogoBase64(id);
+            if (result.Base64 is null)
+            {
+                _response.Code = ResponseEnum.Success;
+                _response.Message = "Logo não encontrado.";
+                _response.Data = null;
+                return Ok(_response);
+            }
+
+            var payload = new
+            {
+                Base64 = result.Base64
+            };
+
+            _response.Code = ResponseEnum.Success;
+            _response.Message = "Logo obtido com sucesso.";
+            _response.Data = payload;
+            return Ok(_response);
         }
     }
 }

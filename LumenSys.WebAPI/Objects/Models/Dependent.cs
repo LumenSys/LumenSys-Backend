@@ -14,7 +14,8 @@ namespace LumenSys.WebAPI.Objects.Models
 
         public int? ContractId { get; set; }
         public Contracts? Contracts { get; set; }
-   
+
+        public string CompanyId { get; set; }
         public Dependent() { }
 
         public Dependent(int id, string name, string cpf)

@@ -64,7 +64,8 @@ namespace LumenSys.WebAPI.Data.Builders
                     Value = 5000.00,
                     MonthlyFee = 150.00,
                     ClientId = 1,        
-                    FuneralPlanId = 1    
+                    FuneralPlanId = 1,
+                    CompanyId = "1"
                 }
             );
 

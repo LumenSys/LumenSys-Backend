@@ -15,6 +15,7 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("FuneralPlansId")]
         public int FuneralPlansId { get; set; }
         public FuneralPlans FuneralPlans { get; set; }
+        public string CompanyId { get; set; }
 
         public BenefitsPlans () { }
         public BenefitsPlans (int id, int benefitsId, Benefits benefit, int funeralPlansId, FuneralPlans funeralPlans)

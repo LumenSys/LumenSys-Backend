@@ -1,5 +1,6 @@
 ﻿using LumenSys.Objects.Enums;
 using LumenSys.WebAPI.Services.Utils;
+using System.Text.Json.Serialization;
 
 namespace LumenSys.WebAPI.Objects.DTOs.Entities
 {
@@ -27,6 +28,8 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
         public DateOnly? HireDate { get; set; }
         public UserStats Stats { get; set; }
         public TypeEmployee TypeEmployee { get; set; }
+        [JsonIgnore]
+        public int? CompanyId { get; set; }
 
         public static bool IsFilledString(params string[] parametros)
         {

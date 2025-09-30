@@ -18,6 +18,8 @@ namespace LumenSys.WebAPI.Objects.Models
         public int? DeceasedPersonId { get; set; }
         public DeceasedPerson? DeceasedPerson { get; set; }
 
+        public string CompanyId { get; set; }
+
         public Cremation () { }
 
         public Cremation (int id, DateOnly date, TimeOnly time, string number) 

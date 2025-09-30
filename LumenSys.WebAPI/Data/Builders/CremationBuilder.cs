@@ -27,7 +27,8 @@ namespace LumenSys.WebAPI.Data.Builders
                     Date = new DateOnly(2024, 6, 20),
                     Time = new TimeOnly(14, 0, 0),
                     Number = "CR-001",
-                    DeceasedPersonId = 1 
+                    DeceasedPersonId = 1,
+                    CompanyId = "1"
                 }
             );
 

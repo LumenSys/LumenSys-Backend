@@ -80,7 +80,8 @@ namespace LumenSys.WebAPI.Data.Builders
                         Nationality = "Brasileiro",
                         Marital = MaritalStatus.MARRIED,
                         Sex = SexType.MALE,
-                        ClientId = 1
+                        ClientId = 1,
+                        CompanyId = "1"
                     },
                     new DeceasedPerson
                     {
@@ -94,7 +95,8 @@ namespace LumenSys.WebAPI.Data.Builders
                         Nationality = "Britânico",
                         Marital = MaritalStatus.SINGLE,
                         Sex = SexType.MALE,
-                        ClientId = 2
+                        ClientId = 2,
+                        CompanyId = "1"
                     }
                  );
         }

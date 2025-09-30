@@ -45,6 +45,8 @@ namespace LumenSys.WebAPI.Objects.Models
 
         public Thanatopraxia? Thanatopraxia { get; set; }
 
+        public string CompanyId { get; set; }
+
         public DeceasedPerson() { }
 
         public DeceasedPerson(int id, string name, int age, DateOnly birthday, DateOnly deathDate, string cpf, string deathcause, string nationality, MaritalStatus marital, SexType sex)

@@ -27,6 +27,8 @@ namespace LumenSys.WebAPI.Objects.Models
         public int? DeceasedPersonId { get; set; }
         public DeceasedPerson? DeceasedPerson { get; set; }
 
+        public string CompanyId { get; set; }
+
         public Transport () { }
 
         public Transport (int id, string name, DateOnly date, TimeOnly time, string street, string number, string neighborhood, string city, string uf) 

@@ -31,6 +31,8 @@ namespace LumenSys.WebAPI.Objects.Models
         public int ContractId { get; set; }
         public Contracts Contract { get; set; }
 
+        public string CompanyId { get; set; }
+
         public Installment() { }
         public Installment(int id, DateTime? paymentDate, DateTime dueDate, double value, double penalty, PaymentMethod paymentMethod, PaymentStatus paymentStatus, int contractId)
         {

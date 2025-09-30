@@ -65,7 +65,8 @@ namespace LumenSys.WebAPI.Data.Builders
                     Neighborhood = "Centro",
                     City = "Townsville",
                     Uf = "NS",
-                    DeceasedPersonId = 1
+                    DeceasedPersonId = 1,
+                    CompanyId = "1"
                 },
                 new Transport
                 {
@@ -78,7 +79,8 @@ namespace LumenSys.WebAPI.Data.Builders
                     Neighborhood = "Bairro Novo",
                     City = "Green Street",
                     Uf = "UK",
-                    DeceasedPersonId = 2
+                    DeceasedPersonId = 2,
+                    CompanyId = "1"
                 },
                 new Transport
                 {
@@ -91,7 +93,8 @@ namespace LumenSys.WebAPI.Data.Builders
                     Neighborhood = "Bairro das Serpentes Escarlates",
                     City = "Green Street",
                     Uf = "UK",
-                    DeceasedPersonId = 2
+                    DeceasedPersonId = 2,
+                    CompanyId = "1"
                 }
             );
         }

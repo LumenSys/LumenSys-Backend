@@ -7,7 +7,7 @@ namespace LumenSys.WebAPI.Data.Builders
     {
         public static void Build(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Company>().HasKey(c => c.Id);
+            var entity = modelBuilder.Entity<Company>();
 
             modelBuilder.Entity<Company>()
                 .Property(c => c.CpfCnpj)
@@ -15,7 +15,7 @@ namespace LumenSys.WebAPI.Data.Builders
                 .HasMaxLength(14);
 
             modelBuilder.Entity<Company>()
-                .Property(c => c.Name)
+                .Property(c => c.CompanyName)
                 .IsRequired()
                 .HasMaxLength(100);
 
@@ -51,17 +51,42 @@ namespace LumenSys.WebAPI.Data.Builders
             modelBuilder.Entity<Company>()
                 .Property(c => c.UF)
                 .HasMaxLength(2);
+            // CompanyLogo agora é byte[] — não precisa de HasMaxLength
+            entity.Property(c => c.CompanyLogo)
+                .HasColumnType("BYTEA"); // PostgreSQL tipo binário
 
             modelBuilder.Entity<Company>().HasData(
                 new Company
                 {
-                    Id = 1,CpfCnpj = "98740052000107", Name = "BarbyGirls", TradeName = "Barby", Email = "barbygirls@gmail.com", Phone = "(85)3029-4894", Street = "Av. Paulista", Number = "999", Neighborhood = "Bela Vista",City = "São Paulo",UF = "SP"
+                    Id = 1,
+                    CpfCnpj = "98740052000107",
+                    CompanyName = "BarbyGirls",
+                    TradeName = "Barby",
+                    Email = "barbygirls@gmail.com",
+                    Phone = "(85)3029-4894",
+                    Street = "Av. Paulista",
+                    Number = "999",
+                    Neighborhood = "Bela Vista",
+                    City = "São Paulo",
+                    UF = "SP",
+                    CompanyLogo = null
                 },
                 new Company
                 {
-                    Id = 2,CpfCnpj = "04862960000111", Name = "DiggoOpinião",TradeName = "Diggo",Email = "diggo@gmmail.com",Phone = "(17)9978-6332", Street = "Rua das Laranjeiras", Number = "2043", Neighborhood = "Centro",City = "Rio de Janeiro",UF = "RJ"
+                    Id = 2,
+                    CpfCnpj = "04862960000111",
+                    CompanyName = "DiggoOpinião",
+                    TradeName = "Diggo",
+                    Email = "diggo@gmmail.com",
+                    Phone = "(17)9978-6332",
+                    Street = "Rua das Laranjeiras",
+                    Number = "2043",
+                    Neighborhood = "Centro",
+                    City = "Rio de Janeiro",
+                    UF = "RJ",
+                    CompanyLogo = null
                 }
-            );
+            ); 
         }
     }
 }

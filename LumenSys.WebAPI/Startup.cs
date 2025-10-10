@@ -18,6 +18,7 @@ using LumenSys.WebAPI.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using LumenSys.WebAPI.BackgroundServices;
 
+
 namespace LumenSys.WebAPI
 {
     public class Startup

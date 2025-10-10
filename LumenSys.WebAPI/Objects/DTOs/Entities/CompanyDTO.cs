@@ -15,7 +15,6 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
         private string _neighborhood;
         private string _city;
         private string _uf;
-        public byte[] CompanyLogo { get; set; }
 
         public int? Id
         {
@@ -82,6 +81,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             get => _uf;
             set => _uf = value?.Trim().ToUpper();
         }
+        public byte[] CompanyLogo { get; set; }
 
         public static void Validate(CompanyDTO dto)
         {

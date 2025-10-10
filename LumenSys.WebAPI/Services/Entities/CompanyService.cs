@@ -1,9 +1,13 @@
 using AutoMapper;
+using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Services.Interfaces;
 using LumenSys.WebAPI.Services.Utils;
-using LumenSys.WebAPI.Data.Interfaces;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LumenSys.WebAPI.Services.Entities
 {
@@ -18,42 +22,34 @@ namespace LumenSys.WebAPI.Services.Entities
             _mapper = mapper;
         }
 
-        public override async Task<CompanyDTO> GetById(int id)
+        public override async Task Create(CompanyDTO dto)
         {
-            var company = await _companyRepository.GetById(id);
-            if (company is null)
-                throw new ArgumentException($"Empresa com o id {id} informado não foi encontrada.");
+            if (dto == null)
+                throw new ArgumentNullException("Empresa não pode ser nula.");
 
-            return _mapper.Map<CompanyDTO>(company);
-        }
+            if (await CheckDuplicates(dto))
+                throw new InvalidOperationException("Nome corporativo ou nome comercial duplicado.");
 
-        public override async Task Create(CompanyDTO companyDto)
-        {
-            if (companyDto is null)
-                throw new ArgumentException("Empresa não pode ser nula.");
-
-            if (await CheckDuplicates(companyDto))
-                throw new ArgumentException("Nome corporativo ou nome comercial duplicado.");
-
-            if (companyDto.Id.HasValue && await _companyRepository.GetById(companyDto.Id.Value) is not null)
-                return;
-
-            await base.Create(companyDto);
+            await base.Create(dto);
             await _companyRepository.SaveChanges();
         }
 
-        public override async Task Update(CompanyDTO companyDto, int id)
+        public override async Task Update(CompanyDTO dto, int id)
         {
-            if (companyDto is null)
-                throw new ArgumentException("Empresa não pode ser nula.");
+            if (dto == null)
+                throw new ArgumentNullException(nameof(dto), "Empresa não pode ser nula.");
 
-            if (await CheckDuplicates(companyDto))
-                throw new ArgumentException("Nome corporativo ou nome comercial duplicado.");
+            if (dto.Id != id)
+                throw new ArgumentException("O ID da empresa deve corresponder ao ID informado.");
 
-            if (companyDto.Id != id)
-                throw new ArgumentException("O id da empresa dever ser o mesmo.");
+            if (await CheckDuplicates(dto))
+                throw new InvalidOperationException("Nome corporativo ou nome comercial duplicado.");
 
-            await base.Update(companyDto, id);
+            var entity = await _companyRepository.GetById(id);
+            if (entity == null)
+                throw new ArgumentNullException($"Empresa com ID {id} não encontrada.");
+
+            await base.Update(dto, id);
         }
 
         public async Task UpdateLogo(CompanyDTO dto)
@@ -64,56 +60,45 @@ namespace LumenSys.WebAPI.Services.Entities
             if (!dto.Id.HasValue)
                 throw new ArgumentException("Id da empresa não informado.");
 
-            var company = await _companyRepository.GetById(dto.Id.Value)
-                ?? throw new ArgumentException($"Empresa com o id {dto.Id} não foi encontrada.");
+            Company company;
+
+            try
+            {
+                company = await _companyRepository.GetById(dto.Id.Value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao buscar empresa: {ex.Message}");
+                throw;
+            }
+
+            if (company is null)
+                throw new KeyNotFoundException($"Empresa com o id {dto.Id} não foi encontrada.");
 
             company.CompanyLogo = dto.CompanyLogo;
 
             try
             {
                 await _companyRepository.Update(company);
+                Console.WriteLine($"Logo atualizado: {dto.CompanyLogo.Length} bytes");
             }
-            catch (Exception)
+            catch (InvalidOperationException ex)
             {
+                Console.WriteLine($"Erro de concorrência no DbContext: {ex.Message}");
+                throw new Exception("Erro interno ao salvar o logo. Tente novamente.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro inesperado ao atualizar logo: {ex.Message}");
                 throw;
             }
-        }
-
-        public async Task UpdateLogo(int id, IFormFile file)
-        {
-            if (file == null || file.Length == 0)
-                throw new ArgumentException("Arquivo de logo inválido ou vazio.");
-
-            var company = await _companyRepository.GetById(id)
-                ?? throw new ArgumentException($"Empresa com o id {id} não foi encontrada.");
-
-            using var ms = new MemoryStream();
-            await file.CopyToAsync(ms);
-            var bytes = ms.ToArray();
-
-            if (bytes.Length == 0)
-                throw new ArgumentException("Não foi possível ler o conteúdo do logo.");
-
-            company.CompanyLogo = bytes;
-            await _companyRepository.Update(company);
-        }
-
-        public async Task<(string Base64, string? MimeType)> GetLogoBase64(int id, string? mimeType = null)
-        {
-            var company = await _companyRepository.GetById(id);
-            if (company is null || company.CompanyLogo is null || company.CompanyLogo.Length == 0)
-                return (string.Empty, mimeType ?? "image/png");
-
-            mimeType ??= "image/png";
-            var base64 = Convert.ToBase64String(company.CompanyLogo);
-            return (base64, mimeType);
         }
 
         public override async Task Delete(int id)
         {
             var company = await _companyRepository.GetById(id);
             if (company is null)
-                throw new ArgumentException($"Empresa com o id {id} informado não foi encontrada.");
+                throw new KeyNotFoundException($"Empresa com o id {id} informado não foi encontrada.");
 
             await base.Delete(id);
         }
@@ -121,9 +106,20 @@ namespace LumenSys.WebAPI.Services.Entities
         public async Task<bool> CheckDuplicates(CompanyDTO dto)
         {
             var companies = await _companyRepository.Get();
-            return companies.Any(m => m.Id != dto.Id &&
+            return companies.Any(m =>
+                m.Id != dto.Id &&
                 (StringUtils.CompareString(m.CompanyName, dto.CompanyName) ||
                  StringUtils.CompareString(m.TradeName, dto.TradeName)));
+        }
+
+        public Task UpdateLogo(int id, IFormFile file)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<(string Base64, string? MimeType)> GetLogoBase64(int id, string? mimeType = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using LumenSys.WebAPI.Objects.Contract;
 using LumenSys.WebAPI.Objects.DTOs.Entities;
+using Microsoft.AspNetCore.Mvc;    
+
 using LumenSys.WebAPI.Services.Interfaces;
-using LumenSys.WebAPI.Objects.Contract;
-using LumenSys.Objects.Enums;
 
 namespace LumenSys.WebAPI.Controllers
 {
-    [Authorize(Roles = "ADMINISTRATOR")]
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class CompanyController : ControllerBase
+    public class CompanyController : Controller
     {
         private readonly ICompanyService _companyService;
         private readonly Response _response;
@@ -22,13 +20,14 @@ namespace LumenSys.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Get()
         {
             var companies = await _companyService.GetAll();
             _response.Code = ResponseEnum.Success;
             _response.Data = companies;
             _response.Message = "Lista de empresas obtida com sucesso!";
             return Ok(_response);
+
         }
 
         [HttpGet("{id}")]
@@ -38,95 +37,205 @@ namespace LumenSys.WebAPI.Controllers
             {
                 var company = await _companyService.GetById(id);
                 _response.Code = ResponseEnum.Success;
-                _response.Message = $"Empresa {company.CompanyName} encontrada com sucesso!";
+                _response.Message = $"Empresa {company.CompanyName} obtida com sucesso!";
                 _response.Data = company;
                 return Ok(_response);
             }
-            catch (ArgumentNullException ex)
+            catch (KeyNotFoundException ex)
             {
                 _response.Code = ResponseEnum.NotFound;
                 _response.Message = ex.Message;
+                _response.Data = null;
                 return NotFound(_response);
             }
             catch (Exception)
             {
                 _response.Code = ResponseEnum.Error;
-                _response.Message = "Erro ao buscar empresa.";
+                _response.Message = "Erro ao tentar obter empresa.";
+                _response.Data = null;
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CompanyDTO companyDto)
+        public async Task<IActionResult> Post([FromBody] CompanyDTO companyDto)
         {
             try
             {
-                CompanyDTO.Validate(companyDto);
                 companyDto.Id = 0;
                 await _companyService.Create(companyDto);
-
                 _response.Code = ResponseEnum.Success;
-                _response.Message = "Empresa criada com sucesso!";
-                _response.Data = companyDto;
-                return Ok(_response);
-            }
-            catch (ArgumentException ex)
-            {
-                _response.Code = ResponseEnum.Invalid;
-                _response.Message = ex.Message;
-                return BadRequest(_response);
-            }
-            catch (InvalidOperationException ex)
-            {
-                _response.Code = ResponseEnum.Conflict;
-                _response.Message = ex.Message;
-                return Conflict(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.Code = ResponseEnum.Error;
-                _response.Message = $"Erro ao cadastrar empresa: {(ex.InnerException?.Message ?? ex.Message)}";
-                return StatusCode(StatusCodes.Status500InternalServerError, _response);
-            }
-
-
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, CompanyDTO companyDto)
-        {
-            try
-            {
-                CompanyDTO.Validate(companyDto);
-                await _companyService.Update(companyDto, id);
-
-                _response.Code = ResponseEnum.Success;
-                _response.Message = "Empresa atualizada com sucesso!";
+                _response.Message = "Empresa cadastrada com sucesso!";
                 _response.Data = companyDto;
                 return Ok(_response);
             }
             catch (ArgumentNullException ex)
             {
-                _response.Code = ResponseEnum.NotFound;
+                _response.Code = ResponseEnum.Invalid;
                 _response.Message = ex.Message;
-                return NotFound(_response);
+                _response.Data = null;
+                return BadRequest(_response);
             }
             catch (ArgumentException ex)
             {
                 _response.Code = ResponseEnum.Invalid;
                 _response.Message = ex.Message;
+                _response.Data = null;
                 return BadRequest(_response);
             }
             catch (InvalidOperationException ex)
             {
                 _response.Code = ResponseEnum.Conflict;
                 _response.Message = ex.Message;
+                _response.Data = companyDto;
                 return Conflict(_response);
             }
             catch (Exception)
             {
                 _response.Code = ResponseEnum.Error;
-                _response.Message = "Erro ao atualizar empresa.";
+                _response.Message = "Erro ao cadastrar empresa.";
+                _response.Data = companyDto;
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpPost("{id}/upload-logo")]
+        public async Task<IActionResult> UploadLogo(int id, IFormFile logo)
+        {
+            if (logo?.Length <= 0)
+                return BadRequest(new Response
+                {
+                    Code = ResponseEnum.Invalid,
+                    Message = "Nenhuma imagem foi enviada.",
+                    Data = null
+                });
+
+            CompanyDTO company;
+
+            try
+            {
+                company = await _companyService.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response
+                {
+                    Code = ResponseEnum.Error,
+                    Message = $"Erro ao buscar empresa: {ex.Message}",
+                    Data = null
+                });
+            }
+
+            if (company is null)
+                return NotFound(new Response
+                {
+                    Code = ResponseEnum.NotFound,
+                    Message = "Empresa não encontrada.",
+                    Data = null
+                });
+
+            try
+            {
+                using var ms = new MemoryStream();
+                await logo.CopyToAsync(ms);
+
+                var Dto = new CompanyDTO
+                {
+                    Id = company.Id,
+                    CompanyLogo = ms.ToArray(),
+                };
+
+                await _companyService.UpdateLogo(Dto);
+
+                return Ok(new Response
+                {
+                    Code = ResponseEnum.Success,
+                    Message = "Logo da empresa atualizado com sucesso!",
+                    Data = null
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response
+                {
+                    Code = ResponseEnum.Error,
+                    Message = $"Erro ao atualizar logo: {ex.Message}",
+                    Data = null
+                });
+            }
+        }
+
+
+        [HttpGet("{id}/logo-base64")]
+        public async Task<IActionResult> GetCompanyLogoBase64(int id)
+        {
+            var company = await _companyService.GetById(id);
+            if (company == null || company.CompanyLogo == null)
+            {
+                return NotFound(new Response
+                {
+                    Code = ResponseEnum.NotFound,
+                    Message = "Logo não encontrado.",
+                    Data = null
+                });
+            }
+
+            var base64 = Convert.ToBase64String(company.CompanyLogo);
+            var mimeType = "image/png"; // ou o tipo real
+            var dataUrl = $"data:{mimeType};base64,{base64}";
+
+            return Ok(new Response
+            {
+                Code = ResponseEnum.Success,
+                Message = "Logo obtido com sucesso.",
+                Data = dataUrl
+            });
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] CompanyDTO companyDto)
+        {
+            try
+            {
+                await _companyService.Update(companyDto, id);
+                _response.Code = ResponseEnum.Success;
+                _response.Message = "Empresa atualizada com sucesso!";
+                _response.Data = companyDto;
+                return Ok(_response);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _response.Code = ResponseEnum.NotFound;
+                _response.Message = ex.Message;
+                _response.Data = null;
+                return NotFound(_response);
+            }
+            catch (ArgumentNullException ex)
+            {
+                _response.Code = ResponseEnum.Invalid;
+                _response.Message = ex.Message;
+                _response.Data = companyDto;
+                return BadRequest(_response);
+            }
+            catch (ArgumentException ex)
+            {
+                _response.Code = ResponseEnum.Invalid;
+                _response.Message = ex.Message;
+                _response.Data = companyDto;
+                return BadRequest(_response);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _response.Code = ResponseEnum.Conflict;
+                _response.Message = ex.Message;
+                _response.Data = companyDto;
+                return Conflict(_response);
+            }
+            catch (Exception)
+            {
+                _response.Code = ResponseEnum.Error;
+                _response.Message = "Erro ao tentar atualizar empresa.";
+                _response.Data = companyDto;
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -138,54 +247,24 @@ namespace LumenSys.WebAPI.Controllers
             {
                 await _companyService.Delete(id);
                 _response.Code = ResponseEnum.Success;
-                _response.Message = "Empresa removida com sucesso!";
+                _response.Message = "Empresa excluída com sucesso!";
+                _response.Data = null;
                 return Ok(_response);
             }
-            catch (ArgumentNullException ex)
+            catch (KeyNotFoundException ex)
             {
                 _response.Code = ResponseEnum.NotFound;
                 _response.Message = ex.Message;
+                _response.Data = null;
                 return NotFound(_response);
             }
             catch (Exception)
             {
                 _response.Code = ResponseEnum.Error;
-                _response.Message = "Erro ao remover empresa.";
+                _response.Message = "Erro ao tentar excluir empresa.";
+                _response.Data = null;
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
-        }
-
-        [HttpPost("{id}/upload-logo")]
-        public async Task<IActionResult> InsertLogo(int id, IFormFile logo)
-        {
-            await _companyService.UpdateLogo(id, logo);
-            _response.Code = ResponseEnum.Success;
-            _response.Message = "Logo inserido com sucesso!";
-            _response.Data = null;
-            return Ok(_response);
-        }
-
-        [HttpGet("{id}/logo-base64")]
-        public async Task<IActionResult> GetCompanyLogoBase64(int id)
-        {
-            var result = await _companyService.GetLogoBase64(id);
-            if (result.Base64 is null)
-            {
-                _response.Code = ResponseEnum.Success;
-                _response.Message = "Logo não encontrado.";
-                _response.Data = null;
-                return Ok(_response);
-            }
-
-            var payload = new
-            {
-                Base64 = result.Base64
-            };
-
-            _response.Code = ResponseEnum.Success;
-            _response.Message = "Logo obtido com sucesso.";
-            _response.Data = payload;
-            return Ok(_response);
         }
     }
 }

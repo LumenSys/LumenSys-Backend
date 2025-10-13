@@ -1,6 +1,6 @@
 ﻿using LumenSys.WebAPI.Data;
-using Microsoft.EntityFrameworkCore;
 using LumenSys.WebAPI.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LumenSys.WebAPI.Data.Repositories;
 
@@ -63,9 +63,4 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         return await _context.SaveChangesAsync() > 0;
     }
-    public void Attach(object entity)
-    {
-        _context.Attach(entity);
-    }
-
 }

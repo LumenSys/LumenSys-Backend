@@ -12,7 +12,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public string CpfCnpj { get; set; }
 
         [Column("name")]
-        public string Name { get; set; }
+        public string CompanyName { get; set; }
         [Column("tradename")]
         public string TradeName { get; set; }
 
@@ -35,17 +35,20 @@ namespace LumenSys.WebAPI.Objects.Models
         public string City { get; set; }
 
         [Column("uf")]
-        public string UF { get; set; } 
+        public string UF { get; set; }
+
+        [Column("companylogo")]
+        public byte[]? CompanyLogo { get; set; }
 
         public ICollection<User> User { get; set; } = new List<User>();
         public ICollection<FuneralPlans> FuneralPlans { get; set; } = new List<FuneralPlans>();
         public Company() { }
 
-        public Company(int id, string cpfCnpj, string name,string tradename, string email, string phone, string street, string number, string neighborhood, string city, string uf)
+        public Company(int id, string cpfCnpj, string companyname,string tradename, string email, string phone, string street, string number, string neighborhood, string city, string uf, byte[] companylogo)
         {
             Id = id;
             CpfCnpj = cpfCnpj;
-            Name = name;
+            CompanyName = companyname;
             TradeName = tradename;
             Email = email;
             Phone = phone;
@@ -54,6 +57,7 @@ namespace LumenSys.WebAPI.Objects.Models
             Neighborhood = neighborhood;
             City = city;
             UF = uf;
+            CompanyLogo = companylogo;
         }
     }
 }

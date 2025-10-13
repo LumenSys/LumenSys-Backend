@@ -5,19 +5,53 @@ using LumenSys.WebAPI.Objects;
 
 namespace LumenSys.WebAPI.Services.Entities
 {
+<<<<<<< HEAD
     public class GenericService<T, TDto> : IGenericService<T, TDto>
         where T : class
         where TDto : class
+=======
+    private readonly IGenericRepository<T> _repository;
+    private readonly IMapper _mapper;
+
+    public GenericService(IGenericRepository<T> repository, IMapper mapper)
+>>>>>>> 8debfde40225bc4a88ff522eebe1fce63779896e
     {
         private readonly IGenericRepository<T> _repository;
         private readonly IMapper _mapper;
         private readonly ICompanyProvider _companyProvider;
 
+<<<<<<< HEAD
         public GenericService(
             IGenericRepository<T> repository,
             IMapper mapper,
             ICompanyProvider companyProvider
         )
+=======
+    public virtual async Task<IEnumerable<TDto>> GetAll()
+    {
+        var entities = await _repository.Get();
+        return _mapper.Map<IEnumerable<TDto>>(entities);
+    }
+
+    public virtual async Task<TDto> GetById(int id)
+    {
+        var entity = await _repository.GetById(id);
+        return _mapper.Map<TDto>(entity);
+    }
+
+    public virtual async Task Create(TDto entityDTO)
+    {
+        var entity = _mapper.Map<T>(entityDTO);
+        await _repository.Add(entity);
+    }
+
+    public virtual async Task Update(TDto entityDTO, int id)
+    {
+        var entity = _mapper.Map<T>(entityDTO);
+        var existingEntity = await _repository.GetById(id);
+
+        if (existingEntity == null)
+>>>>>>> 8debfde40225bc4a88ff522eebe1fce63779896e
         {
             _repository = repository;
             _mapper = mapper;

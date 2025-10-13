@@ -1,5 +1,5 @@
 ﻿public interface ICompanyProvider
 {
-    public string GetCompanyId();
+    public int GetCompanyId();
     public string GetUserRole();
 }

@@ -45,7 +45,7 @@ namespace LumenSys.WebAPI.Data.Builders
                   .IsRequired(false)
                   .OnDelete(DeleteBehavior.Cascade);
 
-            entity.HasMany(dp => dp.Transport)
+            entity.HasMany(dp => dp.Transports)
                   .WithOne()
                   .OnDelete(DeleteBehavior.Cascade);
 
@@ -81,7 +81,7 @@ namespace LumenSys.WebAPI.Data.Builders
                         Marital = MaritalStatus.MARRIED,
                         Sex = SexType.MALE,
                         ClientId = 1,
-                        CompanyId = "1"
+                        CompanyId = 1
                     },
                     new DeceasedPerson
                     {
@@ -96,7 +96,7 @@ namespace LumenSys.WebAPI.Data.Builders
                         Marital = MaritalStatus.SINGLE,
                         Sex = SexType.MALE,
                         ClientId = 2,
-                        CompanyId = "1"
+                        CompanyId = 1
                     }
                  );
         }

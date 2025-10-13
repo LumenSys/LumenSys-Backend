@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace LumenSys.WebAPI.Objects.Models
 {
     [Table("transport")]
-    public class Transport
+    public class Transport : ICompanyScoped
     {
         [Column("id")]
         public int Id { get; set; }
@@ -27,7 +27,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public int? DeceasedPersonId { get; set; }
         public DeceasedPerson? DeceasedPerson { get; set; }
 
-        public string CompanyId { get; set; }
+        public int CompanyId { get; set; }
 
         public Transport () { }
 

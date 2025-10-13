@@ -3,7 +3,7 @@
 namespace LumenSys.WebAPI.Objects.Models
 {
     [Table("dependent")]
-    public class Dependent
+    public class Dependent : ICompanyScoped
     {
         [Column("id")]
         public int Id { get; set; }
@@ -15,7 +15,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public int? ContractId { get; set; }
         public Contracts? Contracts { get; set; }
 
-        public string CompanyId { get; set; }
+        public int CompanyId { get; set; }
         public Dependent() { }
 
         public Dependent(int id, string name, string cpf)

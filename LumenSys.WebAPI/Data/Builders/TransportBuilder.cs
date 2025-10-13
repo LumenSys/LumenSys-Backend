@@ -50,7 +50,7 @@ namespace LumenSys.WebAPI.Data.Builders
 
             modelBuilder.Entity<Transport>()
                 .HasOne(t => t.DeceasedPerson)
-                .WithMany(d => d.Transport)
+                .WithMany(d => d.Transports)
                 .HasForeignKey(t => t.DeceasedPersonId);
 
             modelBuilder.Entity<Transport>().HasData(
@@ -66,7 +66,7 @@ namespace LumenSys.WebAPI.Data.Builders
                     City = "Townsville",
                     Uf = "NS",
                     DeceasedPersonId = 1,
-                    CompanyId = "1"
+                    CompanyId = 1
                 },
                 new Transport
                 {
@@ -80,7 +80,7 @@ namespace LumenSys.WebAPI.Data.Builders
                     City = "Green Street",
                     Uf = "UK",
                     DeceasedPersonId = 2,
-                    CompanyId = "1"
+                    CompanyId = 1
                 },
                 new Transport
                 {
@@ -94,7 +94,7 @@ namespace LumenSys.WebAPI.Data.Builders
                     City = "Green Street",
                     Uf = "UK",
                     DeceasedPersonId = 2,
-                    CompanyId = "1"
+                    CompanyId = 1
                 }
             );
         }

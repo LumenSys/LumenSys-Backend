@@ -4,7 +4,7 @@ using LumenSys.WebAPI.Objects.Enums;
 namespace LumenSys.WebAPI.Objects.Models
 {
     [Table("Installment")]
-    public class Installment
+    public class Installment : ICompanyScoped
     {
         [Column("Id")]
         public int Id { get; set; }
@@ -31,7 +31,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public int ContractId { get; set; }
         public Contracts Contract { get; set; }
 
-        public string CompanyId { get; set; }
+        public int CompanyId { get; set; }
 
         public Installment() { }
         public Installment(int id, DateTime? paymentDate, DateTime dueDate, double value, double penalty, PaymentMethod paymentMethod, PaymentStatus paymentStatus, int contractId)

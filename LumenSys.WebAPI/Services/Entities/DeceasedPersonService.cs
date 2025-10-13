@@ -12,7 +12,7 @@ namespace LumenSys.WebAPI.Services.Entities
         private readonly IDeceasedPersonRepository _deceasedPersonRepository;
         private readonly IMapper _mapper;
 
-        public DeceasedPersonService(IDeceasedPersonRepository repository, IMapper mapper) : base(repository, mapper)
+        public DeceasedPersonService(IDeceasedPersonRepository repository, IMapper mapper, ICompanyProvider companyProvider) : base(repository, mapper, companyProvider)
         {
             _deceasedPersonRepository = repository;
             _mapper = mapper;

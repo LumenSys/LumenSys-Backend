@@ -35,7 +35,7 @@ namespace LumenSys.WebAPI.Data.Builders
                     EndTime = new TimeOnly(12, 0, 0),
                     Description = "Cerimônia de despedida em homenagem à memória de nosso ente querido, realizada na Capela Central. Um momento de reflexão, oração e união familiar para celebrar sua vida e legado.",
                     UserId = 2,
-                    CompanyId = "1"
+                    CompanyId = 1
                 },
                 new Funeral
                 {
@@ -46,7 +46,7 @@ namespace LumenSys.WebAPI.Data.Builders
                     EndTime = new TimeOnly(13, 0, 0),
                     Description = "Encontro para celebrar a vida de quem partiu, com palavras de carinho, lembranças compartilhadas e o conforto da presença dos que amam. Que este momento traga paz aos corações.",
                     UserId = 1,
-                    CompanyId = "1"
+                    CompanyId = 1
                 }
             );
 

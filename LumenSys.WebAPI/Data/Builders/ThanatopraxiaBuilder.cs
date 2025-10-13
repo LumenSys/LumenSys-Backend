@@ -51,7 +51,7 @@ namespace LumenSys.WebAPI.Data.Builders
                     ConditionBody = "Estado regular",
                     UserId = 3, 
                     DeceasedPersonId = 1,
-                    CompanyId = "1"
+                    CompanyId = 1
                 },
                 new Thanatopraxia
                 {
@@ -61,7 +61,7 @@ namespace LumenSys.WebAPI.Data.Builders
                     ConditionBody = "Boa conservação",
                     UserId = 4,
                     DeceasedPersonId = 2,
-                    CompanyId = "1"
+                    CompanyId = 1 
                 }
             );
         }

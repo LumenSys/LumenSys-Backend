@@ -9,9 +9,10 @@ public class CompanyProvider : ICompanyProvider
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public string GetCompanyId()
+    public int GetCompanyId()
     {
-        return _httpContextAccessor.HttpContext?.User?.FindFirst("CompanyId")?.Value ?? "";
+        var claimValue = _httpContextAccessor.HttpContext?.User?.FindFirst("CompanyId")?.Value;
+        return int.TryParse(claimValue, out var id) ? id : 0;
     }
 
     public string GetUserRole()

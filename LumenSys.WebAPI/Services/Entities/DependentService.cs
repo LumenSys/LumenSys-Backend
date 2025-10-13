@@ -14,13 +14,17 @@ namespace LumenSys.WebAPI.Services.Entities
         private readonly IContractsRepository _contractsRepository;
         private readonly IMapper _mapper;
 
-        public DependentService(IDependentRepository dependentRepository, IContractsRepository contractsRepository, IMapper mapper) : base(dependentRepository, mapper)
+        public DependentService(
+            IDependentRepository dependentRepository,
+            IContractsRepository contractsRepository,
+            IMapper mapper,
+            ICompanyProvider companyProvider
+        ) : base(dependentRepository, mapper, companyProvider)
         {
             _dependentRepository = dependentRepository;
             _contractsRepository = contractsRepository;
             _mapper = mapper;
         }
-
 
         public override async Task Create(DependentDTO dto)
         {

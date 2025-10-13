@@ -28,8 +28,9 @@ namespace LumenSys.WebAPI.Data.Builders
                     Time = new TimeOnly(14, 0, 0),
                     Number = "CR-001",
                     DeceasedPersonId = 1,
-                    CompanyId = "1"
+                    CompanyId = 1
                 }
+
             );
 
         }

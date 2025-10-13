@@ -9,14 +9,21 @@ namespace LumenSys.WebAPI.Services.Entities
     public class ContractsService : GenericService<Contracts, ContractsDTO>, IContractsService
     {
         private readonly IContractsRepository _contractsRepository;
-        private readonly IClientRepository _clientRepository; 
+        private readonly IClientRepository _clientRepository;
         private readonly IMapper _mapper;
-        public ContractsService(IContractsRepository repository,  IClientRepository clientRepository, IMapper mapper) : base(repository, mapper)
+
+        public ContractsService(
+            IContractsRepository repository,
+            IClientRepository clientRepository,
+            IMapper mapper,
+            ICompanyProvider companyProvider
+        ) : base(repository, mapper, companyProvider)
         {
             _contractsRepository = repository;
             _clientRepository = clientRepository;
             _mapper = mapper;
         }
+
 
         public async Task Create(ContractsDTO contractDto)
         {

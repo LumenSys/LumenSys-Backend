@@ -14,13 +14,27 @@ namespace LumenSys.WebAPI.Services.Entities
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;
-        public CompanyService(ICompanyRepository repository, IMapper mapper) : base(repository, mapper)
+        private readonly ICompanyProvider _companyProvider; 
+
+        public CompanyService(
+            ICompanyRepository repository,
+            IMapper mapper,
+            ICompanyProvider companyProvider
+        ) : base(repository, mapper, companyProvider)
         {
             _companyRepository = repository;
+            _companyProvider = companyProvider;
             _mapper = mapper;
         }
+
         public override async Task<CompanyDTO> GetById(int id)
         {
+            var role = _companyProvider.GetUserRole();
+            var userCompanyId = _companyProvider.GetCompanyId();
+
+            if (role != "ADMINISTRATOR" && id != userCompanyId)
+                throw new UnauthorizedAccessException("Você só pode visualizar os dados da sua própria empresa.");
+
             var company = await _companyRepository.GetById(id);
             if (company == null)
                 throw new ArgumentNullException($"Empresa com o ID {id} não foi encontrada.");
@@ -28,10 +42,16 @@ namespace LumenSys.WebAPI.Services.Entities
             return _mapper.Map<CompanyDTO>(company);
         }
 
+
         public override async Task Create(CompanyDTO companyDto)
         {
             if (companyDto == null)
                 throw new ArgumentNullException("Empresa não pode ser nula.");
+
+            var role = _companyProvider.GetUserRole();
+            if (role != "ADMINISTRATOR")
+                throw new UnauthorizedAccessException("Somente administradores podem criar empresas.");
+
 
             if (!CpfCnpjValidator.IsValid(companyDto.CpfCnpj))
                 throw new ArgumentException("CPF ou CNPJ inválido.");
@@ -53,6 +73,12 @@ namespace LumenSys.WebAPI.Services.Entities
             if (companyDto.Id != id)
                 throw new ArgumentException("O ID da empresa deve corresponder ao ID informado.");
 
+            var role = _companyProvider.GetUserRole();
+            var userCompanyId = _companyProvider.GetCompanyId();
+
+            if (role != "ADMINISTRATOR" && id != userCompanyId)
+                throw new UnauthorizedAccessException("Você só pode alterar os dados da sua própria empresa.");
+
             if (!CpfCnpjValidator.IsValid(companyDto.CpfCnpj))
                 throw new ArgumentException("CPF ou CNPJ inválido.");
 
@@ -67,12 +93,19 @@ namespace LumenSys.WebAPI.Services.Entities
 
         public override async Task Delete(int id)
         {
+            var role = _companyProvider.GetUserRole();
+            var userCompanyId = _companyProvider.GetCompanyId();
+
+            if (role != "ADMINISTRATOR" && id != userCompanyId)
+                throw new UnauthorizedAccessException("Você só pode excluir a sua própria empresa.");
+
             var company = await _companyRepository.GetById(id);
             if (company == null)
                 throw new ArgumentNullException($"Empresa com o ID {id} não foi encontrada.");
 
             await base.Delete(id);
         }
+
 
         private async Task<bool> CheckDuplicate(Func<Company, string?> selector, string? valor, int idIgnorar)
         {

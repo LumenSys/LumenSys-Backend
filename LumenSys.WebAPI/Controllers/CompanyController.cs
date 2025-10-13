@@ -242,6 +242,7 @@ namespace LumenSys.WebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMINISTRATOR")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

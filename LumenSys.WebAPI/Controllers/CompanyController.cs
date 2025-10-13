@@ -3,13 +3,11 @@ using LumenSys.WebAPI.Objects.DTOs.Entities;
 using Microsoft.AspNetCore.Mvc;    
 
 using LumenSys.WebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LumenSys.WebAPI.Controllers
 {
-<<<<<<< HEAD
     [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
-=======
->>>>>>> 8debfde40225bc4a88ff522eebe1fce63779896e
     [ApiController]
     [Route("api/v1/[controller]")]
     public class CompanyController : Controller

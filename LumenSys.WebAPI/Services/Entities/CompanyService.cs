@@ -15,24 +15,19 @@ namespace LumenSys.WebAPI.Services.Entities
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;
-<<<<<<< HEAD
-        private readonly ICompanyProvider _companyProvider; 
+        private readonly ICompanyProvider _companyProvider;
 
         public CompanyService(
             ICompanyRepository repository,
             IMapper mapper,
             ICompanyProvider companyProvider
-        ) : base(repository, mapper, companyProvider)
-=======
-
-        public CompanyService(ICompanyRepository repository, IMapper mapper) : base(repository, mapper)
->>>>>>> 8debfde40225bc4a88ff522eebe1fce63779896e
+        ) : base(repository, mapper, companyProvider) 
         {
+
             _companyRepository = repository;
             _companyProvider = companyProvider;
             _mapper = mapper;
         }
-<<<<<<< HEAD
 
         public override async Task<CompanyDTO> GetById(int id)
         {
@@ -51,40 +46,32 @@ namespace LumenSys.WebAPI.Services.Entities
 
 
         public override async Task Create(CompanyDTO companyDto)
-=======
-
-        public override async Task Create(CompanyDTO dto)
->>>>>>> 8debfde40225bc4a88ff522eebe1fce63779896e
         {
-            if (dto == null)
+            if (companyDto == null)
                 throw new ArgumentNullException("Empresa não pode ser nula.");
 
-<<<<<<< HEAD
             var role = _companyProvider.GetUserRole();
             if (role != "ADMINISTRATOR")
                 throw new UnauthorizedAccessException("Somente administradores podem criar empresas.");
 
-
             if (!CpfCnpjValidator.IsValid(companyDto.CpfCnpj))
                 throw new ArgumentException("CPF ou CNPJ inválido.");
-=======
-            if (await CheckDuplicates(dto))
-                throw new InvalidOperationException("Nome corporativo ou nome comercial duplicado.");
->>>>>>> 8debfde40225bc4a88ff522eebe1fce63779896e
 
-            await base.Create(dto);
+            if (await CheckDuplicates(companyDto))
+                throw new InvalidOperationException("Nome corporativo ou nome comercial duplicado.");
+
+            await base.Create(companyDto);
             await _companyRepository.SaveChanges();
         }
 
-        public override async Task Update(CompanyDTO dto, int id)
+        public override async Task Update(CompanyDTO companyDto, int id)
         {
-            if (dto == null)
-                throw new ArgumentNullException(nameof(dto), "Empresa não pode ser nula.");
+            if (companyDto == null)
+                throw new ArgumentNullException(nameof(companyDto), "Empresa não pode ser nula.");
 
-            if (dto.Id != id)
+            if (companyDto.Id != id)
                 throw new ArgumentException("O ID da empresa deve corresponder ao ID informado.");
 
-<<<<<<< HEAD
             var role = _companyProvider.GetUserRole();
             var userCompanyId = _companyProvider.GetCompanyId();
 
@@ -93,31 +80,30 @@ namespace LumenSys.WebAPI.Services.Entities
 
             if (!CpfCnpjValidator.IsValid(companyDto.CpfCnpj))
                 throw new ArgumentException("CPF ou CNPJ inválido.");
-=======
-            if (await CheckDuplicates(dto))
+
+            if (await CheckDuplicates(companyDto))
                 throw new InvalidOperationException("Nome corporativo ou nome comercial duplicado.");
->>>>>>> 8debfde40225bc4a88ff522eebe1fce63779896e
 
             var entity = await _companyRepository.GetById(id);
             if (entity == null)
                 throw new ArgumentNullException($"Empresa com ID {id} não encontrada.");
 
-            await base.Update(dto, id);
+            await base.Update(companyDto, id);
         }
 
-        public async Task UpdateLogo(CompanyDTO dto)
+        public async Task UpdateLogo(CompanyDTO companyDto)
         {
-            if (dto is null || dto.CompanyLogo == null || dto.CompanyLogo.Length == 0)
+            if (companyDto is null || companyDto.CompanyLogo == null || companyDto.CompanyLogo.Length == 0)
                 throw new ArgumentException("Logo inválido ou vazio.");
 
-            if (!dto.Id.HasValue)
+            if (!companyDto.Id.HasValue)
                 throw new ArgumentException("Id da empresa não informado.");
 
             Company company;
 
             try
             {
-                company = await _companyRepository.GetById(dto.Id.Value);
+                company = await _companyRepository.GetById(companyDto.Id.Value);
             }
             catch (Exception ex)
             {
@@ -126,14 +112,14 @@ namespace LumenSys.WebAPI.Services.Entities
             }
 
             if (company is null)
-                throw new KeyNotFoundException($"Empresa com o id {dto.Id} não foi encontrada.");
+                throw new KeyNotFoundException($"Empresa com o id {companyDto.Id} não foi encontrada.");
 
-            company.CompanyLogo = dto.CompanyLogo;
+            company.CompanyLogo = companyDto.CompanyLogo;
 
             try
             {
                 await _companyRepository.Update(company);
-                Console.WriteLine($"Logo atualizado: {dto.CompanyLogo.Length} bytes");
+                Console.WriteLine($"Logo atualizado: {companyDto.CompanyLogo.Length} bytes");
             }
             catch (InvalidOperationException ex)
             {
@@ -161,13 +147,7 @@ namespace LumenSys.WebAPI.Services.Entities
 
             await base.Delete(id);
         }
-
-<<<<<<< HEAD
-
-        private async Task<bool> CheckDuplicate(Func<Company, string?> selector, string? valor, int idIgnorar)
-=======
         public async Task<bool> CheckDuplicates(CompanyDTO dto)
->>>>>>> 8debfde40225bc4a88ff522eebe1fce63779896e
         {
             var companies = await _companyRepository.Get();
             return companies.Any(m =>

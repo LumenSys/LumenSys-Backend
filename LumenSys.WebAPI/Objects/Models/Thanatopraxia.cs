@@ -4,7 +4,7 @@ using System.Reflection.Metadata;
 namespace LumenSys.WebAPI.Objects.Models
 {
     [Table("thanatopraxia")]
-    public class Thanatopraxia
+    public class Thanatopraxia : ICompanyScoped
     {
         [Column("id")]
         public int Id { get; set; }
@@ -18,6 +18,8 @@ namespace LumenSys.WebAPI.Objects.Models
         public User? User { get; set; }
         public int? DeceasedPersonId { get; set; }
         public DeceasedPerson? deceasedPerson { get; set; } = null!;
+
+        public int CompanyId { get; set; }
         public Thanatopraxia() { }
 
         public Thanatopraxia(int id, DateOnly date, string description, string conditionBody)

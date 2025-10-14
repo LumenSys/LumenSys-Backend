@@ -84,7 +84,7 @@ namespace LumenSys.WebAPI.Controllers
                 return StatusCode(500, _response);
             }
         }
-
+        [Authorize(Roles = "ADMINISTRATOR")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, FuneralPlansDTO funeralPlan)
         {

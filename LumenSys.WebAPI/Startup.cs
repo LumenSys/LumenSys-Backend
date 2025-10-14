@@ -140,6 +140,9 @@ namespace LumenSys.WebAPI
             services.AddScoped<IBenefitsPlansRepository, BenefitsPlansRepository>();
             services.AddScoped<IThanatopraxiaRepository, ThanatopraxiaRepository>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ICompanyProvider, CompanyProvider>(); ;
+
             services.AddHostedService<InstallmentLateFeeService>();
 
         }

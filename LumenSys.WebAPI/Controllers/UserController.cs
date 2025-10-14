@@ -118,8 +118,7 @@ namespace LumenSys.WebAPI.Controllers
             try
             {
                 var userDTO = await _userService.Login(login);
-                var token = new Token().GenerateToken(userDTO.Email, userDTO.TypeEmployee);
-
+                var token = new Token().GenerateToken(userDTO);
                 _response.Code = ResponseEnum.Success;
                 _response.Message = "Login realizado com sucesso!";
                 _response.Data = new { Token = token, User = userDTO };
@@ -228,7 +227,7 @@ namespace LumenSys.WebAPI.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
+        [Authorize(Roles = "ADMINISTRATOR")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {

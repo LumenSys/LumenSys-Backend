@@ -2,6 +2,7 @@
 using LumenSys.WebAPI.Data;
 using LumenSys.WebAPI.Objects.Models;
 using LumenSys.WebAPI.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 public class ContractsRepository : GenericRepository<Contracts>, IContractsRepository
 {
@@ -11,4 +12,5 @@ public class ContractsRepository : GenericRepository<Contracts>, IContractsRepos
     {
         _context = context;
     }
+
 }

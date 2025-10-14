@@ -3,9 +3,11 @@ using LumenSys.WebAPI.Objects.DTOs.Entities;
 using Microsoft.AspNetCore.Mvc;    
 
 using LumenSys.WebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LumenSys.WebAPI.Controllers
 {
+    [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class CompanyController : Controller
@@ -240,6 +242,7 @@ namespace LumenSys.WebAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMINISTRATOR")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

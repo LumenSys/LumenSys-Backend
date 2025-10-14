@@ -10,7 +10,7 @@ namespace LumenSys.WebAPI.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Funeral> funerals { get; set; } 
+        public DbSet<Funeral> funerals { get; set; }
         public DbSet<FuneralPlans> FuneralPlans { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Contracts> Contracts { get; set; }
@@ -28,12 +28,12 @@ namespace LumenSys.WebAPI.Data
         {
             base.OnModelCreating(modelBuilder);
             UserBuilder.Build(modelBuilder);
-            FuneralBuilder.Build(modelBuilder); 
+            FuneralBuilder.Build(modelBuilder);
             FuneralPlansBuilder.Build(modelBuilder);
             CompanyBuilder.Build(modelBuilder);
             ContractsBuilder.Build(modelBuilder);
-            DependentBuilder.Build(modelBuilder); 
-            InstallmentBuilder.Build(modelBuilder); 
+            DependentBuilder.Build(modelBuilder);
+            InstallmentBuilder.Build(modelBuilder);
             TransportBuilder.Build(modelBuilder);
             CremationBuilder.Build(modelBuilder);
             DeceasedPersonBuilder.Build(modelBuilder);

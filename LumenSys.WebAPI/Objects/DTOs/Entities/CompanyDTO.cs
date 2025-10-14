@@ -119,6 +119,9 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             if (string.IsNullOrWhiteSpace(dto.City))
                 throw new ArgumentException("Cidade é obrigatória.");
 
+            if (dto.CompanyLogo == null) 
+                throw new ArgumentException("Imagem é obrigatória.");
+
             if (string.IsNullOrWhiteSpace(dto.UF) || dto.UF.Length != 2)
                 throw new ArgumentException("UF é obrigatório e deve conter 2 caracteres.");
         }

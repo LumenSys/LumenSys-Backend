@@ -7,7 +7,7 @@ using LumenSys.WebAPI.Objects.Contract;
 
 namespace LumenSys.WebAPI.Controllers
 {
-    [Authorize(Roles = "ADMINISTRATOR,MANAGER")]
+    [Authorize(Roles = "ADMINISTRATOR,MANAGER,EMPLOYEE")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class InstallmentController : ControllerBase
@@ -109,7 +109,7 @@ namespace LumenSys.WebAPI.Controllers
                 return StatusCode(500, _response);
             }
         }
-
+        [Authorize(Roles = "ADMINISTRATOR")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

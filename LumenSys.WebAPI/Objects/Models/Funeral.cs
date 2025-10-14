@@ -3,7 +3,7 @@
 namespace LumenSys.WebAPI.Objects.Models
 {
     [Table("funeral")]
-    public class Funeral
+    public class Funeral : ICompanyScoped
     {
         [Column("id")]
         public int Id { get; set; }
@@ -20,6 +20,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public int? UserId { get; set; }
         public User? User { get; set; }
 
+        public int CompanyId { get; set; }
         public ICollection<DeceasedPerson> DeceasedPerson { get; set; } = new List<DeceasedPerson>();
 
         public Funeral() { }

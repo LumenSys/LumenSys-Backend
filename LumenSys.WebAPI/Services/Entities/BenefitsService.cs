@@ -14,11 +14,16 @@ namespace LumenSys.WebAPI.Services.Entities
         private readonly IBenefitsRepository _benefitsRepository;
         private readonly IMapper _mapper;
 
-        public BenefitsService(IBenefitsRepository repository, IMapper mapper) : base(repository, mapper)
+        public BenefitsService(
+            IBenefitsRepository repository,
+            IMapper mapper,
+            ICompanyProvider companyProvider
+        ) : base(repository, mapper, companyProvider)
         {
             _benefitsRepository = repository;
             _mapper = mapper;
         }
+
         public override async Task<BenefitsDTO> GetById(int id)
         {
             var benefit = await _benefitsRepository.GetById(id);

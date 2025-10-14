@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace LumenSys.WebAPI.Objects;
 
 [Table("user")]
-public class User
+public class User : ICompanyScoped
 {
     [Column("id")]
     public int Id { get; set; }
@@ -25,7 +25,7 @@ public class User
     public UserStats UserStatus { get; set; }
     [Column("hiredate")]
     public DateOnly? HireDate { get; set; }
-    public int? CompanyId { get; set; }
+    public int CompanyId { get; set; }
     public Company? Company { get; set; }
     public ICollection<Funeral> Funeral { get; set; } = new List<Funeral>();
     public ICollection<Client> Client { get; set; } = new List<Client>();

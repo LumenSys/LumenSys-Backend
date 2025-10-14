@@ -50,7 +50,8 @@ namespace LumenSys.WebAPI.Data.Builders
                     Description = "Preservação padrão para velório em capela",
                     ConditionBody = "Estado regular",
                     UserId = 3, 
-                    DeceasedPersonId = 1 
+                    DeceasedPersonId = 1,
+                    CompanyId = 1
                 },
                 new Thanatopraxia
                 {
@@ -59,7 +60,8 @@ namespace LumenSys.WebAPI.Data.Builders
                     Description = "Tratamento avançado para cerimônia prolongada",
                     ConditionBody = "Boa conservação",
                     UserId = 4,
-                    DeceasedPersonId = 2 
+                    DeceasedPersonId = 2,
+                    CompanyId = 1 
                 }
             );
         }

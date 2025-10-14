@@ -15,56 +15,95 @@ namespace LumenSys.WebAPI.Services.Entities
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;
+        private readonly ICompanyProvider _companyProvider;
 
-        public CompanyService(ICompanyRepository repository, IMapper mapper) : base(repository, mapper)
+        public CompanyService(
+            ICompanyRepository repository,
+            IMapper mapper,
+            ICompanyProvider companyProvider
+        ) : base(repository, mapper, companyProvider) 
         {
+
             _companyRepository = repository;
+            _companyProvider = companyProvider;
             _mapper = mapper;
         }
 
-        public override async Task Create(CompanyDTO dto)
+        public override async Task<CompanyDTO> GetById(int id)
         {
-            if (dto == null)
+            var role = _companyProvider.GetUserRole();
+            var userCompanyId = _companyProvider.GetCompanyId();
+
+            if (role != "ADMINISTRATOR" && id != userCompanyId)
+                throw new UnauthorizedAccessException("Você só pode visualizar os dados da sua própria empresa.");
+
+            var company = await _companyRepository.GetById(id);
+            if (company == null)
+                throw new ArgumentNullException($"Empresa com o ID {id} não foi encontrada.");
+
+            return _mapper.Map<CompanyDTO>(company);
+        }
+
+
+        public override async Task Create(CompanyDTO companyDto)
+        {
+            if (companyDto == null)
                 throw new ArgumentNullException("Empresa não pode ser nula.");
 
-            if (await CheckDuplicates(dto))
+            var role = _companyProvider.GetUserRole();
+            if (role != "ADMINISTRATOR")
+                throw new UnauthorizedAccessException("Somente administradores podem criar empresas.");
+
+            if (!CpfCnpjValidator.IsValid(companyDto.CpfCnpj))
+                throw new ArgumentException("CPF ou CNPJ inválido.");
+
+            if (await CheckDuplicates(companyDto))
                 throw new InvalidOperationException("Nome corporativo ou nome comercial duplicado.");
 
-            await base.Create(dto);
+            await base.Create(companyDto);
             await _companyRepository.SaveChanges();
         }
 
-        public override async Task Update(CompanyDTO dto, int id)
+        public override async Task Update(CompanyDTO companyDto, int id)
         {
-            if (dto == null)
-                throw new ArgumentNullException(nameof(dto), "Empresa não pode ser nula.");
+            if (companyDto == null)
+                throw new ArgumentNullException(nameof(companyDto), "Empresa não pode ser nula.");
 
-            if (dto.Id != id)
+            if (companyDto.Id != id)
                 throw new ArgumentException("O ID da empresa deve corresponder ao ID informado.");
 
-            if (await CheckDuplicates(dto))
+            var role = _companyProvider.GetUserRole();
+            var userCompanyId = _companyProvider.GetCompanyId();
+
+            if (role != "ADMINISTRATOR" && id != userCompanyId)
+                throw new UnauthorizedAccessException("Você só pode alterar os dados da sua própria empresa.");
+
+            if (!CpfCnpjValidator.IsValid(companyDto.CpfCnpj))
+                throw new ArgumentException("CPF ou CNPJ inválido.");
+
+            if (await CheckDuplicates(companyDto))
                 throw new InvalidOperationException("Nome corporativo ou nome comercial duplicado.");
 
             var entity = await _companyRepository.GetById(id);
             if (entity == null)
                 throw new ArgumentNullException($"Empresa com ID {id} não encontrada.");
 
-            await base.Update(dto, id);
+            await base.Update(companyDto, id);
         }
 
-        public async Task UpdateLogo(CompanyDTO dto)
+        public async Task UpdateLogo(CompanyDTO companyDto)
         {
-            if (dto is null || dto.CompanyLogo == null || dto.CompanyLogo.Length == 0)
+            if (companyDto is null || companyDto.CompanyLogo == null || companyDto.CompanyLogo.Length == 0)
                 throw new ArgumentException("Logo inválido ou vazio.");
 
-            if (!dto.Id.HasValue)
+            if (!companyDto.Id.HasValue)
                 throw new ArgumentException("Id da empresa não informado.");
 
             Company company;
 
             try
             {
-                company = await _companyRepository.GetById(dto.Id.Value);
+                company = await _companyRepository.GetById(companyDto.Id.Value);
             }
             catch (Exception ex)
             {
@@ -73,14 +112,14 @@ namespace LumenSys.WebAPI.Services.Entities
             }
 
             if (company is null)
-                throw new KeyNotFoundException($"Empresa com o id {dto.Id} não foi encontrada.");
+                throw new KeyNotFoundException($"Empresa com o id {companyDto.Id} não foi encontrada.");
 
-            company.CompanyLogo = dto.CompanyLogo;
+            company.CompanyLogo = companyDto.CompanyLogo;
 
             try
             {
                 await _companyRepository.Update(company);
-                Console.WriteLine($"Logo atualizado: {dto.CompanyLogo.Length} bytes");
+                Console.WriteLine($"Logo atualizado: {companyDto.CompanyLogo.Length} bytes");
             }
             catch (InvalidOperationException ex)
             {
@@ -96,13 +135,18 @@ namespace LumenSys.WebAPI.Services.Entities
 
         public override async Task Delete(int id)
         {
+            var role = _companyProvider.GetUserRole();
+            var userCompanyId = _companyProvider.GetCompanyId();
+
+            if (role != "ADMINISTRATOR" && id != userCompanyId)
+                throw new UnauthorizedAccessException("Você só pode excluir a sua própria empresa.");
+
             var company = await _companyRepository.GetById(id);
             if (company is null)
                 throw new KeyNotFoundException($"Empresa com o id {id} informado não foi encontrada.");
 
             await base.Delete(id);
         }
-
         public async Task<bool> CheckDuplicates(CompanyDTO dto)
         {
             var companies = await _companyRepository.Get();

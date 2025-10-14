@@ -1,5 +1,6 @@
 ﻿using LumenSys.WebAPI.Data.Interfaces;
 using LumenSys.WebAPI.Objects.Models;
+using System.Diagnostics.Contracts;
 
 namespace LumenSys.WebAPI.Data.Interfaces
 {

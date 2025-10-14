@@ -12,11 +12,16 @@ namespace LumenSys.WebAPI.Services.Entities
         private readonly IClientRepository _clientRepository;
         private readonly IMapper _mapper;
 
-        public ClientService(IClientRepository repository, IMapper mapper) : base(repository, mapper)
+        public ClientService(
+            IClientRepository repository,
+            IMapper mapper,
+            ICompanyProvider companyProvider
+        ) : base(repository, mapper, companyProvider)
         {
             _clientRepository = repository;
             _mapper = mapper;
         }
+
 
         public override async Task<ClientDTO> GetById(int id)
         {

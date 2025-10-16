@@ -12,11 +12,16 @@ namespace LumenSys.WebAPI.Services.Entities
         private readonly IClientRepository _clientRepository;
         private readonly IMapper _mapper;
 
-        public ClientService(IClientRepository repository, IMapper mapper) : base(repository, mapper)
+        public ClientService(
+            IClientRepository repository,
+            IMapper mapper,
+            ICompanyProvider companyProvider
+        ) : base(repository, mapper, companyProvider)
         {
             _clientRepository = repository;
             _mapper = mapper;
         }
+
 
         public override async Task<ClientDTO> GetById(int id)
         {
@@ -38,6 +43,9 @@ namespace LumenSys.WebAPI.Services.Entities
             if (await CheckDuplicate(c => c.Email, clientDto.Email, 0))
                 throw new InvalidOperationException("Já existe um cliente com esse e-mail.");
 
+            if (!CpfCnpjValidator.IsValid(clientDto.Cpf))
+                throw new ArgumentException("CPF inválido.");
+
             await base.Create(clientDto);
         }
 
@@ -54,6 +62,9 @@ namespace LumenSys.WebAPI.Services.Entities
 
             if (await CheckDuplicate(c => c.Email, clientDto.Email, id))
                 throw new InvalidOperationException("Já existe um cliente com esse e-mail.");
+
+            if (!CpfCnpjValidator.IsValid(clientDto.Cpf))
+                throw new ArgumentException("CPF inválido.");
 
             await base.Update(clientDto, id);
         }

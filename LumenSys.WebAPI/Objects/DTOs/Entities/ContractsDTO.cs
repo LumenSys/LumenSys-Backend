@@ -7,8 +7,8 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
     {
         public int? Id { get; set; }
         public bool IsActive { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateOnly StartDate { get; set; }
+        public DateOnly EndDate { get; set; }
         public int DependentCount { get; set; }
         public double Value { get; set; }
         public int ClientId { get; set; }
@@ -24,7 +24,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             if (dto.DependentCount < 0)
                 throw new ArgumentException("Quantidade de dependentes não pode ser negativa.");
 
-            if (dto.StartDate > DateTime.Now)
+            if (dto.StartDate > DateOnly.FromDateTime(DateTime.Today))
                 throw new ArgumentException("A data de início não pode ser no futuro.");
 
             if (dto.EndDate < dto.StartDate)

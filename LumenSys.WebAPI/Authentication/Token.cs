@@ -1,12 +1,7 @@
-﻿using Jose;
-using LumenSys.Objects.Enums;
+﻿using LumenSys.WebAPI.Objects.DTOs.Entities;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -17,7 +12,7 @@ namespace LumenSys.WebAPI.Authentication
         [Required(ErrorMessage = "O token é requerido")]
         public string AccessToken { get; private set; }
 
-        public string GenerateToken(string email, TypeEmployee role)
+        public string GenerateToken(UserDTO user)
         {
             var security = new TokenSignatures();
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(security.Key));
@@ -25,10 +20,12 @@ namespace LumenSys.WebAPI.Authentication
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Iss, security.Issuer),
                 new Claim(JwtRegisteredClaimNames.Aud, security.Audience),
-                new Claim(ClaimTypes.Role, role.ToString())
+                new Claim(ClaimTypes.Role, user.TypeEmployee.ToString()),
+                new Claim("UserId", user.Id.ToString()),
+                new Claim("CompanyId", user.CompanyId.ToString())
             };
 
             var token = new JwtSecurityToken(

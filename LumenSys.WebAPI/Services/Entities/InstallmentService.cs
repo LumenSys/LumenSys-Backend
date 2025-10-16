@@ -15,8 +15,12 @@ namespace LumenSys.WebAPI.Services.Entities
         private readonly IMapper _mapper;
         private readonly IContractsRepository _contractsRepository;
 
-        public InstallmentService(IInstallmentRepository repo, IMapper mapper, IContractsRepository contractsRepo)
-            : base(repo, mapper)
+        public InstallmentService(
+            IInstallmentRepository repo,
+            IMapper mapper,
+            IContractsRepository contractsRepo,
+            ICompanyProvider companyProvider
+        ) : base(repo, mapper, companyProvider)
         {
             _installmentRepository = repo;
             _mapper = mapper;

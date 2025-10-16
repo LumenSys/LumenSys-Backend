@@ -14,8 +14,8 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             set => _location = value?.Trim();
         }
 
-        public int StartTime { get; set; }
-        public int EndTime { get; set; }
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }
         public string Description { get; set; }
         public int? UserId { get; set; }
 
@@ -24,11 +24,11 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             if (string.IsNullOrWhiteSpace(dto.Location))
                 throw new ArgumentException("O local do funeral é obrigatório.");
 
-            if (dto.StartTime < 0 || dto.StartTime > 2359)
-                throw new ArgumentException("O horário de início deve estar entre 0000 e 2359.");
+            if (dto.StartTime.Hour < 0 || dto.StartTime.Hour > 23 || dto.StartTime.Minute < 0 || dto.StartTime.Minute > 59)
+                throw new ArgumentException("O horário de início deve estar entre 00:00 e 23:59.");
 
-            if (dto.EndTime < 0 || dto.EndTime > 2359)
-                throw new ArgumentException("O horário de término deve estar entre 0000 e 2359.");
+            if (dto.EndTime.Hour < 0 || dto.EndTime.Hour > 23 || dto.EndTime.Minute < 0 || dto.EndTime.Minute > 59)
+                throw new ArgumentException("O horário de término deve estar entre 00:00 e 23:59.");
 
             if (dto.EndTime <= dto.StartTime)
                 throw new ArgumentException("O horário de término deve ser maior que o horário de início.");

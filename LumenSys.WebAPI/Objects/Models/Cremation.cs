@@ -4,7 +4,8 @@ using System.Reflection.Metadata;
 namespace LumenSys.WebAPI.Objects.Models
 {
     [Table("cremation")]
-    public class Cremation
+    public class Cremation : ICompanyScoped
+
     {
         [Column("id")]
         public int Id { get; set; }
@@ -17,6 +18,8 @@ namespace LumenSys.WebAPI.Objects.Models
 
         public int? DeceasedPersonId { get; set; }
         public DeceasedPerson? DeceasedPerson { get; set; }
+
+        public int CompanyId { get; set; }
 
         public Cremation () { }
 

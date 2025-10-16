@@ -16,8 +16,10 @@ public class BenefitsPlansService : GenericService<BenefitsPlans, BenefitsPlansD
         IBenefitsPlansRepository benefitsPlansRepository,
         IBenefitsRepository benefitsRepository,
         IFuneralPlansRepository funeralPlansRepository,
-        IMapper mapper
-    ) : base(benefitsPlansRepository, mapper)
+        IMapper mapper,
+        ICompanyProvider companyProvider
+
+    ) : base(benefitsPlansRepository, mapper, companyProvider)
     {
         _benefitsPlansRepository = benefitsPlansRepository;
         _benefitsRepository = benefitsRepository;

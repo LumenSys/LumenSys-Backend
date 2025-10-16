@@ -4,7 +4,7 @@ using System.Reflection.Metadata;
 namespace LumenSys.WebAPI.Objects.Models
 {
     [Table("funeralplans")]
-    public class FuneralPlans
+    public class FuneralPlans : ICompanyScoped
     {
         [Column("Id")]
         public int Id { get; set; }
@@ -30,7 +30,7 @@ namespace LumenSys.WebAPI.Objects.Models
         [Column("dependentAdditional ")]
         public double DependentAdditional { get; set; }
 
-        public int? CompanyId { get; set; }
+        public int CompanyId { get; set; }
         public Company? Company { get; set; }
         public ICollection<Contracts> Contracts { get; set; } = new List<Contracts>();
         public ICollection<BenefitsPlans> BenefitsPlans { get; set; } = new List<BenefitsPlans>();

@@ -7,7 +7,7 @@ using LumenSys.Objects.Enums;
 
 namespace LumenSys.WebAPI.Controllers
 {
-    [Authorize(Roles = "ADMINISTRATOR")]
+    [Authorize(Roles = "ADMINISTRATOR,MANAGER,EMPLOYEE")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class TransportController : ControllerBase
@@ -128,7 +128,7 @@ namespace LumenSys.WebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
-
+        [Authorize(Roles = "ADMINISTRATOR")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

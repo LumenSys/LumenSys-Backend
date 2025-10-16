@@ -12,8 +12,7 @@ namespace LumenSys.WebAPI.Services.Entities
         private readonly ITransportRepository _transportRepository;
         private readonly IMapper _mapper;
 
-        public TransportService(ITransportRepository repository, IMapper mapper)
-            : base(repository, mapper)
+        public TransportService(ITransportRepository repository, IMapper mapper, ICompanyProvider companyProvider) : base(repository, mapper, companyProvider)
         {
             _transportRepository = repository;
             _mapper = mapper;

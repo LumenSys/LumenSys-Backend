@@ -7,6 +7,7 @@ namespace LumenSys.WebAPI.Services.Interfaces
 {
     public interface ICompanyService : IGenericService<Company, CompanyDTO>
     {
-
+        Task<bool> CheckDuplicates(CompanyDTO dto);
+        Task UpdateLogo(CompanyDTO dto);
     }
 }

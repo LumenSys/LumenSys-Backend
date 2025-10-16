@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 namespace LumenSys.WebAPI.Objects.Models
 {
     [Table("deceasedperson")]
-    public class DeceasedPerson
+    public class DeceasedPerson : ICompanyScoped
     {
         [Column("id")]
         public int Id { get; set; }
@@ -17,7 +17,7 @@ namespace LumenSys.WebAPI.Objects.Models
         public DateOnly BirthDay { get; set; }
 
         [Column("deathdate")]
-        public DateOnly? DeathDate { get; set; } 
+        public DateOnly DeathDate { get; set; } 
 
         [Column("cpf")]
         public string? Cpf { get; set; } 
@@ -35,7 +35,7 @@ namespace LumenSys.WebAPI.Objects.Models
 
         public Cremation? Cremation { get; set; }
 
-        public ICollection<Transport> Transport { get; } = new List<Transport>();
+        public ICollection<Transport> Transports { get; } = new List<Transport>();
 
         public int? WakeId { get; set; }
         public Funeral? Wake { get; set; }
@@ -45,9 +45,11 @@ namespace LumenSys.WebAPI.Objects.Models
 
         public Thanatopraxia? Thanatopraxia { get; set; }
 
+        public int CompanyId { get; set; }
+
         public DeceasedPerson() { }
 
-        public DeceasedPerson(int id, string name, int age, DateOnly birthday, DateOnly? deathDate, string cpf, string deathcause, string nationality, MaritalStatus marital, SexType sex)
+        public DeceasedPerson(int id, string name, int age, DateOnly birthday, DateOnly deathDate, string cpf, string deathcause, string nationality, MaritalStatus marital, SexType sex)
         {
             Id = id;
             Name = name;

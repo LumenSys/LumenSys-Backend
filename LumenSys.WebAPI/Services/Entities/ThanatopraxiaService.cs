@@ -14,7 +14,7 @@ namespace LumenSys.WebAPI.Services.Entities
 
         private readonly IMapper _mapper;
 
-        public ThanatopraxiaService(IThanatopraxiaRepository repository, IMapper mapper) : base(repository, mapper)
+        public ThanatopraxiaService(IThanatopraxiaRepository repository, IMapper mapper, ICompanyProvider companyProvider) : base(repository, mapper, companyProvider)
         {
             _thanatopraxiaRepository = repository;
             _mapper = mapper;

@@ -14,13 +14,18 @@ namespace LumenSys.WebAPI.Services.Entities
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository repository, IMapper mapper) : base(repository, mapper)
+
+        public UserService(
+            IUserRepository repository,
+            IMapper mapper,
+            ICompanyProvider companyProvider
+        ) : base(repository, mapper, companyProvider)
         {
             _userRepository = repository;
             _mapper = mapper;
         }
 
-        public override async Task<UserDTO> GetById(int id)
+    public override async Task<UserDTO> GetById(int id)
         {
             var user = await _userRepository.GetById(id);
             if (user is null)
@@ -43,6 +48,9 @@ namespace LumenSys.WebAPI.Services.Entities
             if (await CheckDuplicate(u => u.Cpf, userDto.Cpf, 0))
                 throw new InvalidOperationException("CPF já está em uso.");
 
+            if (!string.IsNullOrWhiteSpace(userDto.Cpf) && !CpfCnpjValidator.IsValid(userDto.Cpf))
+                throw new ArgumentException("CPF inválido.");
+
             userDto.Password = OperatorUltilitie.GenerateHash(userDto.Password);
             await base.Create(userDto);
         }
@@ -62,6 +70,9 @@ namespace LumenSys.WebAPI.Services.Entities
 
             if (await CheckDuplicate(u => u.Cpf, userDto.Cpf, id))
                 throw new InvalidOperationException("CPF já está em uso.");
+
+            if (!string.IsNullOrWhiteSpace(userDto.Cpf) && !CpfCnpjValidator.IsValid(userDto.Cpf))
+                throw new ArgumentException("CPF inválido.");
 
             userDto.Password = OperatorUltilitie.GenerateHash(userDto.Password);
             await base.Update(userDto, id);
@@ -113,3 +124,4 @@ namespace LumenSys.WebAPI.Services.Entities
 
     }
 }
+

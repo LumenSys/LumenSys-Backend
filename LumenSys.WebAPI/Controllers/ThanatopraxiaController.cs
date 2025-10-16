@@ -137,7 +137,7 @@ namespace LumenSys.WebAPI.Controllers
                 return StatusCode(500, _response);
             }
         }
-
+        [Authorize(Roles = "ADMINISTRATOR")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

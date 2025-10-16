@@ -1,4 +1,5 @@
-﻿public class FuneralPlansDTO
+﻿
+public class FuneralPlansDTO
 {
     public int Id { get; set; }
 
@@ -15,8 +16,7 @@
     public int MaxDependents { get; set; }
     public int MaxAge { get; set; }
     public double DependentAdditional { get; set; }
-
-    public List<int> BenefitsIds { get; set; } = new();
+    public List<int> BenefitsIds { get; internal set; }
 
     public static void Validate(FuneralPlansDTO dto)
     {

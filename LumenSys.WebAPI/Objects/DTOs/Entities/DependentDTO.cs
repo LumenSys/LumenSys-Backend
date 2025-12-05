@@ -21,6 +21,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             set => _cpf = value?.Trim();
         }
 
+        public int Age { get; set; }
         public int? ContractId { get; set; }
 
         public static void Validate(DependentDTO dto)
@@ -34,9 +35,6 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             var cpfNumbers = dto.Cpf.ExtractNumbers();
             if (cpfNumbers.Length != 11)
                 throw new ArgumentException("O CPF do dependente deve conter 11 dígitos numéricos.");
-
-            if (dto.ContractId.HasValue && dto.ContractId <= 0)
-                throw new ArgumentException("O ID do contrato deve ser um valor positivo.");
         }
     }
 }

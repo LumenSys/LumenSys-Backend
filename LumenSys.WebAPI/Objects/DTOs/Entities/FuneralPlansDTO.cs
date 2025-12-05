@@ -16,7 +16,7 @@ public class FuneralPlansDTO
     public int MaxDependents { get; set; }
     public int MaxAge { get; set; }
     public double DependentAdditional { get; set; }
-    public List<int> BenefitsIds { get; internal set; }
+    //public List<int> BenefitsIds { get; internal set; }
 
     public static void Validate(FuneralPlansDTO dto)
     {

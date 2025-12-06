@@ -9,7 +9,7 @@ namespace LumenSys.WebAPI.Objects.DTOs.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<FuneralPlans, FuneralPlansDTO>();
+            CreateMap<FuneralPlans, FuneralPlansDTO>().ReverseMap();
             CreateMap<DependentDTO, Dependent>().ReverseMap();
             CreateMap<FuneralDTO, Funeral>().ReverseMap();
             CreateMap<CremationDTO, Cremation>().ReverseMap();

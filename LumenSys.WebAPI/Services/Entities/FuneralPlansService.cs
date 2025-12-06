@@ -42,9 +42,6 @@ namespace LumenSys.WebAPI.Services.Entities
             if (dto.Id != id)
                 throw new ArgumentException("O ID do plano funerário deve corresponder ao ID informado.");
 
-            if (await CheckDuplicate(dto.Name, id))
-                throw new InvalidOperationException("Já existe outro plano funerário com este nome.");
-
             var entity = await _funeralPlansRepository.GetById(id);
             if (entity == null)
                 throw new ArgumentNullException($"Plano funerário com ID {id} não encontrado.");

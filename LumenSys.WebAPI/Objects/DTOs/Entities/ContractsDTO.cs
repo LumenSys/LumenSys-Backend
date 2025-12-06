@@ -11,8 +11,10 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
         public DateOnly EndDate { get; set; }
         public int DependentCount { get; set; }
         public double Value { get; set; }
+        public double MonthlyFee { get; set; }
         public int ClientId { get; set; }
-
+        public int FuneralPlanId { get; set; }
+     
         public static void Validate(ContractsDTO dto)
         {
             if (dto == null)
@@ -30,8 +32,14 @@ namespace LumenSys.WebAPI.Objects.DTOs.Entities
             if (dto.EndDate < dto.StartDate)
                 throw new ArgumentException("A data de término deve ser posterior à data de início.");
 
-            if (dto.ClientId == null || dto.ClientId <= 0)
+            if (dto.ClientId <= 0)
                 throw new ArgumentException("Cliente é obrigatório.");
+
+            if (dto.FuneralPlanId <= 0)
+                throw new ArgumentException("Plano funerário é obrigatório.");
+
+            if (dto.MonthlyFee < 0)
+                throw new ArgumentException("Mensalidade não pode ser negativa.");
         }
     }
 }

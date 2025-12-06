@@ -84,9 +84,17 @@ namespace LumenSys.WebAPI.Services.Entities
                     throw new UnauthorizedAccessException("Você não tem permissão para alterar este recurso.");
             }
 
-            var entity = _mapper.Map<T>(entityDTO);
-            await _repository.Update(entity);
+            // Mapear no objeto já carregado para preservar chaves e navegações (CompanyId, relacionamentos, etc.)
+            _mapper.Map(entityDTO, existingEntity);
 
+            // Garantir que o Id permaneça o mesmo do recurso
+            var idProp = typeof(T).GetProperty("Id");
+            if (idProp != null && idProp.CanWrite)
+            {
+                idProp.SetValue(existingEntity, id);
+            }
+
+            await _repository.Update(existingEntity);
         }
 
         public virtual async Task Delete(int id)

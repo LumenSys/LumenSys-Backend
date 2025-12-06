@@ -51,18 +51,18 @@ namespace LumenSys.WebAPI.Data.Builders
                 .HasMany(c => c.Contracts)
                 .WithOne(c => c.Client)
                 .HasForeignKey(c => c.ClientId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Client>()
                 .HasMany(c => c.DeceasedPerson)
                 .WithOne(d => d.Client)
                 .HasForeignKey(d => d.ClientId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Client>().HasData(
                new Client
                {
-                   Id = 1, Name = "Professor Utônio", Cpf = "24929517664", Phone = "7932798495", Email = "utonium@gmail.com", Street = "Rua Meninas", Number = "123", Neighborhood = "Superpoderosas", City = "Townsville", Uf = "NS",
+                   Id = 1, Name = "Professor Utï¿½nio", Cpf = "24929517664", Phone = "7932798495", Email = "utonium@gmail.com", Street = "Rua Meninas", Number = "123", Neighborhood = "Superpoderosas", City = "Townsville", Uf = "NS",
                    CompanyId = 1
                },
                new Client
